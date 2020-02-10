@@ -1,14 +1,14 @@
 import React from 'react';
-import InstructionsSection from './sections/InstructionsSection';
+import InformationSection from './sections/InformationSection';
 import TableSection from './sections/TableSection';
 
-const DashboardPage =  () => {
-  return (
-    <React.Fragment>
-      <InstructionsSection />
-      <TableSection />
-    </React.Fragment>
-  )
+const DashboardPage = () => {
+    return (
+        <React.Fragment>
+            <InformationSection />
+            <TableSection />
+        </React.Fragment>
+    )
 }
 
 export default DashboardPage;

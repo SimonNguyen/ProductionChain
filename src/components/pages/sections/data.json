@@ -1,0 +1,284 @@
+{
+    "Tiers": [
+        "ULV",
+        "LV",
+        "MV",
+        "HV",
+        "EV",
+        "IV",
+        "LuV",
+        "ZPMV",
+        "UV"
+    ],
+    "Headers": [
+        {
+            "label": "#",
+            "name": "step"
+        },
+        {
+            "label": "Machine Name",
+            "name": "machineName"
+        },
+        {
+            "label": "Machine Tier",
+            "name": "machineTier"
+        },
+        {
+            "label": "Overclock",
+            "name": "overclock"
+        },
+        {
+            "label": "RF/t",
+            "name": "rft"
+        },
+        {
+            "label": "Time",
+            "name": "time"
+        },
+        {
+            "label": "Inputs",
+            "name": "inputs"
+        },
+        {
+            "label": "Outputs",
+            "name": "output"
+        }
+    ],
+    "Recipes": [
+        {
+            "step": 1,
+            "machine": "Macerator",
+            "tier": "LV",
+            "overclock": false,
+            "rft": "40",
+            "time": ".8",
+            "inputs": [
+                {
+                    "name": "Cobblestone",
+                    "quantity": "1",
+                    "unit": "b"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "Gravel",
+                    "quantity": "1",
+                    "unit": "b"
+                }
+            ]
+        },
+        {
+            "step": 2,
+            "machine": "Macerator",
+            "tier": "LV",
+            "overclock": false,
+            "rft": "40",
+            "time": ".8",
+            "inputs": [
+                {
+                    "name": "Gravel",
+                    "quantity": "1",
+                    "unit": "b"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "Sand",
+                    "quantity": "1",
+                    "unit": "b"
+                }
+            ]
+        },
+        {
+            "step": 3,
+            "machine": "Macerator",
+            "tier": "LV",
+            "overclock": false,
+            "rft": "40",
+            "time": ".8",
+            "inputs": [
+                {
+                    "name": "Sand",
+                    "quantity": "1",
+                    "unit": "b"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "Dust",
+                    "quantity": "1",
+                    "unit": "b"
+                }
+            ]
+        },
+        {
+            "step": 4,
+            "machine": "Furnace",
+            "tier": "LV",
+            "overclock": false,
+            "rft": "128",
+            "time": "3.2",
+            "inputs": [
+                {
+                    "name": "Sand",
+                    "quantity": "1",
+                    "unit": "b"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "Glass",
+                    "quantity": "1",
+                    "unit": "b"
+                }
+            ]
+        },
+        {
+            "step": 5,
+            "machine": "Chemical Reactor",
+            "tier": "LV",
+            "overclock": false,
+            "rft": "60",
+            "time": "1",
+            "inputs": [
+                {
+                    "name": "Dust",
+                    "quantity": "1",
+                    "unit": "b"
+                },
+                {
+                    "name": "Water",
+                    "quantity": "1000",
+                    "unit": "mb"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "Clay",
+                    "quantity": "1",
+                    "unit": "b"
+                }
+            ]
+        },
+        {
+            "step": 6,
+            "machine": "Electrolyzer",
+            "tier": "LV",
+            "overclock": false,
+            "rft": "40",
+            "time": ".8",
+            "inputs": [
+                {
+                    "name": "Glass",
+                    "quantity": "1",
+                    "unit": "b"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "Quartz",
+                    "quantity": "1",
+                    "unit": "b"
+                }
+            ]
+        },
+        {
+            "step": 7,
+            "machine": "Fluid Extractor",
+            "tier": "LV",
+            "overclock": false,
+            "rft": "128",
+            "time": "2",
+            "inputs": [
+                {
+                    "name": "Ender Pearl",
+                    "quantity": "1",
+                    "unit": "b"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "Resonant Ender",
+                    "quantity": "250",
+                    "unit": "mb"
+                }
+            ]
+        },
+        {
+            "step": 8,
+            "machine": "Chemical Reactor",
+            "tier": "MV",
+            "overclock": false,
+            "rft": "400",
+            "time": "5",
+            "inputs": [
+                {
+                    "name": "Quartz",
+                    "quantity": "1",
+                    "unit": "b"
+                },
+                {
+                    "name": "Resonant Ender",
+                    "quantity": "250",
+                    "unit": "mb"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "Resonant Clathrate",
+                    "quantity": "1",
+                    "unit": "b"
+                }
+            ]
+        },
+        {
+            "step": 9,
+            "machine": "Furnace",
+            "tier": "LV",
+            "overclock": false,
+            "rft": "40",
+            "time": "3.2",
+            "inputs": [
+                {
+                    "name": "Resonant Clathrate",
+                    "quantity": "1",
+                    "unit": "b"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "Pulsating Dust",
+                    "quantity": "1",
+                    "unit": "b"
+                }
+            ]
+        },
+        {
+            "step": 10,
+            "machine": "Alloy Smelter",
+            "tier": "LV",
+            "overclock": false,
+            "rft": "96",
+            "time": "12",
+            "inputs": [
+                {
+                    "name": "Pulsating Dust",
+                    "quantity": "1",
+                    "unit": "b"
+                },
+                {
+                    "name": "Clay",
+                    "quantity": "1",
+                    "unit": "b"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "Polymer Clay",
+                    "quantity": "4",
+                    "unit": "b"
+                }
+            ]
+        }
+    ]
+}

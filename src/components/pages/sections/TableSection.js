@@ -1,61 +1,63 @@
 import React from 'react';
 import { MDBCard, MDBCardBody, MDBTable, MDBTableBody, MDBTableHead, MDBRow, MDBCol } from 'mdbreact';
+import data from "./data";
 
 const TableSection = () => {
-  const data = {
-    columns: [
-      {
-        label: 'Machine Name',
-        field: 'machineName'
-      }
-    ]
-  }
-  return (
-    <MDBRow>
-          <MDBCol>
-              <MDBCard>
-                  <MDBCardBody>
-                    <MDBTable btn hover striped>
-                      <MDBTableHead color="blue-grey lighten-4">
-                        <tr>
-                          <th>#</th>
-                          <th>Machine Name</th>
-                          <th>Machine Tier</th>
-                          <th>EU/t</th>
-                          <th>Time</th>
-                          <th>Overclock</th>
-                          <th>Inputs</th>
-                          <th>Outputs</th>
-                        </tr>
-                      </MDBTableHead>
-                      <MDBTableBody>
-                        <tr>
-                          <td>1</td>
-                          <td>Pyrolyse Oven</td>
-                          <td>LV</td>
-                          <td>30</td>
-                          <td>30</td>
-                          <td>True</td>
-                          <td>16 - Wood</td>
-                          <td>1500 - Wood Gas</td>
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>Distillery</td>
-                          <td>MV</td>
-                          <td>64</td>
-                          <td>4</td>
-                          <td>True</td>
-                          <td>1000 - Wood Gas</td>
-                          <td>20 - Ethylene</td>
-                        </tr>
-                      </MDBTableBody>
-                    </MDBTable>
-                  </MDBCardBody>
-              </MDBCard>
-          </MDBCol>
-      </MDBRow>
-  )
+    return (
+        <MDBRow>
+            <MDBCol>
+                <MDBCard>
+                    <MDBCardBody>
+                        <MDBTable responsiveMd hover striped>
+                            <MDBTableHead color="blue lighten-4">
+                                <tr>
+                                    {
+                                        data.Headers.map(h => {
+                                            return (
+                                                <th key={h.name}>{h.label}</th>
+                                            )
+                                        })
+                                    }
+                                </tr>
+                            </MDBTableHead>
+                            <MDBTableBody>
+                                {
+                                    data.Recipes.map((r, index) => {
+                                        return (
+                                            <tr key={index}>
+                                                <th>{r.step}</th>
+                                                <th>{r.machine}</th>
+                                                <th>{r.tier}</th>
+                                                <th>{r.overclock.toString()}</th>
+                                                <th>{r.rft}</th>
+                                                <th>{Number(r.time).toPrecision(2)}</th>
+                                                <th>
+                                                    {
+                                                        r.inputs.map((n, index) => {
+                                                            return (
+                                                                <p key={index}>{n.quantity + n.unit + " " + n.name}</p>
+                                                            )
+                                                        })}
+                                                </th>
+                                                <th>
+                                                    {
+                                                        r.outputs.map((o, index) => {
+                                                            return (
+                                                                <p key={index}>{o.quantity + o.unit + " " + o.name}</p>
+                                                            )
+                                                        })}
+                                                </th>
+                                            </tr>
+                                        )
+                                    })
+                                }
+                            </MDBTableBody>
+                        </MDBTable>
+                    </MDBCardBody>
+                </MDBCard>
+            </MDBCol>
+        </MDBRow>
+    )
 }
 
 export default TableSection;
