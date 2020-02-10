@@ -5,7 +5,6 @@
   "author": "Simon Nguyen",
   "license": "MIT",
   "dependencies": {
-    "google-map-react": "^1.0.6",
     "mdbreact": "^4.9.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
