@@ -32,7 +32,7 @@
             "name": "rft"
         },
         {
-            "label": "Time",
+            "label": "Time (s)",
             "name": "time"
         },
         {
@@ -42,6 +42,10 @@
         {
             "label": "Outputs",
             "name": "output"
+        },
+        {
+            "label": "Remove",
+            "name": "remove"
         }
     ],
     "Recipes": [

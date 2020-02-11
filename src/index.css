@@ -74,3 +74,13 @@ main {
     border-radius: 5px !important;
     background-color: #007bff !important;
 }
+
+.header {
+    font-weight: 900;
+}
+
+.move-left {
+    vertical-align: middle;
+    height: auto;
+    width: auto;
+  }
