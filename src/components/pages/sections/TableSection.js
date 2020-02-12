@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MDBBadge, MDBCard, MDBCardBody, MDBInput, MDBTable, MDBTableBody, MDBTableHead, MDBRow, MDBCol } from 'mdbreact';
+import { MDBBadge, MDBCard, MDBCardBody, MDBTable, MDBTableBody, MDBTableHead, MDBRow, MDBCol } from 'mdbreact';
 import data from "./data";
 
 class TableSection extends Component {
@@ -12,10 +12,16 @@ class TableSection extends Component {
         })
     }
 
-    handleDelete = recipeId => {
-        const recipes = this.state.recipes.filter(r => r.step !== recipeId);
+    handleDelete = recipeStep => {
+        const recipes = this.state.recipes.filter(r => r.step !== recipeStep);
         this.setState({ recipes });
     };
+
+    handleOverclock = (recipeId, status) => {
+        const recipes = this.state.recipes;
+        recipes[recipeId].overclock = status;
+        this.setState({ recipes });
+    }
 
     render() {
         return (
@@ -26,11 +32,13 @@ class TableSection extends Component {
                             <MDBCardBody>
                                 <MDBTable responsive hover striped>
                                     <MDBTableHead color="blue lighten-4">
+                                        <tr>
                                         {
-                                            (this.state.headers.map(header => (
-                                                <th className="align-middle text-uppercase font-weight-bold">{header}</th>
+                                            (this.state.headers.map((header, index) => (
+                                                <th key={"header"+index}className="align-middle text-uppercase font-weight-bold">{header}</th>
                                             )))
                                         }
+                                        </tr>
                                     </MDBTableHead>
                                     <MDBTableBody>
                                         {
@@ -46,6 +54,7 @@ class TableSection extends Component {
                                                     inputs={recipe.inputs}
                                                     outputs={recipe.outputs}
                                                     onDelete={this.handleDelete}
+                                                    onChange={this.handleOverclock}
                                                 />
                                             ))
                                         }
@@ -65,13 +74,19 @@ class Recipe extends Component {
         return (
             <React.Fragment>
                 <tr>
-                    <th>{this.props.step}</th>
-                    <th>{this.props.machine}</th>
-                    <th>{this.props.tier}</th>
-                    <th>{this.props.overclock.toString()}</th>
-                    <th>{this.props.rft}</th>
-                    <th>{Number(this.props.time).toPrecision(2)}</th>
-                    <th>
+                    <th key={"step"+this.props.step}>{this.props.step}</th>
+                    <th key={"machine"+this.props.step}>{this.props.machine}</th>
+                    <th key={"tier"+this.props.step}>{this.props.tier}</th>
+                    <th key={"overclock"+this.props.step}>
+                        <select className="browser-default custom-select" value={this.props.overclock} 
+                            onChange={(e) => this.props.onChange(this.props.step, e.target.value)}>
+                            <option value="true">True</option>
+                            <option value="false">False</option>
+                        </select>
+                    </th>
+                    <th key={"rft"+this.props.step}>{this.props.rft}</th>
+                    <th key={"time"+this.props.step}>{Number(this.props.time).toPrecision(2)}</th>
+                    <th key={"inputs"+this.props.step}>
                         {
                             this.props.inputs.map((n, index) => {
                                 return (
@@ -82,7 +97,7 @@ class Recipe extends Component {
                                 )
                             })}
                     </th>
-                    <th>
+                    <th key={"outputs"+this.props.step}>
                         {
                             this.props.outputs.map((o, index) => {
                                 return (
@@ -93,7 +108,7 @@ class Recipe extends Component {
                                 )
                             })}
                     </th>
-                    <th>
+                    <th key={"remove"+this.props.step}>
                         <MDBBadge
                             color="danger"
                             size="sm"
@@ -108,4 +123,3 @@ class Recipe extends Component {
 }
 
 export default TableSection;
-
