@@ -1,9 +1,9 @@
-export function OVERCLOCK(RFt, tierName, duration) {
-    var tierNames = ["ULV", "LV", "MV", "HV", "EV", "IV", "LuV", "ZPMV", "UV"]
-    var tier = tierNames.indexOf(tierName);
-    var voltages = [8, 32, 128, 512, 2048, 8192, 32768, 131072, 524288];
-    var EUt = RFt / 4;
-    var resultEUt, resultDuration, multiplier = 0;
+export function Overclock(RFt, tierName, duration) {
+    let tierNames = ["ULV", "LV", "MV", "HV", "EV", "IV", "LuV", "ZPMV", "UV"]
+    let tier = tierNames.indexOf(tierName);
+    let voltages = [8, 32, 128, 512, 2048, 8192, 32768, 131072, 524288];
+    let EUt = RFt / 4;
+    let resultEUt, resultDuration, multiplier = 0;
 
     if (voltages[tier] === EUt || tier === 0) {
         return {
@@ -21,7 +21,7 @@ export function OVERCLOCK(RFt, tierName, duration) {
 
         resultEUt = EUt * (1 << multiplier) * (1 << multiplier);
         resultDuration = duration / (1 << multiplier);
-        
+
     } else {
         resultEUt = EUt;
         resultDuration = duration;
@@ -36,4 +36,16 @@ export function OVERCLOCK(RFt, tierName, duration) {
         rft: resultEUt * 4,
         time: Math.ceil(resultDuration)
     }
+}
+
+export function GetPairs(inputs, outputs) {
+    let pairs = []
+    let weight = outputs.length / inputs.length;
+    
+    inputs.map(input =>
+        outputs.map(output =>
+            pairs.push([input.name, output.name, weight])
+        ));
+    
+    return pairs;
 }

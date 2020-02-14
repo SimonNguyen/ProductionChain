@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 
 class DisplayRFtTime extends Component {
     render() {
-        const overclocked = this.props.overclock;
-        var displayRFt = this.props.rft;
-        var displayTime = this.props.time;
-        var displayEfficiency = this.props.efficiency;
+        let overclocked = this.props.overclock;
+        let displayRFt = this.props.rft;
+        let displayTime = this.props.time;
+        let displayEfficiency = this.props.efficiency;
 
         if (overclocked === 'true') {
             displayRFt = this.props.rftoc;

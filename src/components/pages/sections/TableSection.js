@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { MDBCard, MDBCardBody, MDBTable, MDBTableBody, MDBTableHead, MDBRow, MDBCol } from 'mdbreact';
-import { OVERCLOCK } from './logic/Calculator.js'
+import { Overclock, GetPairs } from './logic/RecipeHelpers'
 import data from "./data";
 import Recipe from './Recipe';
 
@@ -23,7 +23,7 @@ class TableSection extends Component {
         const recipes = this.state.recipes;
         recipes[recipeId].overclock = status;
 
-        var results = OVERCLOCK(recipes[recipeId].rft, recipes[recipeId].tier, recipes[recipeId].time);
+        var results = Overclock(recipes[recipeId].rft, recipes[recipeId].tier, recipes[recipeId].time);
         recipes[recipeId].rftoc = results.rft;
         recipes[recipeId].timeoc = results.time;
         recipes[recipeId].efficiencyoc = 100 * (recipes[recipeId].rft * recipes[recipeId].time) / (results.rft * results.time);

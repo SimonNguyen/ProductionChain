@@ -28,7 +28,7 @@ class Recipe extends Component {
                         efficiencyoc={this.props.efficiencyoc}
                         overclock={this.props.overclock}
                     />
-                    
+
                     <th key={"inputs" + this.props.step}>
                         {
                             this.props.inputs.map((n, index) => {
