@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MDBBadge, MDBCard, MDBCardBody, MDBTable, MDBTableBody, MDBTableHead, MDBRow, MDBCol } from 'mdbreact';
+import { MDBBadge, MDBCard, MDBCardBody, MDBTable, MDBTableBody, MDBTableHead, MDBRow, MDBCol, MDBContainer } from 'mdbreact';
 import data from "./data";
 
 class TableSection extends Component {
@@ -21,6 +21,32 @@ class TableSection extends Component {
         const recipes = this.state.recipes;
         recipes[recipeId].overclock = status;
         this.setState({ recipes });
+    }
+
+    handleSwapDown = recipeStep => {
+        if(recipeStep < this.state.recipes.length - 1){
+            let recipes = this.state.recipes;
+            let currentItem = recipes[recipeStep];
+            let nextItem = recipes[recipeStep + 1];
+            currentItem.step = recipeStep + 1;
+            nextItem.step = recipeStep;
+            recipes[recipeStep] = nextItem;
+            recipes[recipeStep + 1] = currentItem;
+            this.setState({ recipes })
+        }
+    }
+
+    handleSwapUp = recipeStep => {
+        if(recipeStep > 0){
+            let recipes = this.state.recipes;
+            let currentItem = recipes[recipeStep];
+            let nextItem = recipes[recipeStep - 1];
+            currentItem.step = recipeStep - 1;
+            nextItem.step = recipeStep;
+            recipes[recipeStep] = nextItem;
+            recipes[recipeStep - 1] = currentItem;
+            this.setState({ recipes })
+        }
     }
 
     render() {
@@ -55,6 +81,8 @@ class TableSection extends Component {
                                                     outputs={recipe.outputs}
                                                     onDelete={this.handleDelete}
                                                     onChange={this.handleOverclock}
+                                                    onSwapUp={this.handleSwapUp}
+                                                    onSwapDown={this.handleSwapDown}
                                                 />
                                             ))
                                         }
@@ -108,13 +136,30 @@ class Recipe extends Component {
                                 )
                             })}
                     </th>
-                    <th key={"remove"+this.props.step}>
-                        <MDBBadge
-                            color="danger"
-                            size="sm"
-                            className="float-right"
-                            onClick={() => this.props.onDelete(this.props.step)}
-                        >X</MDBBadge>
+                    <th key={"modify"+this.props.step}>
+                        <MDBContainer>
+                            <MDBBadge
+                                tag="a"
+                                color="light"
+                                size="sm"
+                                className="m-sm-1"
+                                onClick={() => this.props.onSwapUp(this.props.step)}
+                            >Up</MDBBadge>
+                            <MDBBadge
+                                tag="a"
+                                color="light"
+                                size="sm"
+                                className="m-sm-1"
+                                onClick={() => this.props.onSwapDown(this.props.step)}
+                            >Down</MDBBadge>
+                            <MDBBadge
+                                tag="a"
+                                color="danger"
+                                size="sm"
+                                className="m-sm-1"
+                                onClick={() => this.props.onDelete(this.props.step)}
+                            >X</MDBBadge>
+                        </MDBContainer>
                     </th>
                 </tr>
             </React.Fragment>
