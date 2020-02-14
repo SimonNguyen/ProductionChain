@@ -36,6 +36,10 @@
             "name": "time"
         },
         {
+            "label": "Efficiency %",
+            "name": "efficiency"
+        },
+        {
             "label": "Inputs",
             "name": "inputs"
         },
@@ -56,6 +60,7 @@
             "overclock": false,
             "rft": "40",
             "time": ".8",
+            "efficiency": 100,
             "inputs": [
                 {
                     "name": "Cobblestone",
@@ -78,6 +83,7 @@
             "overclock": false,
             "rft": "40",
             "time": ".8",
+            "efficiency": 100,
             "inputs": [
                 {
                     "name": "Gravel",
@@ -100,6 +106,7 @@
             "overclock": false,
             "rft": "40",
             "time": ".8",
+            "efficiency": 100,
             "inputs": [
                 {
                     "name": "Sand",
@@ -122,6 +129,7 @@
             "overclock": false,
             "rft": "128",
             "time": "3.2",
+            "efficiency": 100,
             "inputs": [
                 {
                     "name": "Sand",
@@ -144,6 +152,7 @@
             "overclock": false,
             "rft": "60",
             "time": "1",
+            "efficiency": 100,
             "inputs": [
                 {
                     "name": "Dust",
@@ -171,6 +180,7 @@
             "overclock": false,
             "rft": "40",
             "time": ".8",
+            "efficiency": 100,
             "inputs": [
                 {
                     "name": "Glass",
@@ -193,6 +203,7 @@
             "overclock": false,
             "rft": "128",
             "time": "2",
+            "efficiency": 100,
             "inputs": [
                 {
                     "name": "Ender Pearl",
@@ -215,6 +226,7 @@
             "overclock": false,
             "rft": "400",
             "time": "5",
+            "efficiency": 100,
             "inputs": [
                 {
                     "name": "Quartz",
@@ -238,10 +250,11 @@
         {
             "step": 8,
             "machine": "Furnace",
-            "tier": "LV",
+            "tier": "MV",
             "overclock": false,
             "rft": "40",
             "time": "3.2",
+            "efficiency": 100,
             "inputs": [
                 {
                     "name": "Resonant Clathrate",
@@ -260,10 +273,11 @@
         {
             "step": 9,
             "machine": "Alloy Smelter",
-            "tier": "LV",
+            "tier": "MV",
             "overclock": false,
             "rft": "96",
             "time": "12",
+            "efficiency": 100,
             "inputs": [
                 {
                     "name": "Pulsating Dust",
