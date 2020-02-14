@@ -1,11 +1,15 @@
+import * as data from '../data';
+let tierNames = data.TierNames;
+let voltages = data.Voltages;
+
+// Adapted from GregTech Community Edition calculateOverclock function.
+// https://github.com/GregTechCE/GregTech/blob/master/src/main/java/gregtech/api/capability/impl/AbstractRecipeLogic.java
 export function Overclock(RFt, tierName, duration) {
-    let tierNames = ["ULV", "LV", "MV", "HV", "EV", "IV", "LuV", "ZPMV", "UV"]
     let tier = tierNames.indexOf(tierName);
-    let voltages = [8, 32, 128, 512, 2048, 8192, 32768, 131072, 524288];
     let EUt = RFt / 4;
     let resultEUt, resultDuration, multiplier = 0;
 
-    if (voltages[tier] === EUt || tier === 0) {
+    if (voltages[tier] <= EUt || tier === 0) {
         return {
             rft: EUt * 4,
             time: duration
@@ -41,7 +45,7 @@ export function Overclock(RFt, tierName, duration) {
 export function GetPairs(inputs, outputs) {
     let pairs = []
     let weight = outputs.length / inputs.length;
-    
+
     inputs.map(input =>
         outputs.map(output =>
             pairs.push([input.name, output.name, weight])
