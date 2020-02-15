@@ -51,7 +51,7 @@ class Recipe extends Component {
                                 )
                             })}
                     </th>
-                    <th key={"modify"+this.props.step}>
+                    <th key={"modify" + this.props.step}>
                             <MDBBadge
                                 tag="a"
                                 color="light"

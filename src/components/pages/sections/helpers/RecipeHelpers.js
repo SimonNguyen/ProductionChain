@@ -1,6 +1,7 @@
 import * as data from '../data';
 let tierNames = data.TierNames;
 let voltages = data.Voltages;
+let colors = data.Colors;
 
 // Adapted from GregTech Community Edition calculateOverclock function.
 // https://github.com/GregTechCE/GregTech/blob/master/src/main/java/gregtech/api/capability/impl/AbstractRecipeLogic.java
@@ -42,22 +43,23 @@ export function Overclock(RFt, tierName, duration) {
     }
 }
 
-export function GetPairs(recipes) {
-    let pairs = [];
+export function GetLinks(recipes) {
+    let links = [];
 
-    recipes.map(recipe =>
+    recipes.map((recipe, index) =>
         recipe.inputs.map(input =>
             recipe.outputs.map(output =>
-                pairs.push({
+                links.push({
                     source: input.name,
                     target: output.name,
-                    value: recipe.outputs.length / recipe.inputs.length
+                    value: recipe.outputs.length / recipe.inputs.length,
+                    color: colors[index % colors.length]
                 })
             )
         )
     );
 
-    return pairs;
+    return links;
 }
 
 export function GetNodes(pairs) {
@@ -69,7 +71,29 @@ export function GetNodes(pairs) {
     );
 
     let uniqueNodes = [...new Set(nodes)];
-    uniqueNodes.forEach(element => outputNodes.push({id: element}));
+    uniqueNodes.forEach( (element, index) => 
+        outputNodes.push({ 
+            name: element,
+            color: colors[index % colors.length]
+        }));
 
     return outputNodes;
+}
+
+export function FixLinks(links, nodes) {
+    let names = [];
+    let sankeyLinks = [];
+
+    nodes.map(node => names.push(node.name));
+
+    links.forEach(link => {
+        sankeyLinks.push({
+            source: names.indexOf(link.source),
+            target: names.indexOf(link.target),
+            value: link.value,
+            color: link.color
+        })
+    });
+    
+    return sankeyLinks;
 }
