@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MDBBadge, MDBContainer } from 'mdbreact';
+import { MDBBadge, MDBIcon } from 'mdbreact';
 import DisplayRFtTime from './DisplayRFtTime';
 
 class Recipe extends Component {
@@ -51,30 +51,28 @@ class Recipe extends Component {
                                 )
                             })}
                     </th>
-                    <th key={"modify"+this.props.step}>
-                        <MDBContainer>
-                            <MDBBadge
-                                tag="a"
-                                color="light"
-                                size="sm"
-                                className="m-sm-1"
-                                onClick={() => this.props.onSwapUp(this.props.step)}
-                            >Up</MDBBadge>
-                            <MDBBadge
-                                tag="a"
-                                color="light"
-                                size="sm"
-                                className="m-sm-1"
-                                onClick={() => this.props.onSwapDown(this.props.step)}
-                            >Down</MDBBadge>
-                            <MDBBadge
-                                tag="a"
-                                color="danger"
-                                size="sm"
-                                className="m-sm-1"
-                                onClick={() => this.props.onDelete(this.props.step)}
-                            >X</MDBBadge>
-                        </MDBContainer>
+                    <th key={"modify" + this.props.step}>
+                        <MDBBadge
+                            tag="a"
+                            color="light"
+                            size="sm"
+                            className="m-sm-1"
+                            onClick={() => this.props.onSwapUp(this.props.step)}
+                        >Up</MDBBadge>
+                        <MDBBadge
+                            tag="a"
+                            color="light"
+                            size="sm"
+                            className="m-sm-1"
+                            onClick={() => this.props.onSwapDown(this.props.step)}
+                        >Down</MDBBadge>
+                        <MDBBadge
+                            tag="a"
+                            color="danger"
+                            size="sm"
+                            className="m-sm-1"
+                            onClick={() => this.props.onDelete(this.props.step)}
+                        >Remove</MDBBadge>
                     </th>
                 </tr>
             </React.Fragment>

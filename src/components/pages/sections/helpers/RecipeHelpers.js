@@ -42,14 +42,34 @@ export function Overclock(RFt, tierName, duration) {
     }
 }
 
-export function GetPairs(inputs, outputs) {
-    let pairs = []
-    let weight = outputs.length / inputs.length;
+export function GetPairs(recipes) {
+    let pairs = [];
 
-    inputs.map(input =>
-        outputs.map(output =>
-            pairs.push([input.name, output.name, weight])
-        ));
-    
+    recipes.map(recipe =>
+        recipe.inputs.map(input =>
+            recipe.outputs.map(output =>
+                pairs.push({
+                    source: input.name,
+                    target: output.name,
+                    value: recipe.outputs.length / recipe.inputs.length
+                })
+            )
+        )
+    );
+
     return pairs;
+}
+
+export function GetNodes(pairs) {
+    let nodes = [];
+    let outputNodes = [];
+
+    pairs.map(pair =>
+        nodes.push(pair.source, pair.target)
+    );
+
+    let uniqueNodes = [...new Set(nodes)];
+    uniqueNodes.forEach(element => outputNodes.push({id: element}));
+
+    return outputNodes;
 }
