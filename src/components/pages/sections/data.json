@@ -48,8 +48,8 @@
             "name": "output"
         },
         {
-            "label": "Remove",
-            "name": "remove"
+            "label": "Modify",
+            "name": "modify"
         }
     ],
     "Recipes": [

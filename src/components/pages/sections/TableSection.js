@@ -30,6 +30,32 @@ class TableSection extends Component {
         this.setState({ recipes });
     }
 
+    handleSwapDown = recipeStep => {
+        if(recipeStep < this.state.recipes.length - 1){
+            let recipes = this.state.recipes;
+            let currentItem = recipes[recipeStep];
+            let nextItem = recipes[recipeStep + 1];
+            currentItem.step = recipeStep + 1;
+            nextItem.step = recipeStep;
+            recipes[recipeStep] = nextItem;
+            recipes[recipeStep + 1] = currentItem;
+            this.setState({ recipes })
+        }
+    }
+
+    handleSwapUp = recipeStep => {
+        if(recipeStep > 0){
+            let recipes = this.state.recipes;
+            let currentItem = recipes[recipeStep];
+            let nextItem = recipes[recipeStep - 1];
+            currentItem.step = recipeStep - 1;
+            nextItem.step = recipeStep;
+            recipes[recipeStep] = nextItem;
+            recipes[recipeStep - 1] = currentItem;
+            this.setState({ recipes })
+        }
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -66,6 +92,8 @@ class TableSection extends Component {
                                                     outputs={recipe.outputs}
                                                     onDelete={this.handleDelete}
                                                     onChange={this.handleOverclock}
+                                                    onSwapUp={this.handleSwapUp}
+                                                    onSwapDown={this.handleSwapDown}
                                                 />
                                             ))
                                         }

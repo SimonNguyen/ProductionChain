@@ -3,6 +3,7 @@ import InformationSection from './sections/InformationSection';
 import TableSection from './sections/TableSection';
 
 const DashboardPage = () => {
+
     return (
         <React.Fragment>
             <InformationSection />
