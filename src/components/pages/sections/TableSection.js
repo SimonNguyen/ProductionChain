@@ -48,7 +48,7 @@ class TableSection extends Component {
                                         {
                                             //adds a line for adding a recipe
                                             <AddRecipe
-                                                onAdd={this.handleAdd}
+                                                onAdd={this.props.handleAdd}
                                             />
                                         }
                                     </MDBTableBody>
