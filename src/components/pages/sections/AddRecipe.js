@@ -4,18 +4,29 @@ import * as data from './data';
 let tierNames = data.TierNames;
 
 class AddRecipe extends Component {
+    constructor(){
+        super();
+        this.state = {
+            tier: tierNames[0],
+            overclock: false
+        };
+    }
+
     handleInputChange = inputName => value => {
         const nextValue = value;
         this.setState({
             [inputName]: nextValue
         });
-
-        console.log(this.state);
     };
+
+    handleSelectChange = (inputName, selectValue) => {
+        this.setState({
+            [inputName]: selectValue
+        })
+    }
     render() {
         //this builds the options list for tiers
-        let tiers = tierNames;
-        let optionTiers = tiers.map((tier) =>
+        let optionTiers = tierNames.map((tier) =>
             <option value={tier}>{tier}</option>
         );
 
@@ -33,14 +44,14 @@ class AddRecipe extends Component {
                         />
                     </th>
                     <th key="tierAdd">
-                        <select id="tierSelect" className="browser-default custom-select" getValue={this.handleInputChange("tier")}>
+                        <select className="browser-default custom-select" value={this.state.tier} onChange={(e) => this.handleSelectChange("tier", e.target.value)}>
                             {optionTiers}
                         </select>
                     </th>
                     <th key="overclockAdd">
-                        <select id="overclockSelect" className="browser-default custom-select" getValue={this.handleInputChange("overclock")}>
-                            <option value="true">True</option>
+                        <select className="browser-default custom-select" value={this.state.overclock} onChange={(e) => this.handleSelectChange("overclock", e.target.value)}>
                             <option value="false">False</option>
+                            <option value="true">True</option>
                         </select>
                     </th>
                     <th key="rftAdd">
@@ -67,7 +78,7 @@ class AddRecipe extends Component {
                             type="text"
                             className="form-control-sm"
                             id="inputItemsText"
-                            label="{Quantity} {Unit} {Item}, ..."
+                            label="Input Items"
                             getValue={this.handleInputChange("rawInput")}
                         />
                     </th>
@@ -76,7 +87,7 @@ class AddRecipe extends Component {
                             type="text"
                             className="form-control-sm"
                             id="outputItemsText"
-                            label="{Quantity} {Unit} {Item}, ..."
+                            label="Output Items"
                             getValue={this.handleInputChange("rawOutput")}
                         />
                     </th>
