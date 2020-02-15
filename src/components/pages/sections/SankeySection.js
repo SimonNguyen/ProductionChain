@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { MDBRow, MDBCol, MDBCard, MDBCardBody } from 'mdbreact';
 import { GetLinks, GetNodes, FixLinks } from './helpers/RecipeHelpers';
-import { SizeMe } from 'react-sizeme'
+import { SizeMe } from 'react-sizeme';
 import { Sankey } from 'react-vis';
 
 class SankeySection extends Component {

@@ -71,8 +71,8 @@ export function GetNodes(pairs) {
     );
 
     let uniqueNodes = [...new Set(nodes)];
-    uniqueNodes.forEach( (element, index) => 
-        outputNodes.push({ 
+    uniqueNodes.forEach((element, index) =>
+        outputNodes.push({
             name: element,
             color: colors[index % colors.length]
         }));
@@ -80,6 +80,23 @@ export function GetNodes(pairs) {
     return outputNodes;
 }
 
+export function parseItems(raw) {
+    //Works - needs improvement for readability
+    let list = raw.split(';');
+    let items = [];
+    for(let index in list){
+        let item = list[index].split(',');
+        console.log(item);
+        items.push(
+            {
+                quantity: item[0],
+                unit: item[1],
+                name: item[2]
+            }
+        )
+    };
+    return (items);
+}
 export function FixLinks(links, nodes) {
     let names = [];
     let sankeyLinks = [];
@@ -94,6 +111,6 @@ export function FixLinks(links, nodes) {
             color: link.color
         })
     });
-    
+
     return sankeyLinks;
 }

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import InformationSection from './sections/InformationSection';
 import TableSection from './sections/TableSection';
-
 import data from './sections/data';
-import { Overclock } from './sections/helpers/RecipeHelpers'
+import { Overclock, parseItems} from './sections/helpers/RecipeHelpers'
 import SankeySection from './sections/SankeySection';
 
 class DashboardPage extends Component {
@@ -68,6 +67,32 @@ class DashboardPage extends Component {
         }
     }
 
+    handleAdd = rawRecipe => {
+        if(!(rawRecipe.length < 7)){
+            let recipes = this.state.recipes;
+            let nextStep = this.state.recipes.length;
+            let inputList = parseItems(rawRecipe.rawInput);
+            let outputList = parseItems(rawRecipe.rawOutput);
+            recipes.push(
+                {
+                    step: nextStep,
+                    machine: rawRecipe.machine,
+                    tier: rawRecipe.tier,
+                    overclock: rawRecipe.overclock,
+                    rft: rawRecipe.rft,
+                    time: rawRecipe.time,
+                    efficiency: 100,
+                    inputs: [...inputList],
+                    outputs: [...outputList]
+                }
+            )
+            this.setState({ recipes });
+        }
+        else{
+            console.log("failed Add - not enough data");
+        }
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -78,7 +103,9 @@ class DashboardPage extends Component {
                     handleDelete={this.handleDelete}
                     handleOverclock={this.handleOverclock}
                     handleSwapDown={this.handleSwapDown}
-                    handleSwapUp={this.handleSwapUp} />
+                    handleSwapUp={this.handleSwapUp}
+                    handleAdd={this.handleAdd}
+                />
                 <SankeySection recipes={this.state.recipes} />
             </React.Fragment>
         )

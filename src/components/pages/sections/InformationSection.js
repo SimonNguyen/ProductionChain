@@ -10,6 +10,7 @@ const InformationSection = () => {
                     <MDBCardText>
                         GregTech machines should have their EU/t values converted to RF/t. The equivalent RF/t value is <code>4 * EUt</code>.
                         <br />Efficiency % is the energy efficiency of the overclock.
+                        <br />Item input/output format is [Quantity],[Unit],[item]; ...ext.
                     </MDBCardText>
                 </MDBCard>
             </MDBCol>

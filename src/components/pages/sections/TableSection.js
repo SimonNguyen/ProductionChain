@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { MDBCard, MDBCardBody, MDBTable, MDBTableBody, MDBTableHead, MDBRow, MDBCol } from 'mdbreact';
 import Recipe from './Recipe';
+import AddRecipe from './AddRecipe';
 
 class TableSection extends Component {
     render() {
@@ -43,6 +44,12 @@ class TableSection extends Component {
                                                     onSwapDown={this.props.handleSwapDown}
                                                 />
                                             ))
+                                        }
+                                        {
+                                            //adds a line for adding a recipe
+                                            <AddRecipe
+                                                onAdd={this.props.handleAdd}
+                                            />
                                         }
                                     </MDBTableBody>
                                 </MDBTable>
