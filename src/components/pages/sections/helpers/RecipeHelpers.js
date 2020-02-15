@@ -73,3 +73,19 @@ export function GetNodes(pairs) {
 
     return outputNodes;
 }
+
+export function parseItems(raw) {
+    let list = raw.split(',');
+    let items = [];
+    for(let index in list){
+        let item = index.split(' ');
+        items.push(
+            {
+                quantity: item[0],
+                unit: item[1],
+                name: item[2]
+            }
+        )
+    };
+    return(items);
+}

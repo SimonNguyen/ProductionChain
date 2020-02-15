@@ -7,7 +7,6 @@ class SankeySection extends Component {
     render() {
         let pairs = GetPairs(this.props.recipes);
         let nodes = GetNodes(pairs);
-        console.log(nodes, pairs);
         return (
             <MDBRow>
                 <MDBCol>

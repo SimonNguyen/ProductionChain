@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { MDBCard, MDBCardBody, MDBTable, MDBTableBody, MDBTableHead, MDBRow, MDBCol } from 'mdbreact';
 import { Overclock } from './helpers/RecipeHelpers'
 import Recipe from './Recipe';
+import AddRecipe from './AddRecipe';
 
 class TableSection extends Component {
     state = {
@@ -26,7 +27,7 @@ class TableSection extends Component {
     }
 
     handleSwapDown = recipeStep => {
-        if(recipeStep < this.state.recipes.length - 1){
+        if (recipeStep < this.state.recipes.length - 1) {
             let recipes = this.state.recipes;
             let currentItem = recipes[recipeStep];
             let nextItem = recipes[recipeStep + 1];
@@ -39,7 +40,7 @@ class TableSection extends Component {
     }
 
     handleSwapUp = recipeStep => {
-        if(recipeStep > 0){
+        if (recipeStep > 0) {
             let recipes = this.state.recipes;
             let currentItem = recipes[recipeStep];
             let nextItem = recipes[recipeStep - 1];
@@ -49,6 +50,10 @@ class TableSection extends Component {
             recipes[recipeStep - 1] = currentItem;
             this.setState({ recipes })
         }
+    }
+
+    handleAdd = newRecord => {
+        
     }
 
     render() {
@@ -91,6 +96,12 @@ class TableSection extends Component {
                                                     onSwapDown={this.handleSwapDown}
                                                 />
                                             ))
+                                        }
+                                        {
+                                            //adds a line for adding a recipe
+                                            <AddRecipe
+                                                onAdd={this.handleAdd}
+                                            />
                                         }
                                     </MDBTableBody>
                                 </MDBTable>

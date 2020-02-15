@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MDBBadge, MDBIcon } from 'mdbreact';
+import { MDBBadge } from 'mdbreact';
 import DisplayRFtTime from './DisplayRFtTime';
 
 class Recipe extends Component {
