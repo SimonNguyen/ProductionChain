@@ -17,12 +17,12 @@ class AddRecipe extends Component {
         this.setState({
             [inputName]: nextValue
         });
-    };
+    }
 
     handleSelectChange = (inputName, selectValue) => {
         this.setState({
             [inputName]: selectValue
-        })
+        });
     }
     render() {
         //this builds the options list for tiers
@@ -44,12 +44,20 @@ class AddRecipe extends Component {
                         />
                     </th>
                     <th key="tierAdd">
-                        <select className="browser-default custom-select" value={this.state.tier} onChange={(e) => this.handleSelectChange("tier", e.target.value)}>
+                        <select 
+                            className="browser-default custom-select"
+                            value={this.state.tier}
+                            onChange={(e) => this.handleSelectChange("tier", e.target.value)}
+                        >
                             {optionTiers}
                         </select>
                     </th>
                     <th key="overclockAdd">
-                        <select className="browser-default custom-select" value={this.state.overclock} onChange={(e) => this.handleSelectChange("overclock", e.target.value)}>
+                        <select 
+                            className="browser-default custom-select"
+                            value={this.state.overclock} 
+                            onChange={(e) => this.handleSelectChange("overclock", e.target.value)}
+                        >
                             <option value="false">False</option>
                             <option value="true">True</option>
                         </select>
