@@ -48,7 +48,7 @@ class DashboardPage extends Component {
             recipes[recipeStep] = nextItem;
             recipes[recipeStep + 1] = currentItem;
 
-            this.setState({ recipes })
+            this.setState({ recipes });
         }
     }
 
@@ -63,7 +63,7 @@ class DashboardPage extends Component {
             recipes[recipeStep] = nextItem;
             recipes[recipeStep - 1] = currentItem;
 
-            this.setState({ recipes })
+            this.setState({ recipes });
         }
     }
 
@@ -73,6 +73,7 @@ class DashboardPage extends Component {
             let nextStep = this.state.recipes.length;
             let inputList = parseItems(rawRecipe.rawInput);
             let outputList = parseItems(rawRecipe.rawOutput);
+
             recipes.push(
                 {
                     step: nextStep,
@@ -85,7 +86,8 @@ class DashboardPage extends Component {
                     inputs: [...inputList],
                     outputs: [...outputList]
                 }
-            )
+            );
+
             this.setState({ recipes });
         }
         else{
