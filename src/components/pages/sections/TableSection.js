@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
 import { MDBCard, MDBCardBody, MDBTable, MDBTableBody, MDBTableHead, MDBRow, MDBCol } from 'mdbreact';
-import { Overclock, GetPairs } from './logic/RecipeHelpers'
-import data from "./data";
+import { Overclock } from './helpers/RecipeHelpers'
 import Recipe from './Recipe';
 
 class TableSection extends Component {
     state = {
-        headers: data.Headers.map(h => {
-            return (h.label)
-        }),
-        recipes: data.Recipes.map(r => {
-            return r
-        })
+        headers: this.props.headers,
+        recipes: this.props.recipes.map(r => { return r })
     }
 
     handleDelete = recipeStep => {

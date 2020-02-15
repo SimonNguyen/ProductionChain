@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MDBBadge, MDBContainer } from 'mdbreact';
+import { MDBBadge, MDBIcon } from 'mdbreact';
 import DisplayRFtTime from './DisplayRFtTime';
 
 class Recipe extends Component {
@@ -52,7 +52,6 @@ class Recipe extends Component {
                             })}
                     </th>
                     <th key={"modify"+this.props.step}>
-                        <MDBContainer>
                             <MDBBadge
                                 tag="a"
                                 color="light"
@@ -74,7 +73,6 @@ class Recipe extends Component {
                                 className="m-sm-1"
                                 onClick={() => this.props.onDelete(this.props.step)}
                             >X</MDBBadge>
-                        </MDBContainer>
                     </th>
                 </tr>
             </React.Fragment>
