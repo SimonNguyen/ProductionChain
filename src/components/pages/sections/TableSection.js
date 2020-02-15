@@ -4,9 +4,13 @@ import { Overclock } from './helpers/RecipeHelpers'
 import Recipe from './Recipe';
 
 class TableSection extends Component {
-    state = {
-        headers: this.props.headers,
-        recipes: this.props.recipes.map(r => { return r })
+    constructor() {
+        super()
+
+        this.state = {
+            headers: this.props.headers,
+            recipes: this.props.recipes.map(r => { return r })
+        }
     }
 
     handleDelete = recipeStep => {
@@ -18,35 +22,40 @@ class TableSection extends Component {
         const recipes = this.state.recipes;
         recipes[recipeId].overclock = status;
 
-        var results = Overclock(recipes[recipeId].rft, recipes[recipeId].tier, recipes[recipeId].time);
+        let results = Overclock(recipes[recipeId].rft, recipes[recipeId].tier, recipes[recipeId].time);
         recipes[recipeId].rftoc = results.rft;
         recipes[recipeId].timeoc = results.time;
         recipes[recipeId].efficiencyoc = 100 * (recipes[recipeId].rft * recipes[recipeId].time) / (results.rft * results.time);
+
         this.setState({ recipes });
     }
 
     handleSwapDown = recipeStep => {
-        if(recipeStep < this.state.recipes.length - 1){
+        if (recipeStep < this.state.recipes.length - 1) {
             let recipes = this.state.recipes;
             let currentItem = recipes[recipeStep];
             let nextItem = recipes[recipeStep + 1];
+
             currentItem.step = recipeStep + 1;
             nextItem.step = recipeStep;
             recipes[recipeStep] = nextItem;
             recipes[recipeStep + 1] = currentItem;
+
             this.setState({ recipes })
         }
     }
 
     handleSwapUp = recipeStep => {
-        if(recipeStep > 0){
+        if (recipeStep > 0) {
             let recipes = this.state.recipes;
             let currentItem = recipes[recipeStep];
             let nextItem = recipes[recipeStep - 1];
+
             currentItem.step = recipeStep - 1;
             nextItem.step = recipeStep;
             recipes[recipeStep] = nextItem;
             recipes[recipeStep - 1] = currentItem;
+
             this.setState({ recipes })
         }
     }

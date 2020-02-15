@@ -1,15 +1,4 @@
 {
-    "Tiers": [
-        "ULV",
-        "LV",
-        "MV",
-        "HV",
-        "EV",
-        "IV",
-        "LuV",
-        "ZPMV",
-        "UV"
-    ],
     "Headers": [
         {
             "label": "#",
