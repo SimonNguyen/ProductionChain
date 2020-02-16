@@ -1,21 +1,25 @@
 import React, { Component } from 'react';
-import { MDBBadge, MDBInput } from 'mdbreact';
+import { MDBBadge, MDBInput, MDBAlert } from 'mdbreact';
 import * as data from './data';
+import { ParseItems } from './helpers/RecipeHelpers'
 let tierNames = data.TierNames;
 
 class AddRecipe extends Component {
-    constructor(){
+    constructor() {
         super();
         this.state = {
             tier: tierNames[0],
-            overclock: false
+            overclock: false,
+            errorAlert: "invisible",
+            errorText: ""
         };
     }
 
     handleInputChange = inputName => value => {
         const nextValue = value;
         this.setState({
-            [inputName]: nextValue
+            [inputName]: nextValue,
+            errorAlert: "invisible"
         });
     }
 
@@ -24,12 +28,55 @@ class AddRecipe extends Component {
             [inputName]: selectValue
         });
     }
+
+    handleDataValidation = (failMessage) => {
+        let isValid = true;
+        let rawRecipe = this.state;
+        if (Object.keys(rawRecipe).length === 9) {
+            let inputList = ParseItems(rawRecipe.rawInput);
+            let outputList = ParseItems(rawRecipe.rawOutput);
+
+            for (let index in inputList) {
+                if (isNaN(inputList[index].quantity)) {
+                    isValid = false;
+                }
+            }
+
+            for (let index in outputList) {
+                if (isNaN(outputList[index].quantity)) {
+                    isValid = false;
+                }
+            }
+
+            if (isValid) {
+                let newRecipe = {
+                    machine: rawRecipe.machine,
+                    tier: rawRecipe.tier,
+                    overclock: rawRecipe.overclock,
+                    rft: rawRecipe.rft,
+                    time: rawRecipe.time,
+                    inputs: [...inputList],
+                    outputs: [...outputList]
+                }
+                this.props.onAdd(newRecipe);
+            }
+            else {
+                this.setState({
+                    errorAlert: "visible",
+                    errorText: "Invalid: Check item format"
+                });
+            }
+        }
+        else {
+            this.setState({
+                errorAlert: "visible",
+                errorText: "Invalid: Missing info."
+            });
+        }
+    }
+
     render() {
         //this builds the options list for tiers
-        let optionTiers = tierNames.map((tier) =>
-            <option value={tier}>{tier}</option>
-        );
-
         return (
             <React.Fragment>
                 <tr>
@@ -44,18 +91,21 @@ class AddRecipe extends Component {
                         />
                     </th>
                     <th key="tierAdd">
-                        <select 
+                        <select
                             className="browser-default custom-select"
+                            id="tierSelect"
                             value={this.state.tier}
                             onChange={(e) => this.handleSelectChange("tier", e.target.value)}
                         >
-                            {optionTiers}
+                            {tierNames.map((tier) =>
+                                <option key={"tier:" + tier} value={tier}>{tier}</option>)}
                         </select>
                     </th>
                     <th key="overclockAdd">
-                        <select 
+                        <select
                             className="browser-default custom-select"
-                            value={this.state.overclock} 
+                            id="overclockSelect"
+                            value={this.state.overclock}
                             onChange={(e) => this.handleSelectChange("overclock", e.target.value)}
                         >
                             <option value="false">False</option>
@@ -64,7 +114,9 @@ class AddRecipe extends Component {
                     </th>
                     <th key="rftAdd">
                         <MDBInput
-                            type="text"
+                            type="number"
+                            step="o.o1"
+                            min="0"
                             className="form-control-sm"
                             id="RfTText"
                             label="RF/T"
@@ -73,14 +125,24 @@ class AddRecipe extends Component {
                     </th>
                     <th key="timeAdd">
                         <MDBInput
-                            type="text"
+                            type="number"
+                            step="o.o1"
+                            min="0"
                             className="form-control-sm"
                             id="timeText"
                             label="time (s)"
                             getValue={this.handleInputChange("time")}
                         />
                     </th>
-                    <th></th>
+                    <th>
+                        <MDBAlert 
+                            color="danger"
+                            className={this.state.errorAlert}
+                            id="errorAlert"
+                        >
+                            {this.state.errorText}
+                        </MDBAlert>
+                    </th>
                     <th key="inputItemAdd">
                         <MDBInput
                             type="text"
@@ -105,7 +167,7 @@ class AddRecipe extends Component {
                             color="light"
                             size="sm"
                             className="m-sm-1"
-                            onClick={() => this.props.onAdd(this.state)}
+                            onClick={() => this.handleDataValidation()}
                         >Add</MDBBadge>
                     </th>
                 </tr>

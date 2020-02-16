@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import InformationSection from './sections/InformationSection';
 import TableSection from './sections/TableSection';
 import data from './sections/data';
-import { Overclock, parseItems} from './sections/helpers/RecipeHelpers'
+import { Overclock } from './sections/helpers/RecipeHelpers'
 import SankeySection from './sections/SankeySection';
 
 class DashboardPage extends Component {
@@ -67,32 +67,25 @@ class DashboardPage extends Component {
         }
     }
 
-    handleAdd = rawRecipe => {
-        if(!(rawRecipe.length < 7)){
-            let recipes = this.state.recipes;
-            let nextStep = this.state.recipes.length;
-            let inputList = parseItems(rawRecipe.rawInput);
-            let outputList = parseItems(rawRecipe.rawOutput);
+    handleAdd = newRecipe => {
+        let recipes = this.state.recipes;
+        let nextStep = this.state.recipes.length;
 
-            recipes.push(
-                {
-                    step: nextStep,
-                    machine: rawRecipe.machine,
-                    tier: rawRecipe.tier,
-                    overclock: rawRecipe.overclock,
-                    rft: rawRecipe.rft,
-                    time: rawRecipe.time,
-                    efficiency: 100,
-                    inputs: [...inputList],
-                    outputs: [...outputList]
-                }
-            );
+        recipes.push(
+            {
+                step: nextStep,
+                machine: newRecipe.machine,
+                tier: newRecipe.tier,
+                overclock: newRecipe.overclock,
+                rft: newRecipe.rft,
+                time: newRecipe.time,
+                efficiency: 100,
+                inputs: [...newRecipe.inputs],
+                outputs: [...newRecipe.outputs]
+            }
+        );
 
-            this.setState({ recipes });
-        }
-        else{
-            console.log("failed Add - not enough data");
-        }
+        this.setState({ recipes });
     }
 
     render() {

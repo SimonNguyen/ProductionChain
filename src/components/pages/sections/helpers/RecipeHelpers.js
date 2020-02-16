@@ -80,18 +80,17 @@ export function GetNodes(pairs) {
     return outputNodes;
 }
 
-export function parseItems(raw) {
+export function ParseItems(raw) {
     //Works - needs improvement for readability
     let list = raw.split(';');
     let items = [];
     for(let index in list){
         let item = list[index].split(',');
-        console.log(item);
         items.push(
             {
-                quantity: item[0],
-                unit: item[1],
-                name: item[2]
+                quantity: item[0].trim(),
+                unit: item[1].trim(),
+                name: item[2].trim()
             }
         )
     };
