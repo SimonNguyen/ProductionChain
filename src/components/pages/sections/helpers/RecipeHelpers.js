@@ -10,19 +10,21 @@ export function Overclock(RFt, tierName, duration) {
     let EUt = RFt / 4;
     let resultEUt, resultDuration, multiplier = 0;
 
+    if (tier === 0) return { rft: RFt, time: duration };
+
     if (voltages[tier] <= EUt || tier === 0) {
         return {
             rft: EUt * 4,
             time: duration
-        }
-    }
+        };
+    };
 
     if (EUt <= 16) {
         if (EUt <= 8) {
             multiplier = tier;
         } else {
             multiplier = tier - 1;
-        }
+        };
 
         resultEUt = EUt * (1 << multiplier) * (1 << multiplier);
         resultDuration = duration / (1 << multiplier);
@@ -35,12 +37,12 @@ export function Overclock(RFt, tierName, duration) {
             resultEUt = resultEUt * 4;
             resultDuration = resultDuration / 2.8;
         }
-    }
+    };
 
     return {
         rft: resultEUt * 4,
         time: Math.ceil(resultDuration)
-    }
+    };
 }
 
 export function ParseItems(raw) {
@@ -154,7 +156,6 @@ function HexToRGB(hex, opacity) {
     let b = parseInt(hex.substring(4, 6), 16);
 
     let result = 'rgba(' + r + ',' + g + ',' + b + ',' + opacity / 100 + ')';
-    console.log(result);
 
     return result;
 }
