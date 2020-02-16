@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { MDBBadge, MDBInput, MDBAlert } from 'mdbreact';
 import * as data from './data';
 import { ParseItems } from './helpers/RecipeHelpers'
-let tierNames = data.TierNames;
+const tierNames = data.TierNames;
 
 class AddRecipe extends Component {
     constructor() {

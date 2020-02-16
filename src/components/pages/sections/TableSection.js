@@ -39,6 +39,7 @@ class TableSection extends Component {
                                                     inputs={recipe.inputs}
                                                     outputs={recipe.outputs}
                                                     onDelete={this.props.handleDelete}
+                                                    onChangeTier={this.props.handleTiers}
                                                     onChange={this.props.handleOverclock}
                                                     onSwapUp={this.props.handleSwapUp}
                                                     onSwapDown={this.props.handleSwapDown}
