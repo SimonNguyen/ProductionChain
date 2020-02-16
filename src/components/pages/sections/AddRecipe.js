@@ -11,7 +11,7 @@ class AddRecipe extends Component {
             tier: tierNames[0],
             overclock: false,
             errorAlert: "invisible",
-            errorText: ""
+            errorText: " "
         };
     }
 
@@ -32,20 +32,44 @@ class AddRecipe extends Component {
     handleDataValidation = (failMessage) => {
         let isValid = true;
         let rawRecipe = this.state;
-        if (Object.keys(rawRecipe).length === 9) {
-            let inputList = ParseItems(rawRecipe.rawInput);
-            let outputList = ParseItems(rawRecipe.rawOutput);
+        for(const property in rawRecipe){
+            if(rawRecipe[property] === null || rawRecipe[property] === ""){
+                isValid = false;
+            }
+        }
+        if (isValid && Object.keys(rawRecipe).length === 9) {
+            let inputList = [];
+            let outputList = [];
+            try {
+                inputList = ParseItems(rawRecipe.rawInput);
+                outputList = ParseItems(rawRecipe.rawOutput);
+    
+                for (let index in inputList) {
+                    if (isNaN(inputList[index].quantity)) {
+                        isValid = false;
+                    }
+                }
+    
+                for (let index in outputList) {
+                    if (isNaN(outputList[index].quantity)) {
+                        isValid = false;
+                    }
+                }
 
-            for (let index in inputList) {
-                if (isNaN(inputList[index].quantity)) {
-                    isValid = false;
+                for (let index in inputList) {
+                    if (!(inputList[index].unit.toLowerCase() === "mb" || inputList[index].unit.toLowerCase() === "b")){
+                        isValid = false;
+                    }
+                }
+
+                for (let index in outputList) {
+                    if (!(outputList[index].unit.toLowerCase() === "mb" || outputList[index].unit.toLowerCase() === "b")){
+                        isValid = false;
+                    }
                 }
             }
-
-            for (let index in outputList) {
-                if (isNaN(outputList[index].quantity)) {
-                    isValid = false;
-                }
+            catch(error){
+                isValid = false;
             }
 
             if (isValid) {
