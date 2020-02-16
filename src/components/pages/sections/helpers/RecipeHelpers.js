@@ -43,48 +43,11 @@ export function Overclock(RFt, tierName, duration) {
     }
 }
 
-export function GetLinks(recipes) {
-    let links = [];
-
-    recipes.map((recipe, index) =>
-        recipe.inputs.map(input =>
-            recipe.outputs.map(output =>
-                links.push({
-                    source: input.name,
-                    target: output.name,
-                    value: recipe.outputs.length / recipe.inputs.length,
-                    color: colors[index % colors.length]
-                })
-            )
-        )
-    );
-
-    return links;
-}
-
-export function GetNodes(pairs) {
-    let nodes = [];
-    let outputNodes = [];
-
-    pairs.map(pair =>
-        nodes.push(pair.source, pair.target)
-    );
-
-    let uniqueNodes = [...new Set(nodes)];
-    uniqueNodes.forEach((element, index) =>
-        outputNodes.push({
-            name: element,
-            color: colors[index % colors.length]
-        }));
-
-    return outputNodes;
-}
-
-export function parseItems(raw) {
+export function ParseItems(raw) {
     //Works - needs improvement for readability
     let list = raw.split(';');
     let items = [];
-    for(let index in list){
+    for (let index in list) {
         let item = list[index].split(',');
         console.log(item);
         items.push(
@@ -97,20 +60,101 @@ export function parseItems(raw) {
     };
     return (items);
 }
-export function FixLinks(links, nodes) {
-    let names = [];
-    let sankeyLinks = [];
 
-    nodes.map(node => names.push(node.name));
-
-    links.forEach(link => {
-        sankeyLinks.push({
-            source: names.indexOf(link.source),
-            target: names.indexOf(link.target),
-            value: link.value,
-            color: link.color
-        })
+export function GenerateSankeyData(recipes) {
+    let sankeyData = {};
+    sankeyData.data = [];
+    sankeyData.data.push({
+        type: "sankey",
+        orientation: "h",
+        valueformat: ".3f",
+        valuesuffix: " Blocks",
+        domain: {
+            "x": [
+                0,
+                1
+            ],
+            "y": [
+                0,
+                1
+            ]
+        },
+        node: {
+            pad: 15,
+            thickness: 15,
+            line: {
+                color: "black",
+                width: 0.5
+            },
+            label: []
+        },
+        link: {
+            colorscales: [{
+                colorscale: "Rainbow"
+            }]
+        }
     });
 
-    return sankeyLinks;
+    let labels = GetLabels(recipes);
+    sankeyData.data[0].node.label = labels;
+    sankeyData.data[0].link = Object.assign(sankeyData.data[0].link, GetLinks(recipes, labels));
+
+    // sankeyData.data[0].node.color = GetColors(sankeyData.data[0].node.label);
+
+    return sankeyData;
+}
+
+function GetLabels(recipes) {
+    let labels = [];
+
+    recipes.forEach(recipe => {
+        recipe.inputs.forEach(input => {
+            if (labels.indexOf(input.name) === -1) {
+                labels.push(input.name);
+            }
+        })
+        recipe.outputs.forEach(output => {
+            if (labels.indexOf(output.name) === -1) {
+                labels.push(output.name);
+            }
+        })
+    })
+
+    return labels;
+}
+
+function GetLinks(recipes, labels) {
+    let links = {
+        source: [],
+        target: [],
+        value: [],
+        label: [],
+        color: []
+    };
+
+    recipes.forEach(recipe => {
+        recipe.inputs.forEach(input => {
+            recipe.outputs.forEach(output => {
+                links.source.push(labels.indexOf(input.name));
+                links.target.push(labels.indexOf(output.name));
+                (output.unit === 'b') ? links.value.push(output.quantity) : links.value.push(output.quantity / 1000); 
+                links.label.push(recipe.machine + " (" + recipe.tier + ")");
+                links.color.push(HexToRGB(colors[Math.floor(Math.random() * colors.length)], 50));
+            })
+        })
+    })
+
+    return links;
+}
+
+function HexToRGB(hex, opacity) {
+    hex = hex.replace('#', '');
+    let r = parseInt(hex.substring(0, 2), 16);
+    let g = parseInt(hex.substring(2, 4), 16);
+    let b = parseInt(hex.substring(4, 6), 16);
+
+    let result = 'rgba(' + r + ',' + g + ',' + b + ',' + opacity / 100 + ')';
+    console.log(result);
+
+    return result;
 }

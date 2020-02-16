@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import InformationSection from './sections/InformationSection';
 import TableSection from './sections/TableSection';
 import data from './sections/data';
-import { Overclock, parseItems} from './sections/helpers/RecipeHelpers'
+import { Overclock, ParseItems} from './sections/helpers/RecipeHelpers'
 import SankeySection from './sections/SankeySection';
 
 class DashboardPage extends Component {
@@ -71,8 +71,8 @@ class DashboardPage extends Component {
         if(!(rawRecipe.length < 7)){
             let recipes = this.state.recipes;
             let nextStep = this.state.recipes.length;
-            let inputList = parseItems(rawRecipe.rawInput);
-            let outputList = parseItems(rawRecipe.rawOutput);
+            let inputList = ParseItems(rawRecipe.rawInput);
+            let outputList = ParseItems(rawRecipe.rawOutput);
             recipes.push(
                 {
                     step: nextStep,
