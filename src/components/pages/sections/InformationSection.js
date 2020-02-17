@@ -20,7 +20,7 @@ class InformationSection extends Component {
                         <MDBCard className="card-body">
                             <MDBCardTitle className="text-center">Settings</MDBCardTitle>
                             <MDBCardText className="text-center">
-                                // TODO: Input numMachines, numBlocksPerMin, selectedBlock
+                                TODO: Input numMachines, numBlocksPerMin, selectedBlock
                             </MDBCardText>
                         </MDBCard>
                     </MDBCol>

@@ -15,7 +15,7 @@ class Recipe extends Component {
                         <select className="browser-default custom-select" value={this.props.tier}
                             onChange={(e) => this.props.onChangeTier(this.props.step, e.target.value)}>
                             {tierNames.map((tier) =>
-                                <option value={tier}>{tier}</option>)}
+                                <option key={"tierOption" + tier + this.props.step} value={tier}>{tier}</option>)}
                         </select>
                     </th>
                     <th key={"overclock" + this.props.step}>

@@ -4,8 +4,16 @@ let tierNames = data.TierNames;
 let voltages = data.Voltages;
 let colors = data.Colors;
 
-// Adapted from GregTech Community Edition calculateOverclock function.
-// https://github.com/GregTechCE/GregTech/blob/master/src/main/java/gregtech/api/capability/impl/AbstractRecipeLogic.java
+/**
+ * Adapted from GregTech Community Edition calculateOverclock function.
+ * https://github.com/GregTechCE/GregTech/blob/master/src/main/java/gregtech/api/capability/impl/AbstractRecipeLogic.java
+ * 
+ * @export
+ * @param {Number} RFt - RF per tick
+ * @param {String} tierName - GregTech machine tier
+ * @param {Number} duration - Recipe duration in seconds
+ * @returns Returns object containing { rft: number, time: number }
+ */
 export function Overclock(RFt, tierName, duration) {
     let tier = tierNames.indexOf(tierName);
     let EUt = RFt / 4;
@@ -63,6 +71,12 @@ export function ParseItems(raw) {
     return (items);
 }
 
+/**
+ *
+ * @export
+ * @param {Object} recipes - Input object containing recipes
+ * @returns Sankey diagram data for React-Plotly.js Sankey diagrams.
+ */
 export function GenerateSankeyData(recipes) {
     let sankeyData = {};
     sankeyData.data = [];
@@ -101,11 +115,16 @@ export function GenerateSankeyData(recipes) {
     sankeyData.data[0].node.label = labels;
     sankeyData.data[0].link = Object.assign(sankeyData.data[0].link, GetLinks(recipes, labels));
 
-    // sankeyData.data[0].node.color = GetColors(sankeyData.data[0].node.label);
-
     return sankeyData;
 }
 
+/**
+ *
+ *
+ * @export
+ * @param {*} recipes - Input object containing recipes
+ * @returns A list of item labels.
+ */
 export function GetLabels(recipes) {
     let labels = [];
 
@@ -125,6 +144,13 @@ export function GetLabels(recipes) {
     return labels;
 }
 
+/**
+ *
+ *
+ * @param {*} recipes - Input object containing recipes
+ * @param {*} labels - Input array containing item labels
+ * @returns An object containing React-Plotly.js Sankey diagram links
+ */
 function GetLinks(recipes, labels) {
     let links = {
         source: [],
@@ -149,6 +175,13 @@ function GetLinks(recipes, labels) {
     return links;
 }
 
+/**
+ *
+ *
+ * @param {String} hex - Input hex color string
+ * @param {Number} opacity - Input opacity value between 0 and 100
+ * @returns {String} - Returns an RGBA color value
+ */
 function HexToRGB(hex, opacity) {
     hex = hex.replace('#', '');
     let r = parseInt(hex.substring(0, 2), 16);
@@ -160,6 +193,13 @@ function HexToRGB(hex, opacity) {
     return result;
 }
 
+/**
+ *
+ *
+ * @export
+ * @param {*} recipes - Input object containing recipes
+ * @returns A directed graph for recipe calculations.
+ */
 export function GenerateRecipeGraph(recipes) {
     let directedGraph = new DirectedGraph();
 
