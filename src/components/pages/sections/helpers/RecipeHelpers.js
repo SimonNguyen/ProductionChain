@@ -1,3 +1,4 @@
+import { DirectedGraph } from 'graphology';
 import * as data from '../data';
 let tierNames = data.TierNames;
 let voltages = data.Voltages;
@@ -49,7 +50,7 @@ export function ParseItems(raw) {
     //Works - needs improvement for readability
     let list = raw.split(';');
     let items = [];
-    for(let index in list){
+    for (let index in list) {
         let item = list[index].split(',');
         items.push(
             {
@@ -105,7 +106,7 @@ export function GenerateSankeyData(recipes) {
     return sankeyData;
 }
 
-function GetLabels(recipes) {
+export function GetLabels(recipes) {
     let labels = [];
 
     recipes.forEach(recipe => {
@@ -138,7 +139,7 @@ function GetLinks(recipes, labels) {
             recipe.outputs.forEach(output => {
                 links.source.push(labels.indexOf(input.name));
                 links.target.push(labels.indexOf(output.name));
-                (output.unit === 'b') ? links.value.push(output.quantity) : links.value.push(output.quantity / 1000); 
+                (output.unit === 'b') ? links.value.push(output.quantity) : links.value.push(output.quantity / 1000);
                 links.label.push(recipe.machine + " (" + recipe.tier + ")");
                 links.color.push(HexToRGB(colors[Math.floor(Math.random() * colors.length)], 50));
             })
@@ -157,4 +158,37 @@ function HexToRGB(hex, opacity) {
     let result = 'rgba(' + r + ',' + g + ',' + b + ',' + opacity / 100 + ')';
 
     return result;
+}
+
+export function GenerateRecipeGraph(recipes) {
+    let directedGraph = new DirectedGraph();
+
+    recipes.forEach(recipe => {
+        recipe.inputs.forEach(input => {
+            if (!directedGraph.hasNode(input.name)) {
+                directedGraph.addNode(input.name);
+            }
+        })
+
+        recipe.outputs.forEach(output => {
+            if (!directedGraph.hasNode(output.name)) {
+                directedGraph.addNode(output.name);
+            }
+        })
+    })
+
+    recipes.forEach(recipe => {
+        recipe.inputs.forEach(input => {
+            recipe.outputs.forEach(output => {
+                if (!directedGraph.hasEdge(input.name, output.name)) {
+                    let weight = output.unit === 'b' ? output.quantity : output.quantity / 1000;
+                    directedGraph.addEdge(input.name, output.name, {
+                        weight: weight
+                    });
+                }
+            })
+        })
+    })
+
+    return directedGraph;
 }

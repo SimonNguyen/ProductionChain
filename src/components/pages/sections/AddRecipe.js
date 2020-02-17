@@ -120,7 +120,7 @@ class AddRecipe extends Component {
                             id="tierSelect"
                             value={this.state.tier}
                             onChange={(e) => this.handleSelectChange("tier", e.target.value)}
-                        >
+>
                             {tierNames.map((tier) =>
                                 <option key={"tier:" + tier} value={tier}>{tier}</option>)}
                         </select>
