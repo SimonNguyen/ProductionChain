@@ -22,6 +22,10 @@ class DashboardPage extends Component {
     handleDelete = recipeStep => {
         const recipes = this.state.recipes.filter(r => r.step !== recipeStep);
 
+        for(let index in recipes){
+            recipes[index].step = index;
+        }
+
         this.setState({ recipes });
     };
 
@@ -36,6 +40,19 @@ class DashboardPage extends Component {
 
         this.setState({ recipes });
     }
+
+    handleTiers = (recipeId, status) => {
+        const recipes = this.state.recipes;
+        recipes[recipeId].tier = status;
+
+        let results = Overclock(recipes[recipeId].rft, recipes[recipeId].tier, recipes[recipeId].time);
+        recipes[recipeId].rftoc = results.rft;
+        recipes[recipeId].timeoc = results.time;
+        recipes[recipeId].efficiencyoc = 100 * (recipes[recipeId].rft * recipes[recipeId].time) / (results.rft * results.time);
+
+        this.setState({recipes})
+    }
+
 
     handleSwapDown = recipeStep => {
         if (recipeStep < this.state.recipes.length - 1) {
@@ -96,6 +113,7 @@ class DashboardPage extends Component {
                     headers={this.state.headers}
                     recipes={this.state.recipes}
                     handleDelete={this.handleDelete}
+                    handleTiers={this.handleTiers}
                     handleOverclock={this.handleOverclock}
                     handleSwapDown={this.handleSwapDown}
                     handleSwapUp={this.handleSwapUp}

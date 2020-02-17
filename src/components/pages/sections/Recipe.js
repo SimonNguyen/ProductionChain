@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { MDBBadge } from 'mdbreact';
 import DisplayRFtTime from './DisplayRFtTime';
+import * as data from "./data";
+const tierNames = data.TierNames;
 
 class Recipe extends Component {
     render() {
@@ -9,7 +11,13 @@ class Recipe extends Component {
                 <tr>
                     <th key={"step" + this.props.step}>{this.props.step}</th>
                     <th key={"machine" + this.props.step}>{this.props.machine}</th>
-                    <th key={"tier" + this.props.step}>{this.props.tier}</th>
+                    <th key={"tier" + this.props.step}>
+                        <select className="browser-default custom-select" value={this.props.tier}
+                            onChange={(e) => this.props.onChangeTier(this.props.step, e.target.value)}>
+                            {tierNames.map((tier) =>
+                                <option value={tier}>{tier}</option>)}
+                        </select>
+                    </th>
                     <th key={"overclock" + this.props.step}>
                         <select className="browser-default custom-select" value={this.props.overclock}
                             onChange={(e) => this.props.onChange(this.props.step, e.target.value)}>

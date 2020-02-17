@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { MDBBadge, MDBInput, MDBAlert } from 'mdbreact';
 import * as data from './data';
 import { ParseItems } from './helpers/RecipeHelpers'
-let tierNames = data.TierNames;
+const tierNames = data.TierNames;
 
 class AddRecipe extends Component {
     constructor() {
@@ -29,7 +29,7 @@ class AddRecipe extends Component {
         });
     }
 
-    handleDataValidation = (failMessage) => {
+    handleDataValidation = () => {
         let isValid = true;
         let rawRecipe = this.state;
         for(const property in rawRecipe){
@@ -158,7 +158,7 @@ class AddRecipe extends Component {
                             getValue={this.handleInputChange("time")}
                         />
                     </th>
-                    <th>
+                    <th key="errorAdd" className="align-middle">
                         <MDBAlert 
                             color="danger"
                             className={this.state.errorAlert}
@@ -185,7 +185,7 @@ class AddRecipe extends Component {
                             getValue={this.handleInputChange("rawOutput")}
                         />
                     </th>
-                    <th key="modifyAdd">
+                    <th key="modifyAdd" className="align-middle">
                         <MDBBadge
                             tag="a"
                             color="light"
