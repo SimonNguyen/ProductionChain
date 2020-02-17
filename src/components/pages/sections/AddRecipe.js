@@ -29,7 +29,7 @@ class AddRecipe extends Component {
         });
     }
 
-    handleDataValidation = (failMessage) => {
+    handleDataValidation = () => {
         let isValid = true;
         let rawRecipe = this.state;
         for(const property in rawRecipe){
@@ -114,7 +114,7 @@ class AddRecipe extends Component {
                             getValue={this.handleInputChange("machine")}
                         />
                     </th>
-                    <th key="tierAdd">
+                    <th key="tierAdd" className="align-middle">
                         <select
                             className="browser-default custom-select"
                             id="tierSelect"
@@ -125,7 +125,7 @@ class AddRecipe extends Component {
                                 <option key={"tier:" + tier} value={tier}>{tier}</option>)}
                         </select>
                     </th>
-                    <th key="overclockAdd">
+                    <th key="overclockAdd" className="align-middle">
                         <select
                             className="browser-default custom-select"
                             id="overclockSelect"
@@ -158,7 +158,7 @@ class AddRecipe extends Component {
                             getValue={this.handleInputChange("time")}
                         />
                     </th>
-                    <th>
+                    <th key="errorAdd" className="align-middle">
                         <MDBAlert 
                             color="danger"
                             className={this.state.errorAlert}
@@ -185,7 +185,7 @@ class AddRecipe extends Component {
                             getValue={this.handleInputChange("rawOutput")}
                         />
                     </th>
-                    <th key="modifyAdd">
+                    <th key="modifyAdd" className="align-middle">
                         <MDBBadge
                             tag="a"
                             color="light"
