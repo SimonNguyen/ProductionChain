@@ -114,18 +114,18 @@ class AddRecipe extends Component {
                             getValue={this.handleInputChange("machine")}
                         />
                     </th>
-                    <th key="tierAdd">
+                    <th key="tierAdd" className="align-middle">
                         <select
                             className="browser-default custom-select"
                             id="tierSelect"
                             value={this.state.tier}
                             onChange={(e) => this.handleSelectChange("tier", e.target.value)}
-                        >
+>
                             {tierNames.map((tier) =>
                                 <option key={"tier:" + tier} value={tier}>{tier}</option>)}
                         </select>
                     </th>
-                    <th key="overclockAdd">
+                    <th key="overclockAdd" className="align-middle">
                         <select
                             className="browser-default custom-select"
                             id="overclockSelect"

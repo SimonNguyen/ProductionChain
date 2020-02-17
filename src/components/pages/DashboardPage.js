@@ -21,7 +21,7 @@ class DashboardPage extends Component {
 
     handleDelete = recipeStep => {
         const recipes = this.state.recipes.filter(r => r.step !== recipeStep);
-        console.log(recipes);
+
         this.setState({ recipes });
     };
 
