@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { MDBCard, MDBCardTitle, MDBCardText, MDBRow, MDBCol } from 'mdbreact';
+import { MDBCard, MDBCardTitle, MDBCardText, MDBRow, MDBCol, MDBInput } from 'mdbreact';
+import Select from 'react-select';
 
 class InformationSection extends Component {
     render() {
@@ -19,9 +20,32 @@ class InformationSection extends Component {
                     <MDBCol>
                         <MDBCard className="card-body">
                             <MDBCardTitle className="text-center">Settings</MDBCardTitle>
-                            <MDBCardText className="text-center">
-                                // TODO: Input numMachines, numBlocksPerMin, selectedBlock
-                            </MDBCardText>
+                            <form>
+                                <Select
+                                    onChange={(e) => this.props.handleSettingChange(e.label)}
+                                    options={this.props.outputs.map(opt => ({label: opt, value: opt}))}
+                                />
+                                <MDBInput
+                                    type="number"
+                                    step="0.1"
+                                    min="0.0"
+                                    className="form-control-sm"
+                                    id="targetItemOutputs"
+                                    label="Target Items per Second"
+                                    value = {this.props.targets.settingsItemValue}
+                                    onChange={(e) => this.props.handleSettingChange(e.target.value, "item")}
+                                />
+                                <MDBInput
+                                    type="number"
+                                    step="1"
+                                    min="0.00"
+                                    className="form-control-sm"
+                                    id="targetMachines"
+                                    label="Target Machines"
+                                    value = {this.props.targets.settingsMachines}
+                                    onChange={(e) => this.props.handleSettingChange(e.target.value, "machine")}
+                                />
+                            </form>
                         </MDBCard>
                     </MDBCol>
                 </MDBRow>
