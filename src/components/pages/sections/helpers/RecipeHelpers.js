@@ -106,20 +106,25 @@ export function GenerateSankeyData(recipes) {
     return sankeyData;
 }
 
-export function GetLabels(recipes) {
+export function GetLabels(recipes, type = "both") {
     let labels = [];
 
     recipes.forEach(recipe => {
-        recipe.inputs.forEach(input => {
-            if (labels.indexOf(input.name) === -1) {
-                labels.push(input.name);
-            }
-        })
-        recipe.outputs.forEach(output => {
-            if (labels.indexOf(output.name) === -1) {
-                labels.push(output.name);
-            }
-        })
+        if (type === "both" || type === "inputs") {
+            recipe.inputs.forEach(input => {
+                if (labels.indexOf(input.name) === -1) {
+                    labels.push(input.name);
+                }
+            })
+        }
+
+        if (type === "both" || type === "outputs") {
+            recipe.outputs.forEach(output => {
+                if (labels.indexOf(output.name) === -1) {
+                    labels.push(output.name);
+                }
+            })
+        }
     })
 
     return labels;
@@ -191,4 +196,38 @@ export function GenerateRecipeGraph(recipes) {
     })
 
     return directedGraph;
+}
+
+export function CalculateRatio(recipes){
+    //Calculates the items Units/second ratio and adds it to outputs.
+    recipes.forEach(recipe => {
+        let step = recipe.step;
+        let time = recipe.time;
+
+        recipe.outputs.forEach(output => {
+            output["ratio"] = output.quantity / time;
+            output["step"] = step;
+        });
+    });
+
+    return recipes;
+}
+
+export function FindTarget(name, recipes){
+    //Finds a target output from a list of recipes.  returns an object with step and ratio.
+    let newTarget = {
+        step: null,
+        ratio: 0
+    }
+
+    recipes.forEach(recipe => {
+        recipe.outputs.forEach(output => {
+            if(output.name === name){
+                newTarget.step = recipe.step;
+                newTarget.ratio = output.ratio;
+            }
+        });
+    });
+    
+    return newTarget;
 }
