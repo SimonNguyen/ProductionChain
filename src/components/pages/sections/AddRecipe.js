@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { MDBBadge, MDBInput, MDBAlert } from 'mdbreact';
 import * as data from './data';
-import { ParseItems } from './helpers/RecipeHelpers'
+import { ParseItems } from './helpers/RecipeHelpers';
 const tierNames = data.TierNames;
 
 class AddRecipe extends Component {
@@ -32,8 +32,8 @@ class AddRecipe extends Component {
     handleDataValidation = () => {
         let isValid = true;
         let rawRecipe = this.state;
-        for(const property in rawRecipe){
-            if(rawRecipe[property] === null || rawRecipe[property] === ""){
+        for (const property in rawRecipe) {
+            if (rawRecipe[property] === null || rawRecipe[property] === "") {
                 isValid = false;
             }
         }
@@ -43,13 +43,13 @@ class AddRecipe extends Component {
             try {
                 inputList = ParseItems(rawRecipe.rawInput);
                 outputList = ParseItems(rawRecipe.rawOutput);
-    
+
                 for (let index in inputList) {
                     if (isNaN(inputList[index].quantity)) {
                         isValid = false;
                     }
                 }
-    
+
                 for (let index in outputList) {
                     if (isNaN(outputList[index].quantity)) {
                         isValid = false;
@@ -57,18 +57,18 @@ class AddRecipe extends Component {
                 }
 
                 for (let index in inputList) {
-                    if (!(inputList[index].unit.toLowerCase() === "mb" || inputList[index].unit.toLowerCase() === "b")){
+                    if (!(inputList[index].unit.toLowerCase() === "mb" || inputList[index].unit.toLowerCase() === "b")) {
                         isValid = false;
                     }
                 }
 
                 for (let index in outputList) {
-                    if (!(outputList[index].unit.toLowerCase() === "mb" || outputList[index].unit.toLowerCase() === "b")){
+                    if (!(outputList[index].unit.toLowerCase() === "mb" || outputList[index].unit.toLowerCase() === "b")) {
                         isValid = false;
                     }
                 }
             }
-            catch(error){
+            catch (error) {
                 isValid = false;
             }
 
@@ -110,7 +110,7 @@ class AddRecipe extends Component {
                             type="text"
                             className="form-control-sm"
                             id="machineText"
-                            label="Machine Name"
+                            label="Machine"
                             getValue={this.handleInputChange("machine")}
                         />
                     </th>
@@ -120,7 +120,7 @@ class AddRecipe extends Component {
                             id="tierSelect"
                             value={this.state.tier}
                             onChange={(e) => this.handleSelectChange("tier", e.target.value)}
->
+                        >
                             {tierNames.map((tier) =>
                                 <option key={"tier:" + tier} value={tier}>{tier}</option>)}
                         </select>
@@ -158,21 +158,13 @@ class AddRecipe extends Component {
                             getValue={this.handleInputChange("time")}
                         />
                     </th>
-                    <th key="errorAdd" className="align-middle">
-                        <MDBAlert 
-                            color="danger"
-                            className={this.state.errorAlert}
-                            id="errorAlert"
-                        >
-                            {this.state.errorText}
-                        </MDBAlert>
-                    </th>
+                    <th></th>
                     <th key="inputItemAdd">
                         <MDBInput
                             type="text"
                             className="form-control-sm"
                             id="inputItemsText"
-                            label="Input Items"
+                            label="Input"
                             getValue={this.handleInputChange("rawInput")}
                         />
                     </th>
@@ -181,10 +173,21 @@ class AddRecipe extends Component {
                             type="text"
                             className="form-control-sm"
                             id="outputItemsText"
-                            label="Output Items"
+                            label="Output"
                             getValue={this.handleInputChange("rawOutput")}
                         />
                     </th>
+                    <th></th>
+                    <th key="errorAdd" className="align-middle">
+                        <MDBAlert
+                            color="danger"
+                            className={this.state.errorAlert}
+                            id="errorAlert"
+                        >
+                            {this.state.errorText}
+                        </MDBAlert>
+                    </th>
+                    <th></th>
                     <th key="modifyAdd" className="align-middle">
                         <MDBBadge
                             tag="a"

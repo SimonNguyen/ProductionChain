@@ -121,6 +121,7 @@ export function GenerateSankeyData(recipes) {
     return sankeyData;
 }
 
+=======
 /**
  * Returns a list of item labels. Valid types are "both", "inputs" and "outputs".
  * By default, the type is both.
@@ -260,8 +261,7 @@ function CalculateEdges(graph) {
             })
         })
     })
-
-    return edgeGraph;
+  return edgeGraph;
 }
 
 function DepthFirstTraversal(graph, sourceNode) {
@@ -290,4 +290,38 @@ function OutputTargets(graph) {
     graph.forEachNode((node, attributes) => {
         console.log(attributes.step, attributes.machineName, attributes.targetMachines);
       });
+}
+
+export function CalculateRatio(recipes){
+    //Calculates the items Units/second ratio and adds it to outputs.
+    recipes.forEach(recipe => {
+        let step = recipe.step;
+        let time = recipe.time;
+
+        recipe.outputs.forEach(output => {
+            output["ratio"] = output.quantity / time;
+            output["step"] = step;
+        });
+    });
+
+    return recipes;
+}
+
+export function FindTarget(name, recipes){
+    //Finds a target output from a list of recipes.  returns an object with step and ratio.
+    let newTarget = {
+        step: null,
+        ratio: 0
+    }
+
+    recipes.forEach(recipe => {
+        recipe.outputs.forEach(output => {
+            if(output.name === name){
+                newTarget.step = recipe.step;
+                newTarget.ratio = output.ratio;
+            }
+        });
+    });
+    
+    return newTarget;
 }

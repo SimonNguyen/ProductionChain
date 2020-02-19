@@ -25,7 +25,7 @@
             "name": "time"
         },
         {
-            "label": "Efficiency %",
+            "label": "Efficiency (%)",
             "name": "efficiency"
         },
         {
@@ -35,6 +35,18 @@
         {
             "label": "Outputs",
             "name": "output"
+        },
+        {
+            "label": "Target Machines",
+            "name": "targetMachines"
+        },
+        {
+            "label": "Target Inputs",
+            "name": "targetInput"
+        },
+        {
+            "label": "Target Outputs",
+            "name": "targetOutputs"
         },
         {
             "label": "Modify",
