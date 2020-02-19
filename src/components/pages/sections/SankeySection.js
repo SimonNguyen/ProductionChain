@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { MDBRow, MDBCol, MDBCard, MDBCardBody } from 'mdbreact';
-import { GenerateSankeyData, GenerateRecipeGraph } from './helpers/RecipeHelpers';
+import { GenerateSankeyData } from './helpers/RecipeHelpers';
 import Plot from 'react-plotly.js';
 
 class SankeySection extends Component {
     render() {
-        let recipeGraph = GenerateRecipeGraph(this.props.recipes);
         let sankeyData = GenerateSankeyData(this.props.recipes);
         return (
             <MDBRow>

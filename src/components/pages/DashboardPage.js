@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import InformationSection from './sections/InformationSection';
-import TableSection from './sections/TableSection';
 import data from './sections/data';
-import { Overclock, GetLabels, CalculateRatio, FindTarget } from './sections/helpers/RecipeHelpers'
+import { CalculateRatio, FindTarget, GetLabels, Overclock, GenerateRecipeGraph, OutputRecipes } from './sections/helpers/RecipeHelpers';
+import InformationSection from './sections/InformationSection';
 import SankeySection from './sections/SankeySection';
+import TableSection from './sections/TableSection';
 
 class DashboardPage extends Component {
     constructor() {
@@ -48,7 +48,7 @@ class DashboardPage extends Component {
     };
 
     handleOverclock = (recipeId, status) => {
-        const recipes = this.state.recipes;
+        let recipes = this.state.recipes;
         recipes[recipeId].overclock = status;
 
         let results = Overclock(recipes[recipeId].rft, recipes[recipeId].tier, recipes[recipeId].time);
@@ -56,6 +56,9 @@ class DashboardPage extends Component {
         recipes[recipeId].timeoc = results.time;
         recipes[recipeId].efficiencyoc = 100 * (recipes[recipeId].rft * recipes[recipeId].time) / (results.rft * results.time);
 
+        let graph = GenerateRecipeGraph(this.state.recipes, this.state.targets);
+        recipes = OutputRecipes(graph, this.state.recipes)
+        
         this.setState({ recipes });
     };
 
@@ -70,19 +73,6 @@ class DashboardPage extends Component {
 
         this.setState({ recipes })
     };
-
-    handleTiers = (recipeId, status) => {
-        const recipes = this.state.recipes;
-        recipes[recipeId].tier = status;
-
-        let results = Overclock(recipes[recipeId].rft, recipes[recipeId].tier, recipes[recipeId].time);
-        recipes[recipeId].rftoc = results.rft;
-        recipes[recipeId].timeoc = results.time;
-        recipes[recipeId].efficiencyoc = 100 * (recipes[recipeId].rft * recipes[recipeId].time) / (results.rft * results.time);
-
-        this.setState({recipes})
-    }
-
 
     handleSwapDown = recipeStep => {
         if (recipeStep < this.state.recipes.length - 1) {
@@ -178,6 +168,11 @@ class DashboardPage extends Component {
         }
 
         this.setState({ targets });
+        let recipes = this.state.recipes;
+        recipes[targets.settingsItem.step].targetMachines = targets.settingsMachines;
+        let graph = GenerateRecipeGraph(this.state.recipes, this.state.targets);
+        recipes = OutputRecipes(graph, this.state.recipes)
+        this.setState({ recipes });
     };
 
     render() {
@@ -199,7 +194,7 @@ class DashboardPage extends Component {
                     handleAdd={this.handleAdd}
                     handleMachineSetting={this.handleMachineSetting}
                 />
-                <SankeySection recipes={this.state.recipes} />
+                <SankeySection recipes={this.state.recipes} targets={this.state.targets} />
             </React.Fragment>
         )
     } changes

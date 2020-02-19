@@ -175,7 +175,7 @@ function GetLinks(recipes, labels) {
             recipe.outputs.forEach(output => {
                 links.source.push(labels.indexOf(input.name));
                 links.target.push(labels.indexOf(output.name));
-                (output.unit === 'b') ? links.value.push(output.quantity) : links.value.push(output.quantity / 1000);
+                (output.unit === 'b') ? links.value.push(output.quantity * recipe.targetMachines) : links.value.push(output.quantity * recipe.targetMachines / 1000);
                 links.label.push(recipe.machine + " (" + recipe.tier + ")");
                 links.color.push(HexToRGB(colors[Math.floor(Math.random() * colors.length)], 50));
             })
@@ -210,14 +210,13 @@ function HexToRGB(hex, opacity) {
  * @param {*} recipes - Input object containing recipes
  * @returns
  */
-export function GenerateRecipeGraph(recipes) {
+export function GenerateRecipeGraph(recipes, targets) {
     let directedGraph = new DirectedGraph();
 
     recipes.forEach(recipe => {
         directedGraph.addNode(recipe.step, {
-            step: recipe.step,
             machineName: recipe.machine,
-            targetMachines: recipe.targetMachines,
+            targetMachines: targets.settingsMachines,
             time: recipe.overclock === "true" ? recipe.timeoc : recipe.time,
             inputs: recipe.inputs,
             outputs: recipe.outputs,
@@ -228,7 +227,6 @@ export function GenerateRecipeGraph(recipes) {
     let edgeGraph = CalculateEdges(directedGraph);
     let reversedGraph = reverse(edgeGraph);
     let calculatedGraph = CalculateGraph(reversedGraph, 9, "Polymer Clay");
-    // OutputTargets(calculatedGraph); // Uncomment for testing
 
     return calculatedGraph;
 }
@@ -248,7 +246,6 @@ function CalculateEdges(graph) {
                     targetAttributes.inputs.forEach(input => {
                         if (input.name === output.name) {
                             edgeGraph.addDirectedEdge(source, target, {
-                                name: input.name,
                                 inputQuantity: input.quantity,
                                 inputTime: targetAttributes.time,
                                 outputQuantity: output.quantity,
@@ -266,6 +263,7 @@ function CalculateEdges(graph) {
 
 function DepthFirstTraversal(graph, sourceNode) {
     let sourceAttributes = graph.getNodeAttributes(sourceNode);
+
     graph.forEachOutNeighbor(sourceNode, function (targetNode, targetAttributes) {
         let edge = graph.getEdgeAttributes(sourceNode, targetNode);
         let inBPS = (edge.inputQuantity / edge.inputTime) * sourceAttributes.targetMachines;
@@ -286,10 +284,12 @@ function DepthFirstTraversal(graph, sourceNode) {
     return graph;
 }
 
-function OutputTargets(graph) {
-    graph.forEachNode((node, attributes) => {
-        console.log(attributes.step, attributes.machineName, attributes.targetMachines);
-      });
+export function OutputRecipes(graph, recipes) {
+    recipes.forEach((recipe, node) => {
+        recipe.targetMachines = graph.getNodeAttribute(node, "targetMachines");
+    })
+
+    return recipes;
 }
 
 export function CalculateRatio(recipes) {
