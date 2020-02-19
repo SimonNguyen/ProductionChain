@@ -58,7 +58,7 @@ export function Overclock(RFt, tierName, duration) {
 
 export function ParseItems(raw) {
     //Works - needs improvement for readability
-    if(raw.endsWith(';')){
+    if (raw.endsWith(';')) {
         let newRaw = raw.slice(2, -1);
         raw = newRaw;
         console.log(raw);
@@ -266,8 +266,8 @@ function CalculateEdges(graph) {
             })
         })
     })
-    
-  return edgeGraph;
+
+    return edgeGraph;
 }
 
 function DepthFirstTraversal(graph, sourceNode) {
@@ -295,7 +295,7 @@ function DepthFirstTraversal(graph, sourceNode) {
 function OutputTargets(graph) {
     graph.forEachNode((node, attributes) => {
         console.log(attributes.step, attributes.machineName, attributes.targetMachines);
-      });
+    });
 }
 
 export function CalculateRatio(recipes) {
@@ -313,7 +313,7 @@ export function CalculateRatio(recipes) {
     return recipes;
 }
 
-export function buildOptions(recipes){
+export function buildOptions(recipes) {
     //label: {item} + ' - #' + {step}, value={outputObj}
     let options = [];
 
