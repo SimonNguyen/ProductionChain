@@ -6,6 +6,7 @@
   "license": "MIT",
   "dependencies": {
     "graphology": "^0.15.2",
+    "graphology-operators": "^0.2.0",
     "mdbreact": "^4.9.0",
     "plotly.js": "^1.52.2",
     "react": "^16.7.0",

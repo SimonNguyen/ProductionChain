@@ -10,11 +10,11 @@ class DashboardPage extends Component {
         super()
 
         this.state = {
-            headers: data.Headers.map(h => {
-                return (h.label)
+            headers: data.Headers.map(headers => {
+                return (headers.label)
             }),
-            recipes: data.Recipes.map(r => {
-                return r
+            recipes: data.Recipes.map(recipes => {
+                return recipes
             })
         }
     }

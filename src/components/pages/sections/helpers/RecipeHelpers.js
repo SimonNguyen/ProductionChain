@@ -1,4 +1,5 @@
 import { DirectedGraph } from 'graphology';
+import reverse from 'graphology-operators/reverse';
 import * as data from '../data';
 let tierNames = data.TierNames;
 let voltages = data.Voltages;
@@ -7,12 +8,13 @@ let colors = data.Colors;
 /**
  * Adapted from GregTech Community Edition calculateOverclock function.
  * https://github.com/GregTechCE/GregTech/blob/master/src/main/java/gregtech/api/capability/impl/AbstractRecipeLogic.java
+ * Returns object containing { rft: number, time: number }
  * 
  * @export
  * @param {Number} RFt - RF per tick
  * @param {String} tierName - GregTech machine tier
  * @param {Number} duration - Recipe duration in seconds
- * @returns Returns object containing { rft: number, time: number }
+ * @returns 
  */
 export function Overclock(RFt, tierName, duration) {
     let tier = tierNames.indexOf(tierName);
@@ -72,10 +74,11 @@ export function ParseItems(raw) {
 }
 
 /**
+ * Sankey diagram data for React-Plotly.js Sankey diagrams.
  *
  * @export
  * @param {Object} recipes - Input object containing recipes
- * @returns Sankey diagram data for React-Plotly.js Sankey diagrams.
+ * @returns 
  */
 export function GenerateSankeyData(recipes) {
     let sankeyData = {};
@@ -119,37 +122,44 @@ export function GenerateSankeyData(recipes) {
 }
 
 /**
- *
+ * Returns a list of item labels. Valid types are "both", "inputs" and "outputs".
+ * By default, the type is both.
  *
  * @export
+ * @param {*} type
  * @param {*} recipes - Input object containing recipes
- * @returns A list of item labels.
+ * @returns 
  */
-export function GetLabels(recipes) {
+export function GetLabels(recipes, type = "both") {
     let labels = [];
 
     recipes.forEach(recipe => {
-        recipe.inputs.forEach(input => {
-            if (labels.indexOf(input.name) === -1) {
-                labels.push(input.name);
-            }
-        })
-        recipe.outputs.forEach(output => {
-            if (labels.indexOf(output.name) === -1) {
-                labels.push(output.name);
-            }
-        })
+        if (type === "both" || type === "inputs") {
+            recipe.inputs.forEach(input => {
+                if (labels.indexOf(input.name) === -1) {
+                    labels.push(input.name);
+                }
+            })
+        }
+
+        if (type === "both" || type === "outputs") {
+            recipe.outputs.forEach(output => {
+                if (labels.indexOf(output.name) === -1) {
+                    labels.push(output.name);
+                }
+            })
+        }
     })
 
     return labels;
 }
 
 /**
- *
+ *An object containing React-Plotly.js Sankey diagram links
  *
  * @param {*} recipes - Input object containing recipes
  * @param {*} labels - Input array containing item labels
- * @returns An object containing React-Plotly.js Sankey diagram links
+ * @returns 
  */
 function GetLinks(recipes, labels) {
     let links = {
@@ -176,11 +186,11 @@ function GetLinks(recipes, labels) {
 }
 
 /**
- *
+ *Returns an RGBA color value
  *
  * @param {String} hex - Input hex color string
  * @param {Number} opacity - Input opacity value between 0 and 100
- * @returns {String} - Returns an RGBA color value
+ * @returns {String} 
  */
 function HexToRGB(hex, opacity) {
     hex = hex.replace('#', '');
@@ -194,41 +204,90 @@ function HexToRGB(hex, opacity) {
 }
 
 /**
- *
+ *A directed graph for recipe calculations.
  *
  * @export
  * @param {*} recipes - Input object containing recipes
- * @returns A directed graph for recipe calculations.
+ * @returns 
  */
 export function GenerateRecipeGraph(recipes) {
     let directedGraph = new DirectedGraph();
 
     recipes.forEach(recipe => {
-        recipe.inputs.forEach(input => {
-            if (!directedGraph.hasNode(input.name)) {
-                directedGraph.addNode(input.name);
-            }
-        })
-
-        recipe.outputs.forEach(output => {
-            if (!directedGraph.hasNode(output.name)) {
-                directedGraph.addNode(output.name);
-            }
-        })
+        directedGraph.addNode(recipe.step, {
+            step: recipe.step,
+            machineName: recipe.machine,
+            targetMachines: recipe.targetMachines,
+            time: recipe.overclock === "true" ? recipe.timeoc : recipe.time,
+            inputs: recipe.inputs,
+            outputs: recipe.outputs,
+            visited: false
+        });
     })
 
-    recipes.forEach(recipe => {
-        recipe.inputs.forEach(input => {
-            recipe.outputs.forEach(output => {
-                if (!directedGraph.hasEdge(input.name, output.name)) {
-                    let weight = output.unit === 'b' ? output.quantity : output.quantity / 1000;
-                    directedGraph.addEdge(input.name, output.name, {
-                        weight: weight
-                    });
+    let edgeGraph = CalculateEdges(directedGraph);
+    let reversedGraph = reverse(edgeGraph);
+    let calculatedGraph = CalculateGraph(reversedGraph, 9, "Polymer Clay");
+    // OutputTargets(calculatedGraph); // Uncomment for testing
+    
+    return calculatedGraph;
+}
+
+function CalculateGraph(graph, sourceNode) {
+    return DepthFirstTraversal(graph, sourceNode);
+}
+
+// TODO: Optimize edge calculation
+function CalculateEdges(graph) {
+    let edgeGraph = graph;
+
+    edgeGraph.forEachNode((source, sourceAttributes) => {
+        sourceAttributes.outputs.forEach(output => {
+            edgeGraph.forEachNode((target, targetAttributes) => {
+                if (source !== target) {
+                    targetAttributes.inputs.forEach(input => {
+                        if (input.name === output.name) {
+                            edgeGraph.addDirectedEdge(source, target, {
+                                name: input.name,
+                                inputQuantity: input.quantity,
+                                inputTime: targetAttributes.time,
+                                outputQuantity: output.quantity,
+                                outputTime: sourceAttributes.time
+                            });
+                        }
+                    })
                 }
             })
         })
     })
 
-    return directedGraph;
+    return edgeGraph;
+}
+
+function DepthFirstTraversal(graph, sourceNode) {
+    let sourceAttributes = graph.getNodeAttributes(sourceNode);
+    graph.forEachOutNeighbor(sourceNode, function (targetNode, targetAttributes) {
+        let edge = graph.getEdgeAttributes(sourceNode, targetNode);
+        let inBPS = (edge.inputQuantity / edge.inputTime) * sourceAttributes.targetMachines;
+        let outBPS = edge.outputQuantity / edge.outputTime;
+        let targetMachines = inBPS / outBPS;
+        
+        if (targetAttributes.visited && graph.inDegree(targetNode) > 1) {
+            let currentTarget = graph.getNodeAttribute(targetNode, "targetMachines", targetMachines);
+            graph.setNodeAttribute(targetNode, "targetMachines", currentTarget + targetMachines);
+        } else {
+            graph.setNodeAttribute(targetNode, "targetMachines", targetMachines);
+            graph.setNodeAttribute(targetNode, "visited", true);
+        }
+
+        return DepthFirstTraversal(graph, targetNode);
+    })
+
+    return graph;
+}
+
+function OutputTargets(graph) {
+    graph.forEachNode((node, attributes) => {
+        console.log(attributes.step, attributes.machineName, attributes.targetMachines);
+      });
 }
