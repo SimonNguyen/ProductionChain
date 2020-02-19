@@ -29,11 +29,11 @@
             "name": "efficiency"
         },
         {
-            "label": "Inputs",
+            "label": "Base Inputs",
             "name": "inputs"
         },
         {
-            "label": "Outputs",
+            "label": "Base Outputs",
             "name": "output"
         },
         {
@@ -76,9 +76,7 @@
                     "unit": "b"
                 }
             ],
-            "targetMachines": 1,
-            "targetInputs": [],
-            "targetOutputs": []
+            "targetMachines": 1
         },
         {
             "step": 1,
@@ -102,9 +100,7 @@
                     "unit": "b"
                 }
             ],
-            "targetMachines": 1,
-            "targetInputs": [],
-            "targetOutputs": []
+            "targetMachines": 1
         },
         {
             "step": 2,
@@ -128,9 +124,7 @@
                     "unit": "b"
                 }
             ],
-            "targetMachines": 1,
-            "targetInputs": [],
-            "targetOutputs": []
+            "targetMachines": 1
         },
         {
             "step": 3,
@@ -154,9 +148,7 @@
                     "unit": "b"
                 }
             ],
-            "targetMachines": 1,
-            "targetInputs": [],
-            "targetOutputs": []
+            "targetMachines": 1
         },
         {
             "step": 4,
@@ -185,9 +177,7 @@
                     "unit": "b"
                 }
             ],
-            "targetMachines": 1,
-            "targetInputs": [],
-            "targetOutputs": []
+            "targetMachines": 1
         },
         {
             "step": 5,
@@ -211,9 +201,7 @@
                     "unit": "b"
                 }
             ],
-            "targetMachines": 1,
-            "targetInputs": [],
-            "targetOutputs": []
+            "targetMachines": 1
         },
         {
             "step": 6,
@@ -237,9 +225,7 @@
                     "unit": "mb"
                 }
             ],
-            "targetMachines": 1,
-            "targetInputs": [],
-            "targetOutputs": []
+            "targetMachines": 1
         },
         {
             "step": 7,
@@ -268,9 +254,7 @@
                     "unit": "b"
                 }
             ],
-            "targetMachines": 1,
-            "targetInputs": [],
-            "targetOutputs": []
+            "targetMachines": 1
         },
         {
             "step": 8,
@@ -294,9 +278,7 @@
                     "unit": "b"
                 }
             ],
-            "targetMachines": 1,
-            "targetInputs": [],
-            "targetOutputs": []
+            "targetMachines": 1
         },
         {
             "step": 9,
@@ -325,9 +307,7 @@
                     "unit": "b"
                 }
             ],
-            "targetMachines": 7.449662416,
-            "targetInputs": [],
-            "targetOutputs": []
+            "targetMachines": 1
         }
     ],
     "TierNames": [

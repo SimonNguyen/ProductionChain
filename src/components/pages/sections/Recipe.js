@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
 import { MDBBadge } from 'mdbreact';
-import DisplayRFtTime from './DisplayRFtTime';
+import React, { Component } from 'react';
 import * as data from "./data";
+import DisplayRFtTime from './DisplayRFtTime';
 const tierNames = data.TierNames;
 
 class Recipe extends Component {
@@ -46,7 +46,8 @@ class Recipe extends Component {
                                         {" " + n.name}
                                     </div>
                                 )
-                            })}
+                            })
+                        }
                     </th>
                     <th key={"outputs" + this.props.step}>
                         {
@@ -57,11 +58,36 @@ class Recipe extends Component {
                                         {" " + o.name}
                                     </div>
                                 )
-                            })}
+                            })
+                        }
                     </th>
-                    <th key={"targetMachines" + this.props.step}></th>
-                    <th key={"targetInputs" + this.props.step}></th>
-                    <th key={"targetOutputs" + this.props.step}></th>
+                    <th key={"targetMachines" + this.props.step}>
+                        {Number(this.props.targetMachines).toFixed(2)}
+                    </th>
+                    <th key={"targetInputs" + this.props.step}>
+                        {
+                            this.props.inputs.map((o, index) => {
+                                return (
+                                    <div key={index}>
+                                        <b>{Number(o.quantity * this.props.targetMachines).toFixed(2) + o.unit}</b>
+                                        {" " + o.name}
+                                    </div>
+                                )
+                            })
+                        }
+                    </th>
+                    <th key={"targetOutputs" + this.props.step}>
+                        {
+                            this.props.outputs.map((o, index) => {
+                                return (
+                                    <div key={index}>
+                                        <b>{Number(o.quantity * this.props.targetMachines).toFixed(2) + o.unit}</b>
+                                        {" " + o.name}
+                                    </div>
+                                )
+                            })
+                        }
+                    </th>
                     <th key={"modify" + this.props.step}>
                         <MDBBadge
                             tag="a"

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import InformationSection from './sections/InformationSection';
-import TableSection from './sections/TableSection';
 import data from './sections/data';
-import { Overclock, buildOptions, CalculateRatio } from './sections/helpers/RecipeHelpers'
+import { BuildOptions, CalculateRatio, Overclock, GenerateRecipeGraph, OutputRecipes } from './sections/helpers/RecipeHelpers';
+import InformationSection from './sections/InformationSection';
 import SankeySection from './sections/SankeySection';
+import TableSection from './sections/TableSection';
 
 class DashboardPage extends Component {
     constructor() {
@@ -47,7 +47,7 @@ class DashboardPage extends Component {
     };
 
     handleOverclock = (recipeId, status) => {
-        const recipes = this.state.recipes;
+        let recipes = this.state.recipes;
         recipes[recipeId].overclock = status;
 
         let results = Overclock(recipes[recipeId].rft, recipes[recipeId].tier, recipes[recipeId].time);
@@ -55,6 +55,9 @@ class DashboardPage extends Component {
         recipes[recipeId].timeoc = results.time;
         recipes[recipeId].efficiencyoc = 100 * (recipes[recipeId].rft * recipes[recipeId].time) / (results.rft * results.time);
 
+        let graph = GenerateRecipeGraph(this.state.recipes, this.state.targets);
+        recipes = OutputRecipes(graph, this.state.recipes)
+        
         this.setState({ recipes });
     };
 
@@ -163,13 +166,18 @@ class DashboardPage extends Component {
         }
 
         this.setState({ targets });
+        let recipes = this.state.recipes;
+        recipes[targets.item.step].targetMachines = targets.machines;
+        let graph = GenerateRecipeGraph(this.state.recipes, this.state.targets);
+        recipes = OutputRecipes(graph, this.state.recipes)
+        this.setState({ recipes });
     };
 
     render() {
         return (
             <React.Fragment>
                 <InformationSection
-                    outputs={buildOptions(this.state.recipes)}
+                    outputs={BuildOptions(this.state.recipes)}
                     targets={this.state.targets}
                     handleSettingChange={this.handleSettingChange}
                 />
@@ -184,7 +192,7 @@ class DashboardPage extends Component {
                     handleAdd={this.handleAdd}
                     handleMachineSetting={this.handleMachineSetting}
                 />
-                <SankeySection recipes={this.state.recipes} />
+                <SankeySection recipes={this.state.recipes} targets={this.state.targets} />
             </React.Fragment>
         )
     } changes
