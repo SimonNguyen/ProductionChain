@@ -121,7 +121,6 @@ export function GenerateSankeyData(recipes) {
     return sankeyData;
 }
 
-=======
 /**
  * Returns a list of item labels. Valid types are "both", "inputs" and "outputs".
  * By default, the type is both.
@@ -129,7 +128,7 @@ export function GenerateSankeyData(recipes) {
  * @export
  * @param {*} type
  * @param {*} recipes - Input object containing recipes
- * @returns 
+ * @returns
  */
 export function GetLabels(recipes, type = "both") {
     let labels = [];
@@ -160,7 +159,7 @@ export function GetLabels(recipes, type = "both") {
  *
  * @param {*} recipes - Input object containing recipes
  * @param {*} labels - Input array containing item labels
- * @returns 
+ * @returns
  */
 function GetLinks(recipes, labels) {
     let links = {
@@ -191,7 +190,7 @@ function GetLinks(recipes, labels) {
  *
  * @param {String} hex - Input hex color string
  * @param {Number} opacity - Input opacity value between 0 and 100
- * @returns {String} 
+ * @returns {String}
  */
 function HexToRGB(hex, opacity) {
     hex = hex.replace('#', '');
@@ -209,7 +208,7 @@ function HexToRGB(hex, opacity) {
  *
  * @export
  * @param {*} recipes - Input object containing recipes
- * @returns 
+ * @returns
  */
 export function GenerateRecipeGraph(recipes) {
     let directedGraph = new DirectedGraph();
@@ -230,7 +229,7 @@ export function GenerateRecipeGraph(recipes) {
     let reversedGraph = reverse(edgeGraph);
     let calculatedGraph = CalculateGraph(reversedGraph, 9, "Polymer Clay");
     // OutputTargets(calculatedGraph); // Uncomment for testing
-    
+
     return calculatedGraph;
 }
 
@@ -261,6 +260,7 @@ function CalculateEdges(graph) {
             })
         })
     })
+    
   return edgeGraph;
 }
 
@@ -271,7 +271,7 @@ function DepthFirstTraversal(graph, sourceNode) {
         let inBPS = (edge.inputQuantity / edge.inputTime) * sourceAttributes.targetMachines;
         let outBPS = edge.outputQuantity / edge.outputTime;
         let targetMachines = inBPS / outBPS;
-        
+
         if (targetAttributes.visited && graph.inDegree(targetNode) > 1) {
             let currentTarget = graph.getNodeAttribute(targetNode, "targetMachines", targetMachines);
             graph.setNodeAttribute(targetNode, "targetMachines", currentTarget + targetMachines);
@@ -292,7 +292,7 @@ function OutputTargets(graph) {
       });
 }
 
-export function CalculateRatio(recipes){
+export function CalculateRatio(recipes) {
     //Calculates the items Units/second ratio and adds it to outputs.
     recipes.forEach(recipe => {
         let step = recipe.step;
@@ -307,7 +307,7 @@ export function CalculateRatio(recipes){
     return recipes;
 }
 
-export function FindTarget(name, recipes){
+export function FindTarget(name, recipes) {
     //Finds a target output from a list of recipes.  returns an object with step and ratio.
     let newTarget = {
         step: null,
@@ -322,6 +322,6 @@ export function FindTarget(name, recipes){
             }
         });
     });
-    
+
     return newTarget;
 }
