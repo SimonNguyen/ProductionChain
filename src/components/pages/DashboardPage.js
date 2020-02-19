@@ -10,8 +10,8 @@ class DashboardPage extends Component {
         super()
 
         this.state = {
-            headers: data.Headers.map(h => {
-                return (h.label)
+            headers: data.Headers.map(headers => {
+                return (headers.label)
             }),
             recipes: CalculateRatio(data.Recipes),
             targets: {
@@ -23,6 +23,7 @@ class DashboardPage extends Component {
                 "settingsMachines": 0,
                 "settingsItemValue": 0
             }
+
         }
     }
 
@@ -69,6 +70,19 @@ class DashboardPage extends Component {
 
         this.setState({ recipes })
     };
+
+    handleTiers = (recipeId, status) => {
+        const recipes = this.state.recipes;
+        recipes[recipeId].tier = status;
+
+        let results = Overclock(recipes[recipeId].rft, recipes[recipeId].tier, recipes[recipeId].time);
+        recipes[recipeId].rftoc = results.rft;
+        recipes[recipeId].timeoc = results.time;
+        recipes[recipeId].efficiencyoc = 100 * (recipes[recipeId].rft * recipes[recipeId].time) / (results.rft * results.time);
+
+        this.setState({recipes})
+    }
+
 
     handleSwapDown = recipeStep => {
         if (recipeStep < this.state.recipes.length - 1) {

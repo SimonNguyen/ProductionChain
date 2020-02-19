@@ -75,7 +75,10 @@
                     "quantity": "1",
                     "unit": "b"
                 }
-            ]
+            ],
+            "targetMachines": 1,
+            "targetInputs": [],
+            "targetOutputs": []
         },
         {
             "step": 1,
@@ -98,7 +101,10 @@
                     "quantity": "1",
                     "unit": "b"
                 }
-            ]
+            ],
+            "targetMachines": 1,
+            "targetInputs": [],
+            "targetOutputs": []
         },
         {
             "step": 2,
@@ -121,7 +127,10 @@
                     "quantity": "1",
                     "unit": "b"
                 }
-            ]
+            ],
+            "targetMachines": 1,
+            "targetInputs": [],
+            "targetOutputs": []
         },
         {
             "step": 3,
@@ -144,7 +153,10 @@
                     "quantity": "1",
                     "unit": "b"
                 }
-            ]
+            ],
+            "targetMachines": 1,
+            "targetInputs": [],
+            "targetOutputs": []
         },
         {
             "step": 4,
@@ -172,7 +184,10 @@
                     "quantity": "1",
                     "unit": "b"
                 }
-            ]
+            ],
+            "targetMachines": 1,
+            "targetInputs": [],
+            "targetOutputs": []
         },
         {
             "step": 5,
@@ -180,12 +195,12 @@
             "tier": "LV",
             "overclock": false,
             "rft": "40",
-            "time": ".8",
+            "time": "5",
             "efficiency": 100,
             "inputs": [
                 {
                     "name": "Glass",
-                    "quantity": "1",
+                    "quantity": "4",
                     "unit": "b"
                 }
             ],
@@ -195,7 +210,10 @@
                     "quantity": "1",
                     "unit": "b"
                 }
-            ]
+            ],
+            "targetMachines": 1,
+            "targetInputs": [],
+            "targetOutputs": []
         },
         {
             "step": 6,
@@ -218,7 +236,10 @@
                     "quantity": "250",
                     "unit": "mb"
                 }
-            ]
+            ],
+            "targetMachines": 1,
+            "targetInputs": [],
+            "targetOutputs": []
         },
         {
             "step": 7,
@@ -246,7 +267,10 @@
                     "quantity": "1",
                     "unit": "b"
                 }
-            ]
+            ],
+            "targetMachines": 1,
+            "targetInputs": [],
+            "targetOutputs": []
         },
         {
             "step": 8,
@@ -269,7 +293,10 @@
                     "quantity": "1",
                     "unit": "b"
                 }
-            ]
+            ],
+            "targetMachines": 1,
+            "targetInputs": [],
+            "targetOutputs": []
         },
         {
             "step": 9,
@@ -297,7 +324,10 @@
                     "quantity": "4",
                     "unit": "b"
                 }
-            ]
+            ],
+            "targetMachines": 7.449662416,
+            "targetInputs": [],
+            "targetOutputs": []
         }
     ],
     "TierNames": [

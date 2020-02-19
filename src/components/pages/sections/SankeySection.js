@@ -5,8 +5,8 @@ import Plot from 'react-plotly.js';
 
 class SankeySection extends Component {
     render() {
-        let sankeyData = GenerateSankeyData(this.props.recipes);
         let recipeGraph = GenerateRecipeGraph(this.props.recipes);
+        let sankeyData = GenerateSankeyData(this.props.recipes);
         return (
             <MDBRow>
                 <MDBCol>
