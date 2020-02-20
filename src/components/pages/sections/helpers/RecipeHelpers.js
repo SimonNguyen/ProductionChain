@@ -1,5 +1,6 @@
 import { DirectedGraph } from 'graphology';
 import reverse from 'graphology-operators/reverse';
+import findCircuits from 'elementary-circuits-directed-graph';
 import * as data from '../data';
 let tierNames = data.TierNames;
 let voltages = data.Voltages;
@@ -176,7 +177,7 @@ function GetLinks(recipes, labels) {
                 links.source.push(labels.indexOf(input.name));
                 links.target.push(labels.indexOf(output.name));
                 (output.unit === 'b') ? links.value.push(output.quantity * recipe.targetMachines) : links.value.push(output.quantity * recipe.targetMachines / 1000);
-                links.label.push(recipe.machine + " (" + recipe.tier + ")");
+                links.label.push(recipe.step + ": " + recipe.machine + " (" + recipe.tier + ")");
                 links.color.push(HexToRGB(colors[Math.floor(Math.random() * colors.length)], 50));
             })
         })
@@ -214,10 +215,10 @@ export function GenerateRecipeGraph(recipes, targets) {
     let directedGraph = new DirectedGraph();
 
     recipes.forEach(recipe => {
-        directedGraph.addNode(recipe.step, {
+        directedGraph.addNode(Number(recipe.step), {
             machineName: recipe.machine,
             targetMachines: targets.settingsMachines,
-            time: recipe.overclock === "true" ? recipe.timeoc : recipe.time,
+            time: recipe.overclock === true ? recipe.timeoc : recipe.time,
             inputs: recipe.inputs,
             outputs: recipe.outputs,
             visited: false
@@ -226,8 +227,9 @@ export function GenerateRecipeGraph(recipes, targets) {
 
     let edgeGraph = CalculateEdges(directedGraph);
     let reversedGraph = reverse(edgeGraph);
-    let calculatedGraph = CalculateGraph(reversedGraph, 9, "Polymer Clay");
+    let acyclicGraph = RemoveCycles(reversedGraph);
 
+    let calculatedGraph = CalculateGraph(acyclicGraph, 9);
     return calculatedGraph;
 }
 
@@ -246,8 +248,10 @@ function CalculateEdges(graph) {
                     targetAttributes.inputs.forEach(input => {
                         if (input.name === output.name) {
                             edgeGraph.addDirectedEdge(source, target, {
+                                inputName: input.name,
                                 inputQuantity: input.quantity,
                                 inputTime: targetAttributes.time,
+                                outputName: output.name,
                                 outputQuantity: output.quantity,
                                 outputTime: sourceAttributes.time
                             });
@@ -257,8 +261,8 @@ function CalculateEdges(graph) {
             })
         })
     })
-    
-  return edgeGraph;
+
+    return edgeGraph;
 }
 
 function DepthFirstTraversal(graph, sourceNode) {
@@ -280,6 +284,43 @@ function DepthFirstTraversal(graph, sourceNode) {
 
         return DepthFirstTraversal(graph, targetNode);
     })
+
+    return graph;
+}
+
+function RemoveCycles(graph) {
+    let adjList = FindAdjList(graph);
+    let cycles = findCircuits(adjList);
+    let acyclicGraph = FixGraph(graph, cycles);
+
+    return acyclicGraph;
+}
+
+function FindAdjList(graph) {
+    let edges = [];
+
+    graph.forEachNode(node => {
+        edges[node] = [];
+    })
+
+    graph.forEachEdge(
+        (edge, attributes, source, target, sourceAttributes, targetAttributes) => {
+            edges[source].push(Number(target));
+        });
+    let adjList = Object.values(edges);
+
+    return adjList;
+}
+
+function FixGraph(graph, cycles) {
+    let tmpGraph = graph;
+
+    for (let cycle of cycles) {
+        let source = cycle[0];
+        let target = cycle[1];
+
+        tmpGraph.dropEdge((tmpGraph.edge(source, target)));
+    }
 
     return graph;
 }
@@ -316,7 +357,7 @@ export function FindTarget(name, recipes) {
 
     recipes.forEach(recipe => {
         recipe.outputs.forEach(output => {
-            if(output.name === name){
+            if (output.name === name) {
                 newTarget.step = recipe.step;
                 newTarget.ratio = output.ratio;
             }
