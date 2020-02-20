@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import data from './sections/data';
-import { Overclock, GenerateRecipeGraph, OutputRecipes } from './sections/helpers/RecipeHelpers';
-import { BuildOptions, CalculateRatio,} from './sections/helpers/UIHelpers';
+import { Overclock, GenerateRecipeGraph } from './sections/helpers/RecipeHelpers';
+import { BuildOptions, CalculateRatio, OutputRecipes} from './sections/helpers/UIHelpers';
 import InformationSection from './sections/InformationSection';
 import SankeySection from './sections/SankeySection';
 import TableSection from './sections/TableSection';
@@ -51,7 +51,7 @@ class DashboardPage extends Component {
 
     handleOverclock = (recipeId, status) => {
         let recipes = this.state.recipes;
-        recipes[recipeId].overclock = Boolean(status);
+        recipes[recipeId].overclock = status;
 
         let results = Overclock(recipes[recipeId].rft, recipes[recipeId].tier, recipes[recipeId].time);
         recipes[recipeId].rftoc = results.rft;
@@ -79,8 +79,6 @@ class DashboardPage extends Component {
     handleSwapDown = recipeStep => {
         if (recipeStep < this.state.recipes.length - 1) {
             let recipes = this.state.recipes;
-            console.log(this.state.recipes);
-            console.log(recipes);
             let currentItem = recipes[recipeStep];
             let nextItem = recipes[recipeStep + 1];
 
