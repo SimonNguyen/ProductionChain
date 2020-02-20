@@ -56,29 +56,6 @@ export function Overclock(RFt, tierName, duration) {
     };
 }
 
-export function ParseItems(raw) {
-    //Works - needs improvement for readability
-    if (raw.endsWith(';')) {
-        let newRaw = raw.slice(2, -1);
-        raw = newRaw;
-        console.log(raw);
-    }
-
-    let list = raw.split(';');
-    let items = [];
-    for (let index in list) {
-        let item = list[index].split(',');
-        items.push(
-            {
-                quantity: item[0].trim(),
-                unit: item[1].trim(),
-                name: item[2].trim()
-            }
-        )
-    };
-    return (items);
-}
-
 /**
  * Sankey diagram data for React-Plotly.js Sankey diagrams.
  *
@@ -296,36 +273,4 @@ export function OutputRecipes(graph, recipes) {
     })
 
     return recipes;
-}
-
-export function CalculateRatio(recipes) {
-    //Calculates the items Units/second ratio and adds it to outputs.
-    recipes.forEach(recipe => {
-        let step = recipe.step;
-        let time = recipe.time;
-
-        recipe.outputs.forEach(output => {
-            output["ratio"] = output.quantity / time;
-            output["step"] = step;
-        });
-    });
-
-    return recipes;
-}
-
-export function BuildOptions(recipes) {
-    //label: {item} + ' - #' + {step}, value={outputObj}
-    let options = [];
-
-    recipes.forEach(recipe => {
-        recipe.outputs.forEach(output => {
-            let newOption = {
-                label: output.name + ' - #' + output.step,
-                value: output
-            }
-            options.push(newOption);
-        })
-    })
-
-    return options;
 }

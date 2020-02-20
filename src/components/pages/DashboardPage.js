@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import data from './sections/data';
-import { BuildOptions, CalculateRatio, Overclock, GenerateRecipeGraph, OutputRecipes } from './sections/helpers/RecipeHelpers';
+import { Overclock, GenerateRecipeGraph, OutputRecipes } from './sections/helpers/RecipeHelpers';
+import { BuildOptions, CalculateRatio,} from './sections/helpers/UIHelpers';
 import InformationSection from './sections/InformationSection';
 import SankeySection from './sections/SankeySection';
 import TableSection from './sections/TableSection';
@@ -27,23 +28,26 @@ class DashboardPage extends Component {
     }
 
     handleDelete = recipeStep => {
-        const recipes = this.state.recipes.filter(r => r.step !== recipeStep);
-        let targets = this.state.targets;
+        const state = this.state;
+        state.recipes = state.recipes.filter(r => r.step !== recipeStep);
 
-        for (let index in recipes) {
-            recipes[index].step = index;
+        for (let index in state.recipes) {
+            state.recipes[index].step = index;
+            state.recipes[index].outputs.map(output => (
+                output.step = index
+            ))
         }
 
-        if (recipeStep === targets.item.step) {
-            targets.item.step = null;
-            targets.item.name = "";
-            targets.item.ratio = 0;
-            targets.bps = 0;
-            targets.machines = 0;
+        if (recipeStep === state.targets.item.step) {
+            state.targets.item.step = null;
+            state.targets.item.name = "";
+            state.targets.item.ratio = 0;
+            state.targets.bps = 0;
+            state.targets.machines = 0;
         }
 
-        this.setState({ recipes, targets });
-        console.log(this.state);
+        this.setState(state);
+        console.log(this.state.recipes);
     };
 
     handleOverclock = (recipeId, status) => {
@@ -76,11 +80,21 @@ class DashboardPage extends Component {
     handleSwapDown = recipeStep => {
         if (recipeStep < this.state.recipes.length - 1) {
             let recipes = this.state.recipes;
+            console.log(this.state.recipes);
+            console.log(recipes);
             let currentItem = recipes[recipeStep];
             let nextItem = recipes[recipeStep + 1];
 
             currentItem.step = recipeStep + 1;
+            currentItem.outputs.map(output => (
+                output.step = recipeStep + 1
+            ));
+
             nextItem.step = recipeStep;
+            nextItem.outputs.map(output => (
+                output.step = recipeStep
+            ));
+
             recipes[recipeStep] = nextItem;
             recipes[recipeStep + 1] = currentItem;
 
@@ -95,7 +109,16 @@ class DashboardPage extends Component {
             let nextItem = recipes[recipeStep - 1];
 
             currentItem.step = recipeStep - 1;
+            currentItem.outputs.map(output => (
+                output.step = recipeStep - 1
+            ));
+
             nextItem.step = recipeStep;
+            nextItem.step = recipeStep;
+            nextItem.outputs.map(output => (
+                output.step = recipeStep
+            ));
+
             recipes[recipeStep] = nextItem;
             recipes[recipeStep - 1] = currentItem;
 
