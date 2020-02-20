@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import data from './sections/data';
-import { CalculateRatio, FindTarget, GetLabels, Overclock, GenerateRecipeGraph, OutputRecipes } from './sections/helpers/RecipeHelpers';
+import { Overclock, GenerateRecipeGraph, OutputRecipes } from './sections/helpers/RecipeHelpers';
+import { BuildOptions, CalculateRatio,} from './sections/helpers/UIHelpers';
 import InformationSection from './sections/InformationSection';
 import SankeySection from './sections/SankeySection';
 import TableSection from './sections/TableSection';
@@ -15,35 +16,37 @@ class DashboardPage extends Component {
             }),
             recipes: CalculateRatio(data.Recipes),
             targets: {
-                "settingsItem": {
+                "item": {
                     step: null,
                     name: "",
                     ratio: 0
                 },
-                "settingsMachines": 0,
-                "settingsItemValue": 0
+                "machines": 0,
+                "bps": 0
             }
-
         }
     }
 
     handleDelete = recipeStep => {
-        const recipes = this.state.recipes.filter(r => r.step !== recipeStep);
-        let targets = this.state.targets;
+        const state = this.state;
+        state.recipes = state.recipes.filter(r => r.step !== recipeStep);
 
-        for (let index in recipes) {
-            recipes[index].step = index;
+        for (let index in state.recipes) {
+            state.recipes[index].step = index;
+            state.recipes[index].outputs.map(output => (
+                output.step = index
+            ))
         }
 
-        if (recipeStep === targets.settingsItem.step) {
-            targets.settingsItem.step = null;
-            targets.settingsItem.name = "";
-            targets.settingsItem.ratio = 0;
-            targets.settingsItemValue = 0;
-            targets.settingsMachines = 0;
+        if (recipeStep === state.targets.item.step) {
+            state.targets.item.step = null;
+            state.targets.item.name = "";
+            state.targets.item.ratio = 0;
+            state.targets.bps = 0;
+            state.targets.machines = 0;
         }
 
-        this.setState({ recipes, targets });
+        this.setState(state);
     };
 
     handleOverclock = (recipeId, status) => {
@@ -76,11 +79,21 @@ class DashboardPage extends Component {
     handleSwapDown = recipeStep => {
         if (recipeStep < this.state.recipes.length - 1) {
             let recipes = this.state.recipes;
+            console.log(this.state.recipes);
+            console.log(recipes);
             let currentItem = recipes[recipeStep];
             let nextItem = recipes[recipeStep + 1];
 
             currentItem.step = recipeStep + 1;
+            currentItem.outputs.map(output => (
+                output.step = recipeStep + 1
+            ));
+
             nextItem.step = recipeStep;
+            nextItem.outputs.map(output => (
+                output.step = recipeStep
+            ));
+
             recipes[recipeStep] = nextItem;
             recipes[recipeStep + 1] = currentItem;
 
@@ -95,7 +108,16 @@ class DashboardPage extends Component {
             let nextItem = recipes[recipeStep - 1];
 
             currentItem.step = recipeStep - 1;
+            currentItem.outputs.map(output => (
+                output.step = recipeStep - 1
+            ));
+
             nextItem.step = recipeStep;
+            nextItem.step = recipeStep;
+            nextItem.outputs.map(output => (
+                output.step = recipeStep
+            ));
+
             recipes[recipeStep] = nextItem;
             recipes[recipeStep - 1] = currentItem;
 
@@ -128,47 +150,46 @@ class DashboardPage extends Component {
 
     handleSettingChange = (update, type = "name") => {
         let targets = this.state.targets;
-        if (targets.settingsItem.name === "") {
+        if (targets.item.name === "") {
             if (type === "name") {
-                let newTarget = FindTarget(update, this.state.recipes);
-                targets.settingsItem.name = update;
-                targets.settingsItem.ratio = newTarget.ratio;
-                targets.settingsItem.step = newTarget.step;
-                targets.settingsMachines = 1;
-                targets.settingsItemValue = 1 * targets.settingsItem.ratio;
+                targets.item.name = update;
+                targets.item.ratio = update.ratio;
+                targets.item.step = update.step;
+                targets.machines = 1;
+                targets.bps = 1 * targets.item.ratio;
             }
         }
         else if (type === "name") {
-            let newTarget = FindTarget(update, this.state.recipes);
-            targets.settingsItem.name = update;
-            targets.settingsItem.ratio = newTarget.ratio;
-            targets.settingsItem.step = newTarget.step;
-            targets.settingsMachines = 1;
-            targets.settingsItemValue = targets.settingsMachines * targets.settingsItem.ratio;
+            targets.item.name = update;
+            targets.item.ratio = update.ratio;
+            targets.item.step = update.step;
+            targets.machines = 1;
+            targets.bps = targets.machines * targets.item.ratio;
         }
         else if (type === "machine") {
             if (update <= 0) {
-                targets.settingsMachines = 0;
-                targets.settingsItemValue = 0;
+                targets.machines = 0;
+                targets.bps = 0;
             }
             else {
-                targets.settingsMachines = update;
-                targets.settingsItemValue = targets.settingsMachines * targets.settingsItem.ratio;
+                targets.machines = update;
+                targets.bps = targets.machines * targets.item.ratio;
             }
         }
         else {
             if (update <= 0) {
-                targets.settingsItemValue = 0;
+                targets.bps = 0;
+                targets.machines = 0;
             }
             else {
-                targets.settingsItemValue = update;
-                targets.settingsMachines = update / targets.settingsItem.ratio;
+                targets.bps = update;
+                targets.machines = update / targets.item.ratio;
             }
         }
 
         this.setState({ targets });
         let recipes = this.state.recipes;
-        recipes[targets.settingsItem.step].targetMachines = targets.settingsMachines;
+        recipes[targets.item.step].targetMachines = targets.machines;
         let graph = GenerateRecipeGraph(this.state.recipes, this.state.targets);
         recipes = OutputRecipes(graph, this.state.recipes)
         this.setState({ recipes });
@@ -178,7 +199,7 @@ class DashboardPage extends Component {
         return (
             <React.Fragment>
                 <InformationSection
-                    outputs={GetLabels(this.state.recipes, "outputs")}
+                    outputs={BuildOptions(this.state.recipes)}
                     targets={this.state.targets}
                     handleSettingChange={this.handleSettingChange}
                 />

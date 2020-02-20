@@ -57,23 +57,6 @@ export function Overclock(RFt, tierName, duration) {
     };
 }
 
-export function ParseItems(raw) {
-    //Works - needs improvement for readability
-    let list = raw.split(';');
-    let items = [];
-    for (let index in list) {
-        let item = list[index].split(',');
-        items.push(
-            {
-                quantity: item[0].trim(),
-                unit: item[1].trim(),
-                name: item[2].trim()
-            }
-        )
-    };
-    return (items);
-}
-
 /**
  * Sankey diagram data for React-Plotly.js Sankey diagrams.
  *
@@ -217,8 +200,8 @@ export function GenerateRecipeGraph(recipes, targets) {
     recipes.forEach(recipe => {
         directedGraph.addNode(Number(recipe.step), {
             machineName: recipe.machine,
-            targetMachines: targets.settingsMachines,
-            time: recipe.overclock === true ? recipe.timeoc : recipe.time,
+            targetMachines: targets.machines,
+            time: Boolean(recipe.overclock) === true ? recipe.timeoc : recipe.time,
             inputs: recipe.inputs,
             outputs: recipe.outputs,
             visited: false
@@ -323,46 +306,4 @@ function FixGraph(graph, cycles) {
     }
 
     return graph;
-}
-
-export function OutputRecipes(graph, recipes) {
-    recipes.forEach((recipe, node) => {
-        recipe.targetMachines = graph.getNodeAttribute(node, "targetMachines");
-    })
-
-    return recipes;
-}
-
-export function CalculateRatio(recipes) {
-    //Calculates the items Units/second ratio and adds it to outputs.
-    recipes.forEach(recipe => {
-        let step = recipe.step;
-        let time = recipe.time;
-
-        recipe.outputs.forEach(output => {
-            output["ratio"] = output.quantity / time;
-            output["step"] = step;
-        });
-    });
-
-    return recipes;
-}
-
-export function FindTarget(name, recipes) {
-    //Finds a target output from a list of recipes.  returns an object with step and ratio.
-    let newTarget = {
-        step: null,
-        ratio: 0
-    }
-
-    recipes.forEach(recipe => {
-        recipe.outputs.forEach(output => {
-            if (output.name === name) {
-                newTarget.step = recipe.step;
-                newTarget.ratio = output.ratio;
-            }
-        });
-    });
-
-    return newTarget;
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { MDBBadge, MDBInput, MDBAlert } from 'mdbreact';
 import * as data from './data';
-import { ParseItems } from './helpers/RecipeHelpers';
+import { ParseItems } from './helpers/UIHelpers';
 const tierNames = data.TierNames;
 
 class AddRecipe extends Component {
