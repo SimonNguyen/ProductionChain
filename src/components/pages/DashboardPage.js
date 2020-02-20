@@ -47,12 +47,11 @@ class DashboardPage extends Component {
         }
 
         this.setState(state);
-        console.log(this.state.recipes);
     };
 
     handleOverclock = (recipeId, status) => {
         let recipes = this.state.recipes;
-        recipes[recipeId].overclock = status;
+        recipes[recipeId].overclock = Boolean(status);
 
         let results = Overclock(recipes[recipeId].rft, recipes[recipeId].tier, recipes[recipeId].time);
         recipes[recipeId].rftoc = results.rft;
