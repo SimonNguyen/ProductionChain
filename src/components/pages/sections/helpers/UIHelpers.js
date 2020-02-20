@@ -1,5 +1,5 @@
 /**
- *A Parsing fuction that converts a string into
+ *A Parsing function that converts a string into
  *an item object array
  * 
  * @export

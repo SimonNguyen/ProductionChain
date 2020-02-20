@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import data from './sections/data';
-import { Overclock, GenerateRecipeGraph, OutputRecipes } from './sections/helpers/RecipeHelpers';
-import { BuildOptions, CalculateRatio,} from './sections/helpers/UIHelpers';
+import { Overclock, GenerateRecipeGraph } from './sections/helpers/RecipeHelpers';
+import { BuildOptions, CalculateRatio, OutputRecipes} from './sections/helpers/UIHelpers';
 import InformationSection from './sections/InformationSection';
 import SankeySection from './sections/SankeySection';
 import TableSection from './sections/TableSection';
@@ -47,7 +47,6 @@ class DashboardPage extends Component {
         }
 
         this.setState(state);
-        console.log(this.state.recipes);
     };
 
     handleOverclock = (recipeId, status) => {

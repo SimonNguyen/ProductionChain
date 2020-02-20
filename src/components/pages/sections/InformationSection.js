@@ -18,7 +18,9 @@ class InformationSection extends Component {
                             <br /> -> Unit must be either b for block, or mb for millibuckets
                             <br /> -> item is the name of the item.  This is case sensitive!
                             <br /> Example: 1000, mb, Lava; 1000, mb, Water;
-                        </MDBCardText>
+                                The production chain is not calculated with any recycled items in mind.
+                                The resultant production chain visual is not updated to show that the items are ignored.
+                            </MDBCardText>
                         </MDBCard>
                     </MDBCol>
                     <MDBCol>
