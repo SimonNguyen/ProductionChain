@@ -201,7 +201,7 @@ export function GenerateRecipeGraph(recipes, targets) {
         directedGraph.addNode(Number(recipe.step), {
             machineName: recipe.machine,
             targetMachines: targets.machines,
-            time: Boolean(recipe.overclock) === true ? recipe.timeoc : recipe.time,
+            time: recipe.overclock === 'true' ? recipe.timeoc : recipe.time,
             inputs: recipe.inputs,
             outputs: recipe.outputs,
             visited: false

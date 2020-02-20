@@ -58,8 +58,8 @@ class DashboardPage extends Component {
         recipes[recipeId].timeoc = results.time;
         recipes[recipeId].efficiencyoc = 100 * (recipes[recipeId].rft * recipes[recipeId].time) / (results.rft * results.time);
 
-        let graph = GenerateRecipeGraph(this.state.recipes, this.state.targets);
-        recipes = OutputRecipes(graph, this.state.recipes)
+        let graph = GenerateRecipeGraph(recipes, this.state.targets);
+        recipes = OutputRecipes(graph, recipes);
         
         this.setState({ recipes });
     };
