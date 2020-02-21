@@ -72,7 +72,7 @@ class InformationSection extends Component {
                                     step="0.1"
                                     min="0.0"
                                     className="form-control-sm"
-                                    disabled={this.props.targets.disable}
+                                    disabled={false}
                                     id="targetItemOutputs"
                                     label="Target Items per Second"
                                     value={this.props.targets.bps}
@@ -83,7 +83,7 @@ class InformationSection extends Component {
                                     step="1"
                                     min="0.00"
                                     className="form-control-sm"
-                                    disabled={this.props.targets.disable}
+                                    disabled={false}
                                     id="targetMachines"
                                     label="Target Machines"
                                     value={this.props.targets.machines}

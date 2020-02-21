@@ -198,7 +198,7 @@ class DashboardPage extends Component {
                 targets.machines = 0;
             }
             else {
-                targets.bps = update.toFixed(2);
+                targets.bps = Number(update).toFixed(2);
                 targets.machines = update / targets.item.ratio;
             }
         }
