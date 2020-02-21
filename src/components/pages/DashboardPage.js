@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import data from './sections/data';
+import exampleRecipes from './sections/example';
 import { Overclock, GenerateRecipeGraph } from './sections/helpers/RecipeHelpers';
 import { BuildOptions, CalculateRatio, OutputRecipes } from './sections/helpers/UIHelpers';
 import InformationSection from './sections/InformationSection';
@@ -14,7 +15,7 @@ class DashboardPage extends Component {
             headers: data.Headers.map(headers => {
                 return (headers.label)
             }),
-            recipes: CalculateRatio(data.Recipes),
+            recipes: CalculateRatio(exampleRecipes.Recipes),
             targets: {
                 "item": {
                     step: null,
@@ -29,7 +30,7 @@ class DashboardPage extends Component {
 
     handleDelete = recipeStep => {
         const state = this.state;
-        state.recipes = state.recipes.filter(r => r.step !== recipeStep);
+        state.recipes = state.recipes.filter(r => Number(r.step) !== recipeStep);
 
         for (let index in state.recipes) {
             state.recipes[index].step = index;
