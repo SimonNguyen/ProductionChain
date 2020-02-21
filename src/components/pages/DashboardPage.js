@@ -67,7 +67,7 @@ class DashboardPage extends Component {
     };
 
     handleTiers = (recipeId, status) => {
-        const recipes = this.state.recipes;
+        let recipes = this.state.recipes;
         recipes[recipeId].tier = status;
 
         let results = Overclock(recipes[recipeId].rft / 4, recipes[recipeId].tier, recipes[recipeId].time * 20);
@@ -76,6 +76,9 @@ class DashboardPage extends Component {
         recipes[recipeId].efficiencyoc =
             100 * (recipes[recipeId].rft * recipes[recipeId].time) /
             (recipes[recipeId].rftoc * recipes[recipeId].timeoc);
+
+        let graph = GenerateRecipeGraph(recipes, this.state.targets);
+        recipes = OutputRecipes(graph, recipes);
 
         this.setState({ recipes })
     };
