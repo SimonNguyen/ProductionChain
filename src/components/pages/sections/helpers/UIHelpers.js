@@ -17,6 +17,7 @@ export function ParseItems(raw) {
     let items = [];
     for (let index in list) {
         let item = list[index].split(',');
+        item[1].toLowerCase();
         items.push(
             {
                 quantity: item[0].trim(),
