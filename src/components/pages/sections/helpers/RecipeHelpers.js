@@ -23,8 +23,6 @@ export function Overclock(EUt, tierName, duration) {
     let resultDuration = duration;
     let multiplier = 0;
 
-    console.log(tier, voltages[tier])
-
     if (voltages[tier] <= EUt || tier === 0) {
         return {
             eut: resultEUt,
@@ -214,7 +212,7 @@ export function GenerateRecipeGraph(recipes, targets) {
     let reversedGraph = reverse(edgeGraph);
     let acyclicGraph = RemoveCycles(reversedGraph);
 
-    let calculatedGraph = CalculateGraph(acyclicGraph, 9);
+    let calculatedGraph = CalculateGraph(acyclicGraph, targets.item.step);
     return calculatedGraph;
 }
 

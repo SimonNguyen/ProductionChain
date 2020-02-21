@@ -69,7 +69,9 @@ class Recipe extends Component {
                             this.props.inputs.map((o, index) => {
                                 return (
                                     <div key={index}>
-                                        <b>{Number(o.quantity * this.props.targetMachines).toFixed(2) + o.unit}</b>
+                                        <b>{Number(o.quantity * this.props.targetMachines /
+                                            (this.props.overclock === 'true' ? this.props.timeoc : this.props.time)
+                                        ).toFixed(2) + o.unit}</b>
                                         {" " + o.name}
                                     </div>
                                 )
@@ -81,7 +83,9 @@ class Recipe extends Component {
                             this.props.outputs.map((o, index) => {
                                 return (
                                     <div key={index}>
-                                        <b>{Number(o.quantity * this.props.targetMachines).toFixed(2) + o.unit}</b>
+                                        <b>{Number(o.quantity * this.props.targetMachines /
+                                            (this.props.overclock === 'true' ? this.props.timeoc : this.props.time)
+                                        ).toFixed(2) + o.unit}</b>
                                         {" " + o.name}
                                     </div>
                                 )
