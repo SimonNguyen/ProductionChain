@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import data from './sections/data';
 import { Overclock, GenerateRecipeGraph } from './sections/helpers/RecipeHelpers';
-import { BuildOptions, CalculateRatio, OutputRecipes} from './sections/helpers/UIHelpers';
+import { BuildOptions, CalculateRatio, OutputRecipes } from './sections/helpers/UIHelpers';
 import InformationSection from './sections/InformationSection';
 import SankeySection from './sections/SankeySection';
 import TableSection from './sections/TableSection';
@@ -53,14 +53,16 @@ class DashboardPage extends Component {
         let recipes = this.state.recipes;
         recipes[recipeId].overclock = status;
 
-        let results = Overclock(recipes[recipeId].rft, recipes[recipeId].tier, recipes[recipeId].time);
-        recipes[recipeId].rftoc = results.rft;
-        recipes[recipeId].timeoc = results.time;
-        recipes[recipeId].efficiencyoc = 100 * (recipes[recipeId].rft * recipes[recipeId].time) / (results.rft * results.time);
+        let results = Overclock(recipes[recipeId].rft / 4, recipes[recipeId].tier, recipes[recipeId].time * 20);
+        recipes[recipeId].rftoc = results.eut * 4;
+        recipes[recipeId].timeoc = results.ticks / 20;
+        recipes[recipeId].efficiencyoc =
+            100 * (recipes[recipeId].rft * recipes[recipeId].time) /
+            (recipes[recipeId].rftoc * recipes[recipeId].timeoc);
 
         let graph = GenerateRecipeGraph(recipes, this.state.targets);
         recipes = OutputRecipes(graph, recipes);
-        
+
         this.setState({ recipes });
     };
 
@@ -68,10 +70,12 @@ class DashboardPage extends Component {
         const recipes = this.state.recipes;
         recipes[recipeId].tier = status;
 
-        let results = Overclock(recipes[recipeId].rft, recipes[recipeId].tier, recipes[recipeId].time);
-        recipes[recipeId].rftoc = results.rft;
-        recipes[recipeId].timeoc = results.time;
-        recipes[recipeId].efficiencyoc = 100 * (recipes[recipeId].rft * recipes[recipeId].time) / (results.rft * results.time);
+        let results = Overclock(recipes[recipeId].rft / 4, recipes[recipeId].tier, recipes[recipeId].time * 20);
+        recipes[recipeId].rftoc = results.eut * 4;
+        recipes[recipeId].timeoc = results.ticks / 20;
+        recipes[recipeId].efficiencyoc =
+            100 * (recipes[recipeId].rft * recipes[recipeId].time) /
+            (recipes[recipeId].rftoc * recipes[recipeId].timeoc);
 
         this.setState({ recipes })
     };
