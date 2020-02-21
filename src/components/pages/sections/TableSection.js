@@ -11,7 +11,7 @@ class TableSection extends Component {
                     <MDBCol>
                         <MDBCard>
                             <MDBCardBody>
-                                <MDBTable autoWidth responsive hover striped>
+                                <MDBTable responsive hover striped>
                                     <MDBTableHead color="blue lighten-4">
                                         <tr>
                                             {

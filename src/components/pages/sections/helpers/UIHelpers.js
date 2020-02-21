@@ -1,3 +1,4 @@
+import { GenerateRecipeGraph } from './RecipeHelpers';
 /**
  *A Parsing function that converts a string into
  *an item object array
@@ -37,7 +38,6 @@ export function OutputRecipes(graph, recipes) {
 
 export function CalculateRatio(recipes) {
     //Calculates the items Units/second ratio and adds it to outputs.
-    console.log(recipes)
     recipes.forEach(recipe => {
         let step = recipe.step;
         let time = recipe.time;
@@ -54,15 +54,18 @@ export function CalculateRatio(recipes) {
 export function BuildOptions(recipes) {
     //label: {item} + ' - #' + {step}, value={outputObj}
     let options = [];
+    let graph = GenerateRecipeGraph(recipes);
 
-    recipes.forEach(recipe => {
-        recipe.outputs.forEach(output => {
-            let newOption = {
-                label: output.name + ' - #' + output.step,
-                value: output
-            }
-            options.push(newOption);
-        })
+    graph.forEachNode((node, nodeAttributes) => {
+        if (graph.inNeighbors(node).length === 0) {
+            nodeAttributes.outputs.forEach(output => {
+                let newOption = {
+                    label: output.name + ' - #' + node,
+                    value: output
+                }
+                options.push(newOption);
+            })
+        }
     })
 
     return options;

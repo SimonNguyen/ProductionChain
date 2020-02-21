@@ -18,13 +18,14 @@ class DashboardPage extends Component {
             recipes: CalculateRatio(exampleRecipes.Recipes),
             targets: {
                 "item": {
-                    step: null,
-                    name: "",
-                    ratio: 0
+                    step: 9,
+                    name: "Polymer Clay",
+                    ratio: 1/3
                 },
-                "machines": 0,
-                "bps": 0
-            }
+                "machines": 1,
+                "bps": 1/3
+            },
+            labels: BuildOptions(exampleRecipes.Recipes)
         }
     }
 
@@ -162,7 +163,7 @@ class DashboardPage extends Component {
                 targets.item.ratio = update.ratio;
                 targets.item.step = update.step;
                 targets.machines = 1;
-                targets.bps = 1 * targets.item.ratio;
+                targets.bps = targets.item.ratio;
             }
         }
         else if (type === "name") {
@@ -205,7 +206,7 @@ class DashboardPage extends Component {
         return (
             <React.Fragment>
                 <InformationSection
-                    outputs={BuildOptions(this.state.recipes)}
+                    outputs={this.state.labels}
                     targets={this.state.targets}
                     handleSettingChange={this.handleSettingChange}
                 />

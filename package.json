@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Production Chain",
   "author": "Simon Nguyen",
+  "homepage": "https://simonnguyen.github.io/ProductionChain/",
   "license": "MIT",
   "dependencies": {
     "graphology": "^0.15.2",

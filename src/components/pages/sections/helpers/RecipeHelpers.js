@@ -23,7 +23,7 @@ export function Overclock(EUt, tierName, duration) {
     let resultDuration = duration;
     let multiplier = 0;
 
-    if (voltages[tier] <= EUt || tier === 0) {
+    if (voltages[tier] <= EUt || tier === 0 || tier === -1) {
         return {
             eut: resultEUt,
             ticks: resultDuration
@@ -200,7 +200,7 @@ export function GenerateRecipeGraph(recipes, targets) {
     recipes.forEach(recipe => {
         directedGraph.addNode(Number(recipe.step), {
             machineName: recipe.machine,
-            targetMachines: targets.machines,
+            targetMachines: targets ? targets.machines : 1,
             time: recipe.overclock === 'true' ? recipe.timeoc : recipe.time,
             inputs: recipe.inputs,
             outputs: recipe.outputs,
@@ -212,8 +212,9 @@ export function GenerateRecipeGraph(recipes, targets) {
     let reversedGraph = reverse(edgeGraph);
     let acyclicGraph = RemoveCycles(reversedGraph);
 
-    let calculatedGraph = CalculateGraph(acyclicGraph, targets.item.step);
-    return calculatedGraph;
+    if (targets) return CalculateGraph(acyclicGraph, targets.item.step);
+
+    return acyclicGraph;
 }
 
 function CalculateGraph(graph, sourceNode) {
@@ -274,9 +275,13 @@ function DepthFirstTraversal(graph, sourceNode) {
 function RemoveCycles(graph) {
     let adjList = FindAdjList(graph);
     let cycles = findCircuits(adjList);
-    let acyclicGraph = FixGraph(graph, cycles);
-
-    return acyclicGraph;
+    
+    if (cycles) {
+        let acyclicGraph = FixGraph(graph, cycles);
+        return acyclicGraph;
+    } else {
+        return graph;
+    }
 }
 
 function FindAdjList(graph) {

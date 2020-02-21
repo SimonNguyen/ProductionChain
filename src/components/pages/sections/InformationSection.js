@@ -13,13 +13,13 @@ class InformationSection extends Component {
                             <MDBCardText>
                                 GregTech machines should have their EU/t values converted to RF/t. The equivalent RF/t value is <code>4 * EUt</code>.
                             <br />Efficiency % is the energy efficiency of the overclock.
-                            <br />Item input/output format is [Quantity],[Unit],[item]; ...ext.
-                            <br /> -> Quantity is the number of units needed per operation
-                            <br /> -> Unit must be either b for block, or mb for millibuckets
-                            <br /> -> item is the name of the item.  This is case sensitive!
-                            <br /> Example: 1000, mb, Lava; 1000, mb, Water;
-                                The production chain is not calculated with any recycled items in mind.
-                                The resultant production chain visual is not updated to show that the items are ignored.
+                            <br />Item input/output format is <code>[Quantity],[Unit],[item];</code> ...ext.
+                            <br />-> Quantity is the number of units needed per operation
+                            <br />-> Unit must be either b for block, or mb for millibuckets
+                            <br />-> item is the name of the item.  This is case sensitive!
+                            <br />Example: 1000, mb, Lava; 1000, mb, Water;
+                            <br />The production chain is not calculated with any recycled items in mind.
+                            <br />The resultant production chain visual is not updated to show that the items are ignored.
                             </MDBCardText>
                         </MDBCard>
                     </MDBCol>
@@ -28,6 +28,7 @@ class InformationSection extends Component {
                             <MDBCardTitle className="text-center">Settings</MDBCardTitle>
                             <form>
                                 <Select
+                                    defaultInputValue={this.props.outputs[0].label}
                                     onChange={(e) => this.props.handleSettingChange(e.value)}
                                     options={this.props.outputs.map(opt => ({label: opt.label, value: opt.value}))}
                                 />
