@@ -20,10 +20,10 @@ class DashboardPage extends Component {
                 "item": {
                     step: 9,
                     name: "Polymer Clay",
-                    ratio: 1/3
+                    ratio: 1 / 3
                 },
                 "machines": 1,
-                "bps": 1/3
+                "bps": 1 / 3
             },
             labels: BuildOptions(exampleRecipes.Recipes)
         }
@@ -49,7 +49,9 @@ class DashboardPage extends Component {
             state.targets.disable = true;
         }
 
-        this.setState(state);
+        let labels = BuildOptions(this.state.recipes);
+
+        this.setState({ state, labels });
     };
 
     handleOverclock = (recipeId, status) => {
@@ -154,8 +156,9 @@ class DashboardPage extends Component {
         );
 
         recipes = CalculateRatio(recipes);
+        let labels = BuildOptions(this.state.recipes);
 
-        this.setState({ recipes });
+        this.setState({ recipes, labels });
     };
 
     handleSettingChange = (update, type = "name") => {
