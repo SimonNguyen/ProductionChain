@@ -98,21 +98,21 @@ class Recipe extends Component {
                             color="light"
                             size="sm"
                             className="m-sm-1"
-                            onClick={() => this.props.onSwapUp(this.props.step)}
+                            onClick={() => this.props.onSwapUp(Number(this.props.step))}
                         >Up</MDBBadge>
                         <MDBBadge
                             tag="a"
                             color="light"
                             size="sm"
                             className="m-sm-1"
-                            onClick={() => this.props.onSwapDown(this.props.step)}
+                            onClick={() => this.props.onSwapDown(Number(this.props.step))}
                         >Down</MDBBadge>
                         <MDBBadge
                             tag="a"
                             color="danger"
                             size="sm"
                             className="m-sm-1"
-                            onClick={() => this.props.onDelete(this.props.step)}
+                            onClick={() => this.props.onDelete(Number(this.props.step))}
                         >Remove</MDBBadge>
                     </th>
                 </tr>
