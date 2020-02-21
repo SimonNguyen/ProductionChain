@@ -57,13 +57,13 @@ class AddRecipe extends Component {
                 }
 
                 for (let index in inputList) {
-                    if (!(inputList[index].unit.toLowerCase() === "mb" || inputList[index].unit.toLowerCase() === "b")) {
+                    if (!(inputList[index].unit === "mb" || inputList[index].unit === "b")) {
                         isValid = false;
                     }
                 }
 
                 for (let index in outputList) {
-                    if (!(outputList[index].unit.toLowerCase() === "mb" || outputList[index].unit.toLowerCase() === "b")) {
+                    if (!(outputList[index].unit === "mb" || outputList[index].unit === "b")) {
                         isValid = false;
                     }
                 }

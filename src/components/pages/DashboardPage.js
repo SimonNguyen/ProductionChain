@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import data from './sections/data';
 import { Overclock, GenerateRecipeGraph } from './sections/helpers/RecipeHelpers';
-import { BuildOptions, CalculateRatio, OutputRecipes} from './sections/helpers/UIHelpers';
+import { BuildOptions, CalculateRatio, OutputRecipes } from './sections/helpers/UIHelpers';
 import InformationSection from './sections/InformationSection';
 import SankeySection from './sections/SankeySection';
 import TableSection from './sections/TableSection';
@@ -22,7 +22,8 @@ class DashboardPage extends Component {
                     ratio: 0
                 },
                 "machines": 0,
-                "bps": 0
+                "bps": 0,
+                "disable": true
             }
         }
     }
@@ -44,6 +45,7 @@ class DashboardPage extends Component {
             state.targets.item.ratio = 0;
             state.targets.bps = 0;
             state.targets.machines = 0;
+            state.targets.disable = true;
         }
 
         this.setState(state);
@@ -60,7 +62,7 @@ class DashboardPage extends Component {
 
         let graph = GenerateRecipeGraph(this.state.recipes, this.state.targets);
         recipes = OutputRecipes(graph, this.state.recipes)
-        
+
         this.setState({ recipes });
     };
 
@@ -157,6 +159,7 @@ class DashboardPage extends Component {
                 targets.item.step = update.step;
                 targets.machines = 1;
                 targets.bps = 1 * targets.item.ratio;
+                targets.disable = false;
             }
         }
         else if (type === "name") {
@@ -191,7 +194,7 @@ class DashboardPage extends Component {
         let recipes = this.state.recipes;
         recipes[targets.item.step].targetMachines = targets.machines;
         let graph = GenerateRecipeGraph(this.state.recipes, this.state.targets);
-        recipes = OutputRecipes(graph, this.state.recipes)
+        recipes = OutputRecipes(graph, this.state.recipes);
         this.setState({ recipes });
     };
 
