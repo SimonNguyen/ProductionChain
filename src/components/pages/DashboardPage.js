@@ -156,6 +156,8 @@ class DashboardPage extends Component {
         );
 
         recipes = CalculateRatio(recipes);
+        let graph = GenerateRecipeGraph(recipes, this.state.targets);
+        recipes = OutputRecipes(graph, recipes);
         let labels = BuildOptions(this.state.recipes);
 
         this.setState({ recipes, labels });

@@ -63,7 +63,7 @@ class InformationSection extends Component {
                             <MDBCardTitle className="text-center">Settings</MDBCardTitle>
                             <form>
                                 <Select
-                                    defaultInputValue={this.props.outputs[0].label}
+                                    defaultInputValue={this.props.outputs.length !== 0 ? this.props.outputs[0].label : "No valid outputs." }
                                     onChange={(e) => this.props.handleSettingChange(e.value)}
                                     options={this.props.outputs.map(opt => ({label: opt.label, value: opt.value}))}
                                 />
