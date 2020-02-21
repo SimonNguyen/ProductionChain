@@ -39,7 +39,7 @@ class InformationSection extends Component {
                                     </MDBNavLink>
                                 </MDBNavItem>
                             </MDBNav>
-                            <MDBTabContent activeItem={this.state.active}>
+                            <MDBTabContent activeItem={this.state.active} className="pl-2">
                                 <MDBTabPane tabId="1" role="tabpanel">
                                     <p className="mt-2">GregTech machines should have their EU/t values converted to RF/t. The equivalent RF/t value is <code>4 * EUt</code>.
                                     <br />Efficiency % is the energy efficiency of the overclock.</p>
@@ -53,7 +53,7 @@ class InformationSection extends Component {
                                     <br /> -> Quantity is the number of units needed per operation
                                     <br /> -> Unit must be either b for block, or mb for millibuckets
                                     <br /> -> item is the name of the item.  This is case sensitive!
-                                    <br /> Example: 1000, mb, Lava; 1000, mb, Water;</p>
+                                    <br /> Example: <code className="blue-text">1000, mb, Lava; 1000, mb, Water;</code></p>
                                 </MDBTabPane>
                             </MDBTabContent>
                         </MDBCard>

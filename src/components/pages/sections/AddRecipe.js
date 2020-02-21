@@ -9,7 +9,6 @@ class AddRecipe extends Component {
         super();
         this.state = {
             tier: tierNames[0],
-            overclock: false,
             errorAlert: "invisible",
             errorText: " "
         };
@@ -37,7 +36,8 @@ class AddRecipe extends Component {
                 isValid = false;
             }
         }
-        if (isValid && Object.keys(rawRecipe).length === 9) {
+        console.log(rawRecipe);
+        if (isValid && Object.keys(rawRecipe).length === 8) {
             let inputList = [];
             let outputList = [];
             try {
@@ -76,7 +76,7 @@ class AddRecipe extends Component {
                 let newRecipe = {
                     machine: rawRecipe.machine,
                     tier: rawRecipe.tier,
-                    overclock: rawRecipe.overclock,
+                    overclock: false,
                     rft: rawRecipe.rft,
                     time: rawRecipe.time,
                     inputs: [...inputList],
@@ -125,17 +125,7 @@ class AddRecipe extends Component {
                                 <option key={"tier:" + tier} value={tier}>{tier}</option>)}
                         </select>
                     </th>
-                    <th key="overclockAdd" className="align-middle">
-                        <select
-                            className="browser-default custom-select"
-                            id="overclockSelect"
-                            value={this.state.overclock}
-                            onChange={(e) => this.handleSelectChange("overclock", e.target.value)}
-                        >
-                            <option value="false">False</option>
-                            <option value="true">True</option>
-                        </select>
-                    </th>
+                    <th></th>
                     <th key="rftAdd">
                         <MDBInput
                             type="number"
