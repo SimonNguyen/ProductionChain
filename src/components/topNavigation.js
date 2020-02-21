@@ -33,7 +33,7 @@ class TopNavigation extends Component {
                     </MDBNavbarNav>
                     <MDBNavbarNav right>
                         <MDBNavItem>
-                            <a className="border border-light rounded mr-1 nav-link Ripple-parent" rel="noopener noreferrer" href="https://github.com/mdbootstrap/React-Bootstrap-with-Material-Design" target="_blank"><MDBIcon fab icon="github" className="mr-2"/>PC GitHub</a>
+                            <a className="border border-light rounded mr-1 nav-link Ripple-parent" rel="noopener noreferrer" href="https://github.com/SimonNguyen/ProductionChain" target="_blank"><MDBIcon fab icon="github" className="mr-2"/>PC GitHub</a>
                         </MDBNavItem>
                     </MDBNavbarNav>
                 </MDBCollapse>

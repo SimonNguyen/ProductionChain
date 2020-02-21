@@ -12,23 +12,22 @@ let colors = data.Colors;
  * Returns object containing { rft: number, time: number }
  * 
  * @export
- * @param {Number} RFt - RF per tick
+ * @param {Number} EUt - EU per tick
  * @param {String} tierName - GregTech machine tier
- * @param {Number} duration - Recipe duration in seconds
+ * @param {Number} duration - Recipe duration in ticks
  * @returns 
  */
-export function Overclock(RFt, tierName, duration) {
-    let tier = tierNames.indexOf(tierName);
-    let EUt = RFt / 4;
-    let resultEUt, resultDuration, multiplier = 0;
-
-    if (tier === 0) return { rft: RFt, time: duration };
+export function Overclock(EUt, tierName, duration) {
+    let tier = tierNames.indexOf(tierName) - 1;
+    let resultEUt = EUt;
+    let resultDuration = duration;
+    let multiplier = 0;
 
     if (voltages[tier] <= EUt || tier === 0) {
         return {
-            rft: EUt * 4,
-            time: duration
-        };
+            eut: resultEUt,
+            ticks: resultDuration
+        }
     };
 
     if (EUt <= 16) {
@@ -41,19 +40,20 @@ export function Overclock(RFt, tierName, duration) {
         resultEUt = EUt * (1 << multiplier) * (1 << multiplier);
         resultDuration = duration / (1 << multiplier);
 
+        return {
+            eut: resultEUt,
+            ticks: resultDuration
+        }
     } else {
-        resultEUt = EUt;
-        resultDuration = duration;
-
         while (resultDuration >= 3 && resultEUt <= voltages[tier - 1]) {
             resultEUt = resultEUt * 4;
             resultDuration = resultDuration / 2.8;
         }
     };
-
+    
     return {
-        rft: resultEUt * 4,
-        time: Math.ceil(resultDuration)
+        eut: resultEUt,
+        ticks: Math.ceil(resultDuration)
     };
 }
 
@@ -201,7 +201,7 @@ export function GenerateRecipeGraph(recipes, targets) {
         directedGraph.addNode(Number(recipe.step), {
             machineName: recipe.machine,
             targetMachines: targets.machines,
-            time: Boolean(recipe.overclock) === true ? recipe.timeoc : recipe.time,
+            time: recipe.overclock === 'true' ? recipe.timeoc : recipe.time,
             inputs: recipe.inputs,
             outputs: recipe.outputs,
             visited: false
@@ -212,7 +212,7 @@ export function GenerateRecipeGraph(recipes, targets) {
     let reversedGraph = reverse(edgeGraph);
     let acyclicGraph = RemoveCycles(reversedGraph);
 
-    let calculatedGraph = CalculateGraph(acyclicGraph, 9);
+    let calculatedGraph = CalculateGraph(acyclicGraph, targets.item.step);
     return calculatedGraph;
 }
 
