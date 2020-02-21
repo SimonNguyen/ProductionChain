@@ -3,7 +3,7 @@ import { MDBCard, MDBCardTitle, MDBRow, MDBCol, MDBInput, MDBNavItem, MDBNav, MD
 import Select from 'react-select';
 
 class InformationSection extends Component {
-    constructor(){
+    constructor() {
         super();
         this.state = {
             active: "1",
@@ -21,19 +21,20 @@ class InformationSection extends Component {
             <React.Fragment>
                 <MDBRow>
                     <MDBCol>
-                            <MDBNav className="mt-3 nav-tabs m-sm-1">
+                        <MDBCard className="white m-sm-1 p-1">
+                            <MDBNav className="nav-tab m-sm-1">
                                 <MDBNavItem>
-                                    <MDBNavLink to="#" active={this.state.active === "1"} onClick={this.handleTabs("1")} role="tab">
+                                    <MDBNavLink to="#" active={this.state.active === "1"} onClick={this.handleTabs("1")} roll="tab">
                                         EU/t
                                     </MDBNavLink>
                                 </MDBNavItem>
                                 <MDBNavItem>
-                                    <MDBNavLink to="#" active={this.state.active === "2"} onClick={this.handleTabs("2")} role="tab">
+                                    <MDBNavLink to="#" active={this.state.active === "2"} onClick={this.handleTabs("2")} roll="tab">
                                         Recycled Items
                                     </MDBNavLink>
                                 </MDBNavItem>
                                 <MDBNavItem>
-                                    <MDBNavLink to="#" active={this.state.active === "3"} onClick={this.handleTabs("3")} role="tab">
+                                    <MDBNavLink to="#" active={this.state.active === "3"} onClick={this.handleTabs("3")} roll="tab">
                                         Adding Recipes
                                     </MDBNavLink>
                                 </MDBNavItem>
@@ -47,7 +48,7 @@ class InformationSection extends Component {
                                     <p className="mt-2">The production chain is not calculated with any recycled items in mind.
                                     The resultant production chain visual is not updated to show that the items are ignored.</p>
                                 </MDBTabPane>
-                                <MDBTabPane tabId="3" role="tabpanel">
+                                <MDBTabPane tabId="3" role="tabpanel" >
                                     <p className="mt-2">Item input/output format is [Quantity],[Unit],[item]; ...ext.
                                     <br /> -> Quantity is the number of units needed per operation
                                     <br /> -> Unit must be either b for block, or mb for millibuckets
@@ -55,6 +56,7 @@ class InformationSection extends Component {
                                     <br /> Example: 1000, mb, Lava; 1000, mb, Water;</p>
                                 </MDBTabPane>
                             </MDBTabContent>
+                        </MDBCard>
                     </MDBCol>
                     <MDBCol>
                         <MDBCard className="card-body">
@@ -64,7 +66,7 @@ class InformationSection extends Component {
                                     onChange={(e) => {
                                         this.props.handleSettingChange(e.value);
                                     }}
-                                    options={this.props.outputs.map(opt => ({label: opt.label, value: opt.value}))}
+                                    options={this.props.outputs.map(opt => ({ label: opt.label, value: opt.value }))}
                                 />
                                 <MDBInput
                                     type="number"
@@ -74,7 +76,7 @@ class InformationSection extends Component {
                                     disabled={this.props.targets.disable}
                                     id="targetItemOutputs"
                                     label="Target Items per Second"
-                                    value = {this.props.targets.bps}
+                                    value={this.props.targets.bps}
                                     onChange={(e) => this.props.handleSettingChange(e.target.value, "item")}
                                 />
                                 <MDBInput
@@ -85,7 +87,7 @@ class InformationSection extends Component {
                                     disabled={this.props.targets.disable}
                                     id="targetMachines"
                                     label="Target Machines"
-                                    value = {this.props.targets.machines}
+                                    value={this.props.targets.machines}
                                     onChange={(e) => this.props.handleSettingChange(e.target.value, "machine")}
                                 />
                             </form>

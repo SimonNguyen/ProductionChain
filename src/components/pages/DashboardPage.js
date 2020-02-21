@@ -167,6 +167,7 @@ class DashboardPage extends Component {
                 targets.item.step = update.step;
                 targets.machines = 1;
                 targets.bps = 1 * targets.item.ratio;
+                targets.bps = targets.bps.toFixed(2);
                 targets.disable = false;
             }
         }
@@ -176,6 +177,7 @@ class DashboardPage extends Component {
             targets.item.step = update.step;
             targets.machines = 1;
             targets.bps = targets.machines * targets.item.ratio;
+            targets.bps = targets.bps.toFixed(2);
         }
         else if (type === "machine") {
             if (update <= 0) {
@@ -185,6 +187,7 @@ class DashboardPage extends Component {
             else {
                 targets.machines = update;
                 targets.bps = targets.machines * targets.item.ratio;
+                targets.bps = targets.bps.toFixed(2);
             }
         }
         else {
@@ -195,6 +198,7 @@ class DashboardPage extends Component {
             else {
                 targets.bps = update;
                 targets.machines = update / targets.item.ratio;
+                targets.bps = targets.bps.toFixed(2);
             }
         }
 
