@@ -23,7 +23,8 @@ class DashboardPage extends Component {
                     ratio: 0
                 },
                 "machines": 0,
-                "bps": 0
+                "bps": 0,
+                "disable": true
             }
         }
     }
@@ -45,6 +46,7 @@ class DashboardPage extends Component {
             state.targets.item.ratio = 0;
             state.targets.bps = 0;
             state.targets.machines = 0;
+            state.targets.disable = true;
         }
 
         this.setState(state);
@@ -87,6 +89,8 @@ class DashboardPage extends Component {
     handleSwapDown = recipeStep => {
         if (recipeStep < this.state.recipes.length - 1) {
             let recipes = this.state.recipes;
+            console.log(this.state.recipes);
+            console.log(recipes);
             let currentItem = recipes[recipeStep];
             let nextItem = recipes[recipeStep + 1];
 
@@ -163,6 +167,8 @@ class DashboardPage extends Component {
                 targets.item.step = update.step;
                 targets.machines = 1;
                 targets.bps = 1 * targets.item.ratio;
+                targets.bps = targets.bps.toFixed(2);
+                targets.disable = false;
             }
         }
         else if (type === "name") {
@@ -171,6 +177,7 @@ class DashboardPage extends Component {
             targets.item.step = update.step;
             targets.machines = 1;
             targets.bps = targets.machines * targets.item.ratio;
+            targets.bps = targets.bps.toFixed(2);
         }
         else if (type === "machine") {
             if (update <= 0) {
@@ -180,6 +187,7 @@ class DashboardPage extends Component {
             else {
                 targets.machines = update;
                 targets.bps = targets.machines * targets.item.ratio;
+                targets.bps = targets.bps.toFixed(2);
             }
         }
         else {
@@ -190,6 +198,7 @@ class DashboardPage extends Component {
             else {
                 targets.bps = update;
                 targets.machines = update / targets.item.ratio;
+                targets.bps = targets.bps.toFixed(2);
             }
         }
 
@@ -197,7 +206,7 @@ class DashboardPage extends Component {
         let recipes = this.state.recipes;
         recipes[targets.item.step].targetMachines = targets.machines;
         let graph = GenerateRecipeGraph(this.state.recipes, this.state.targets);
-        recipes = OutputRecipes(graph, this.state.recipes)
+        recipes = OutputRecipes(graph, this.state.recipes);
         this.setState({ recipes });
     };
 
