@@ -23,7 +23,7 @@ export function Overclock(EUt, tierName, duration) {
     let resultDuration = duration;
     let multiplier = 0;
 
-    if (voltages[tier] <= EUt || tier === 0 || tier === -1) {
+    if (voltages[tier] <= EUt || tier === 0 || tier === -1 || EUt === 0) {
         return {
             eut: resultEUt,
             ticks: resultDuration

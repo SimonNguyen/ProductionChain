@@ -10,8 +10,9 @@ class DisplayRFtTime extends Component {
         if (overclocked === 'true') {
             displayRFt = this.props.rftoc;
             displayTime = this.props.timeoc;
-            displayEfficiency = this.props.efficiencyoc;
+            displayEfficiency = displayRFt !== 0 ? this.props.efficiencyoc : 100;
         }
+
         return (
             <React.Fragment>
                 <th key={"rft" + this.props.step}>{displayRFt}</th>

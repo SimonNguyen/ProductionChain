@@ -254,6 +254,102 @@
                 }
             ],
             "targetMachines": 1
+        },
+        {
+            "step": 10,
+            "machine": "Simulation Chamber",
+            "tier": "N/A",
+            "overclock": false,
+            "rft": 2048,
+            "time": 15,
+            "efficiency": 100,
+            "inputs": [
+                {
+                    "name": "Polymer Clay",
+                    "quantity": 1,
+                    "unit": "b"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "Ender Pristine",
+                    "quantity": 0.3,
+                    "unit": "b"
+                }
+            ],
+            "targetMachines": 1
+        },
+        {
+            "step": 11,
+            "machine": "Simulation Chamber",
+            "tier": "N/A",
+            "overclock": false,
+            "rft": 2048,
+            "time": 15,
+            "efficiency": 100,
+            "inputs": [
+                {
+                    "name": "Polymer Clay",
+                    "quantity": 1,
+                    "unit": "b"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "Shulker Pristine",
+                    "quantity": 0.3,
+                    "unit": "b"
+                }
+            ],
+            "targetMachines": 1
+        },
+        {
+            "step": 12,
+            "machine": "Loot Fabricator",
+            "tier": "N/A",
+            "overclock": false,
+            "rft": 0,
+            "time": 2.7,
+            "efficiency": 100,
+            "inputs": [
+                {
+                    "name": "Ender Pristine",
+                    "quantity": 1,
+                    "unit": "b"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "Ender Pearl",
+                    "quantity": 6,
+                    "unit": "b"
+                }
+            ],
+            "targetMachines": 1
+        },
+        {
+            "step": 13,
+            "machine": "Loot Fabricator",
+            "tier": "N/A",
+            "overclock": false,
+            "rft": 0,
+            "time": 2.7,
+            "efficiency": 100,
+            "inputs": [
+                {
+                    "name": "Shulker Pristine",
+                    "quantity": 1,
+                    "unit": "b"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "Diamond",
+                    "quantity": 6,
+                    "unit": "b"
+                }
+            ],
+            "targetMachines": 1
         }
     ]
 }
