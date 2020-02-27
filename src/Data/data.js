@@ -1,55 +1,55 @@
 const Headers = [
   {
-    label: '#',
-    name: 'step',
+    title: 'Step',
+    field: 'step',
   },
   {
-    label: 'Machine Name',
-    name: 'machineName',
+    title: 'Machine Name',
+    field: 'machineName',
   },
   {
-    label: 'Machine Tier',
-    name: 'machineTier',
+    title: 'Machine Tier',
+    field: 'machineTier',
   },
   {
-    label: 'Overclock',
-    name: 'overclock',
+    title: 'Overclock',
+    field: 'overclock',
   },
   {
-    label: 'RF/t',
-    name: 'rft',
+    title: 'RF/t',
+    field: 'rft',
   },
   {
-    label: 'Time (s)',
-    name: 'time',
+    title: 'Time (s)',
+    field: 'time',
   },
   {
-    label: 'Efficiency (%)',
-    name: 'efficiency',
+    title: 'Efficiency (%)',
+    field: 'efficiency',
   },
   {
-    label: 'Base Inputs',
-    name: 'inputs',
+    title: 'Base Inputs',
+    field: 'inputs',
   },
   {
-    label: 'Base Outputs',
-    name: 'output',
+    title: 'Base Outputs',
+    field: 'outputs',
   },
   {
-    label: 'Target Machines',
-    name: 'targetMachines',
+    title: 'Target Machines',
+    field: 'targetMachines',
   },
   {
-    label: 'Target Inputs',
-    name: 'targetInput',
+    title: 'Target Inputs',
+    field: 'targetInputs',
   },
   {
-    label: 'Target Outputs',
-    name: 'targetOutputs',
+    title: 'Target Outputs',
+    field: 'targetOutputs',
   },
   {
-    label: 'Modify',
-    name: 'modify',
+    title: 'Actions',
+    field: 'actions',
   },
 ];
 

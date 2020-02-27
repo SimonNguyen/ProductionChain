@@ -3,14 +3,17 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Topbar from './Components/Topbar';
-import { DefaultTheme } from './Data';
+import Topbar from './components/Topbar';
+import { DefaultTheme, Headers, Recipes } from './data';
+import DataTableContainer from './components/DataTable';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       theme: DefaultTheme,
+      headers: Headers,
+      recipes: Recipes,
     };
   }
 
@@ -30,10 +33,11 @@ class App extends Component {
           paletteType={muiTheme.palette.type}
         />
         <Container maxWidth="xl">
-          <Box my={2}>
-            {[...new Array(200)]
-              .map(() => 'The quick brown fox jumps over the lazy dog.')
-              .join('\n')}
+          <Box my={4}>
+            <DataTableContainer
+              headers={this.state.headers}
+              recipes={this.state.recipes}
+            />
           </Box>
         </Container>
       </MuiThemeProvider>
