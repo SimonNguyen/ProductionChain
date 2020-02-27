@@ -1,25 +1,25 @@
-# Create React App example
+# Production Chain Tool
 
-## How to use
+> A production chain calculator and visualization tool made for the OmniFactory Minecraft modpack.
 
-Download the example [or clone the repo](https://github.com/mui-org/material-ui):
+## Libraries
 
-```sh
-curl https://codeload.github.com/mui-org/material-ui/tar.gz/master | tar -xz --strip=2 material-ui-master/examples/create-react-app
-cd create-react-app
-```
+1. <https://material-ui.com/>
 
-Install it and run:
+2. <https://reactjs.org/>
 
-```sh
+## Build Setup
+
+``` bash
+# install dependencies
 npm install
+
+# serve with hot reload at localhost:3000
 npm start
+
+# build for production with minification
+npm build
+
+# build for production and view the bundle analyzer report
+npm build --report
 ```
-
-or:
-
-[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/mui-org/material-ui/tree/master/examples/create-react-app)
-
-## The idea behind the example
-
-This example demonstrates how you can use [Create React App](https://github.com/facebookincubator/create-react-app).
