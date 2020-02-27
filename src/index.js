@@ -6,5 +6,5 @@ render(
   <React.Fragment>
     <App />
   </React.Fragment>,
-  document.querySelector('#root'),
+  document.querySelector('#root')
 );

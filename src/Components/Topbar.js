@@ -8,7 +8,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
@@ -23,7 +23,10 @@ const useStyles = makeStyles(theme => ({
     },
   },
   primary: {
-    backgroundColor: theme.palette.type === 'light' ? theme.palette.primary.light : theme.palette.primary.dark,
+    backgroundColor:
+      theme.palette.type === 'light'
+        ? theme.palette.primary.light
+        : theme.palette.primary.dark,
   },
 }));
 
@@ -38,8 +41,7 @@ const Topbar = ({ paletteType, onToggleDark }) => {
             edge="start"
             className={classes.menuButton}
             color="inherit"
-            aria-label="open drawer"
-          >
+            aria-label="open drawer">
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
@@ -47,9 +49,11 @@ const Topbar = ({ paletteType, onToggleDark }) => {
           </Typography>
           <div>
             <IconButton onClick={onToggleDark}>
-              {
-                paletteType === 'light' ? <Brightness4Icon /> : <Brightness7Icon />
-              }
+              {paletteType === 'light' ? (
+                <Brightness4Icon />
+              ) : (
+                <Brightness7Icon />
+              )}
             </IconButton>
           </div>
         </Toolbar>
@@ -57,6 +61,6 @@ const Topbar = ({ paletteType, onToggleDark }) => {
       <Toolbar />
     </div>
   );
-}
+};
 
-export default Topbar
+export default Topbar;
