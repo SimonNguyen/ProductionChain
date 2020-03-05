@@ -889,6 +889,7 @@ const DefaultTheme = {
     fontWeightBold: 700,
   },
   palette: {
+    type: 'dark',
     primary: {
       light: '#58a5f0',
       main: '#0277bd',
