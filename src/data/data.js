@@ -88,23 +88,23 @@ const Colors = [
 const Recipes = [
   {
     step: 0,
-    machine: 'Macerator',
+    machine: 'Wiremill',
     tier: 'LV',
     overclock: false,
-    rft: 40,
-    time: 0.8,
+    rft: 24,
+    time: 3.15,
     efficiency: 100,
     inputs: [
       {
-        name: 'Cobblestone',
+        name: 'Copper Ingot',
         quantity: 1,
         unit: 'b',
       },
     ],
     outputs: [
       {
-        name: 'Gravel',
-        quantity: 1,
+        name: 'Copper Wire',
+        quantity: 2,
         unit: 'b',
       },
     ],
@@ -112,23 +112,23 @@ const Recipes = [
   },
   {
     step: 1,
-    machine: 'Macerator',
+    machine: 'Wiremill',
     tier: 'LV',
     overclock: false,
-    rft: 40,
-    time: 0.8,
+    rft: 24,
+    time: 10,
     efficiency: 100,
     inputs: [
       {
-        name: 'Gravel',
+        name: 'Copper Wire',
         quantity: 1,
         unit: 'b',
       },
     ],
     outputs: [
       {
-        name: 'Sand',
-        quantity: 1,
+        name: 'Fine Copper Wire',
+        quantity: 4,
         unit: 'b',
       },
     ],
@@ -139,19 +139,19 @@ const Recipes = [
     machine: 'Macerator',
     tier: 'LV',
     overclock: false,
-    rft: 40,
-    time: 0.8,
+    rft: 48,
+    time: 10,
     efficiency: 100,
     inputs: [
       {
-        name: 'Sand',
+        name: 'Coal',
         quantity: 1,
         unit: 'b',
       },
     ],
     outputs: [
       {
-        name: 'Dust',
+        name: 'Coal Dust',
         quantity: 1,
         unit: 'b',
       },
@@ -160,23 +160,28 @@ const Recipes = [
   },
   {
     step: 3,
-    machine: 'Furnace',
+    machine: 'Assembler',
     tier: 'LV',
     overclock: false,
-    rft: 128,
-    time: 3.2,
+    rft: 24,
+    time: 8,
     efficiency: 100,
     inputs: [
       {
-        name: 'Sand',
+        name: 'Fine Copper Wire',
+        quantity: 4,
+        unit: 'b',
+      },
+      {
+        name: 'Coal Dust',
         quantity: 1,
         unit: 'b',
       },
     ],
     outputs: [
       {
-        name: 'Glass',
-        quantity: 1,
+        name: 'Resistor',
+        quantity: 12,
         unit: 'b',
       },
     ],
@@ -184,27 +189,22 @@ const Recipes = [
   },
   {
     step: 4,
-    machine: 'Chemical Reactor',
-    tier: 'LV',
+    machine: 'Diamond Furnace',
+    tier: 'N/A',
     overclock: false,
-    rft: 60,
-    time: 1,
+    rft: 0,
+    time: 1.28,
     efficiency: 100,
     inputs: [
       {
-        name: 'Dust',
+        name: 'Aluminium Dust',
         quantity: 1,
         unit: 'b',
-      },
-      {
-        name: 'Water',
-        quantity: 1000,
-        unit: 'mb',
       },
     ],
     outputs: [
       {
-        name: 'Clay',
+        name: 'Aluminium Ingot',
         quantity: 1,
         unit: 'b',
       },
@@ -213,7 +213,7 @@ const Recipes = [
   },
   {
     step: 5,
-    machine: 'Electrolyzer',
+    machine: 'Compressor',
     tier: 'LV',
     overclock: false,
     rft: 40,
@@ -221,14 +221,14 @@ const Recipes = [
     efficiency: 100,
     inputs: [
       {
-        name: 'Glass',
-        quantity: 4,
+        name: 'Aluminium Ingot',
+        quantity: 1,
         unit: 'b',
       },
     ],
     outputs: [
       {
-        name: 'Quartz',
+        name: 'Aluminium Plate',
         quantity: 1,
         unit: 'b',
       },
@@ -237,52 +237,52 @@ const Recipes = [
   },
   {
     step: 6,
-    machine: 'Fluid Extractor',
+    machine: 'Cluster Mill',
     tier: 'LV',
     overclock: false,
-    rft: 128,
-    time: 2,
+    rft: 96,
+    time: 1.3,
     efficiency: 100,
     inputs: [
       {
-        name: 'Ender Pearl',
+        name: 'Aluminium Plate',
         quantity: 1,
         unit: 'b',
       },
     ],
     outputs: [
       {
-        name: 'Resonant Ender',
-        quantity: 250,
-        unit: 'mb',
+        name: 'Aluminium Foil',
+        quantity: 4,
+        unit: 'b',
       },
     ],
     targetMachines: 1,
   },
   {
     step: 7,
-    machine: 'Chemical Reactor',
+    machine: 'Assembler',
     tier: 'MV',
     overclock: false,
-    rft: 400,
-    time: 5,
+    rft: 384,
+    time: 4,
     efficiency: 100,
     inputs: [
       {
-        name: 'Quartz',
-        quantity: 1,
+        name: 'Aluminium Foil',
+        quantity: 2,
         unit: 'b',
       },
       {
-        name: 'Resonant Ender',
-        quantity: 250,
-        unit: 'mb',
+        name: 'Polyethylene Sheet',
+        quantity: 1,
+        unit: 'b',
       },
     ],
     outputs: [
       {
-        name: 'Resonant Clathrate',
-        quantity: 1,
+        name: 'Capacitor',
+        quantity: 2,
         unit: 'b',
       },
     ],
@@ -290,22 +290,22 @@ const Recipes = [
   },
   {
     step: 8,
-    machine: 'Furnace',
-    tier: 'MV',
+    machine: 'Compressor',
+    tier: 'LV',
     overclock: false,
     rft: 40,
-    time: 3.2,
+    time: 5,
     efficiency: 100,
     inputs: [
       {
-        name: 'Resonant Clathrate',
+        name: 'Tin Ingot',
         quantity: 1,
         unit: 'b',
       },
     ],
     outputs: [
       {
-        name: 'Pulsating Dust',
+        name: 'Tin Plate',
         quantity: 1,
         unit: 'b',
       },
@@ -314,27 +314,22 @@ const Recipes = [
   },
   {
     step: 9,
-    machine: 'Alloy Smelter',
-    tier: 'MV',
+    machine: 'Cluster Mill',
+    tier: 'LV',
     overclock: false,
     rft: 96,
-    time: 12,
+    time: 5.9,
     efficiency: 100,
     inputs: [
       {
-        name: 'Pulsating Dust',
-        quantity: 1,
-        unit: 'b',
-      },
-      {
-        name: 'Clay',
+        name: 'Tin Plate',
         quantity: 1,
         unit: 'b',
       },
     ],
     outputs: [
       {
-        name: 'Polymer Clay',
+        name: 'Tin Foil',
         quantity: 4,
         unit: 'b',
       },
@@ -343,23 +338,23 @@ const Recipes = [
   },
   {
     step: 10,
-    machine: 'Simulation Chamber',
+    machine: 'Diamond Furnace',
     tier: 'N/A',
     overclock: false,
-    rft: 2048,
-    time: 15,
+    rft: 0,
+    time: 1.28,
     efficiency: 100,
     inputs: [
       {
-        name: 'Polymer Clay',
+        name: 'Silicon Dust',
         quantity: 1,
         unit: 'b',
       },
     ],
     outputs: [
       {
-        name: 'Ender Pristine',
-        quantity: 0.3,
+        name: 'Silicon Ingot',
+        quantity: 1,
         unit: 'b',
       },
     ],
@@ -367,23 +362,23 @@ const Recipes = [
   },
   {
     step: 11,
-    machine: 'Simulation Chamber',
-    tier: 'N/A',
+    machine: 'Compressor',
+    tier: 'LV',
     overclock: false,
-    rft: 2048,
-    time: 15,
+    rft: 40,
+    time: 5,
     efficiency: 100,
     inputs: [
       {
-        name: 'Polymer Clay',
+        name: 'Silicon Ingot',
         quantity: 1,
         unit: 'b',
       },
     ],
     outputs: [
       {
-        name: 'Shulker Pristine',
-        quantity: 0.3,
+        name: 'Silicon Plate',
+        quantity: 1,
         unit: 'b',
       },
     ],
@@ -391,47 +386,492 @@ const Recipes = [
   },
   {
     step: 12,
-    machine: 'Loot Fabricator',
-    tier: 'N/A',
+    machine: 'Pyrolyse Oven',
+    tier: 'MV',
     overclock: false,
-    rft: 0,
-    time: 2.7,
+    rft: 120,
+    time: 30,
     efficiency: 100,
     inputs: [
       {
-        name: 'Ender Pristine',
-        quantity: 1,
+        name: 'Wood',
+        quantity: 16,
         unit: 'b',
+      },
+      {
+        name: 'Steam',
+        quantity: 4000,
+        unit: 'mb',
       },
     ],
     outputs: [
       {
-        name: 'Ender Pearl',
-        quantity: 6,
-        unit: 'b',
+        name: 'Wood Gas',
+        quantity: 1500,
+        unit: 'mb',
       },
     ],
     targetMachines: 1,
   },
   {
     step: 13,
-    machine: 'Loot Fabricator',
-    tier: 'N/A',
+    machine: 'Distillery',
+    tier: 'MV',
     overclock: false,
-    rft: 0,
-    time: 2.7,
+    rft: 256,
+    time: 4,
     efficiency: 100,
     inputs: [
       {
-        name: 'Shulker Pristine',
+        name: 'Wood Gas',
+        quantity: 1000,
+        unit: 'mb',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Ethylene',
+        quantity: 20,
+        unit: 'mb',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 14,
+    machine: 'Chemical Reactor',
+    tier: 'LV',
+    overclock: false,
+    rft: 120,
+    time: 8,
+    efficiency: 100,
+    inputs: [
+      {
+        name: 'Ethylene',
+        quantity: 144,
+        unit: 'mb',
+      },
+      {
+        name: 'Air',
+        quantity: 1000,
+        unit: 'mb',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Polyethylene',
+        quantity: 144,
+        unit: 'mb',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 15,
+    machine: 'Assembler',
+    tier: 'LV',
+    overclock: false,
+    rft: 96,
+    time: 4,
+    efficiency: 100,
+    inputs: [
+      {
+        name: 'Tin Foil',
+        quantity: 6,
+        unit: 'b',
+      },
+      {
+        name: 'Silicon Plate',
+        quantity: 1,
+        unit: 'b',
+      },
+      {
+        name: 'Polyethylene',
+        quantity: 144,
+        unit: 'mb',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Transistor',
+        quantity: 8,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 16,
+    machine: 'Alloy Smelter',
+    tier: 'LV',
+    overclock: false,
+    rft: 64,
+    time: 5,
+    efficiency: 100,
+    inputs: [
+      {
+        name: 'Tin Ingot',
+        quantity: 1,
+        unit: 'b',
+      },
+      {
+        name: 'Iron Ingot',
         quantity: 1,
         unit: 'b',
       },
     ],
     outputs: [
       {
-        name: 'Diamond',
-        quantity: 6,
+        name: 'Tin Alloy Ingot',
+        quantity: 2,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 17,
+    machine: 'Wiremill',
+    tier: 'LV',
+    overclock: false,
+    rft: 32,
+    time: 20,
+    efficiency: 100,
+    inputs: [
+      {
+        name: 'Tin Alloy Ingot',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Fine Tin Alloy Wire',
+        quantity: 8,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 18,
+    machine: 'Blast Furnace',
+    tier: 'MV',
+    overclock: false,
+    rft: 480,
+    time: 300,
+    efficiency: 100,
+    inputs: [
+      {
+        name: 'Silicon Dust',
+        quantity: 32,
+        unit: 'b',
+      },
+      {
+        name: 'Tiny Pile of Gallium Dust',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Monocrystalline Silicon Boule',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 19,
+    machine: 'Cutting Saw',
+    tier: 'MV',
+    overclock: false,
+    rft: 32,
+    time: 20,
+    efficiency: 100,
+    inputs: [
+      {
+        name: 'Water',
+        quantity: 5,
+        unit: 'mb',
+      },
+      {
+        name: 'Monocrystalline Silicon Boule',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Wafer',
+        quantity: 16,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 20,
+    machine: 'Precision Laser Engraver',
+    tier: 'MV',
+    overclock: false,
+    rft: 480,
+    time: 45,
+    efficiency: 100,
+    inputs: [
+      {
+        name: 'Wafer',
+        quantity: 1,
+        unit: 'mb',
+      },
+    ],
+    outputs: [
+      {
+        name: 'CPU Wafer',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 21,
+    machine: 'Cutting Saw',
+    tier: 'MV',
+    overclock: false,
+    rft: 32,
+    time: 60,
+    efficiency: 100,
+    inputs: [
+      {
+        name: 'Water',
+        quantity: 90,
+        unit: 'mb',
+      },
+      {
+        name: 'CPU Wafer',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Central Processing Unit',
+        quantity: 8,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 22,
+    machine: 'Fluid Solidifier',
+    tier: 'LV',
+    overclock: false,
+    rft: 32,
+    time: 2,
+    efficiency: 100,
+    inputs: [
+      {
+        name: 'Polyethylene',
+        quantity: 144,
+        unit: 'mb',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Polyethylene Sheet',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 23,
+    machine: 'Compressor',
+    tier: 'LV',
+    overclock: false,
+    rft: 40,
+    time: 5,
+    efficiency: 100,
+    inputs: [
+      {
+        name: 'Copper Ingot',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Copper Plate',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 24,
+    machine: 'Cluster Mill',
+    tier: 'LV',
+    overclock: false,
+    rft: 96,
+    time: 3.15,
+    efficiency: 100,
+    inputs: [
+      {
+        name: 'Copper Plate',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Copper Foil',
+        quantity: 4,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 25,
+    machine: 'Chemical Reactor',
+    tier: 'LV',
+    overclock: false,
+    rft: 40,
+    time: 30,
+    efficiency: 100,
+    inputs: [
+      {
+        name: 'Water',
+        quantity: 2000,
+        unit: 'mb',
+      },
+      {
+        name: 'Sulfur Dust',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Sulfuric Acid',
+        quantity: 3000,
+        unit: 'mb',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 26,
+    machine: 'Chemical Reactor',
+    tier: 'LV',
+    overclock: false,
+    rft: 40,
+    time: 30,
+    efficiency: 100,
+    inputs: [
+      {
+        name: 'Polyethylene Sheet',
+        quantity: 1,
+        unit: 'b',
+      },
+      {
+        name: 'Copper Foil',
+        quantity: 1,
+        unit: 'b',
+      },
+      {
+        name: 'Sulfuric Acid',
+        quantity: 125,
+        unit: 'mb',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Plastic Circuit Board',
+        quantity: 8,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 27,
+    machine: 'Fluid Extractor',
+    tier: 'LV',
+    overclock: false,
+    rft: 128,
+    time: 4,
+    efficiency: 100,
+    inputs: [
+      {
+        name: 'Soldering Alloy Ingot',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Soldering Alloy',
+        quantity: 144,
+        unit: 'mb',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 28,
+    machine: 'Assembler',
+    tier: 'MV',
+    overclock: false,
+    rft: 240,
+    time: 10,
+    efficiency: 100,
+    inputs: [
+      {
+        name: 'Resistor',
+        quantity: 4,
+        unit: 'b',
+      },
+      {
+        name: 'Capacitor',
+        quantity: 4,
+        unit: 'b',
+      },
+      {
+        name: 'Transistor',
+        quantity: 4,
+        unit: 'b',
+      },
+      {
+        name: 'Fine Tin Alloy Wire',
+        quantity: 4,
+        unit: 'b',
+      },
+      {
+        name: 'Central Processing Unit',
+        quantity: 1,
+        unit: 'b',
+      },
+      {
+        name: 'Plastic Circuit Board',
+        quantity: 1,
+        unit: 'b',
+      },
+      {
+        name: 'Soldering Alloy',
+        quantity: 72,
+        unit: 'mb',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Refined Circuit',
+        quantity: 4,
         unit: 'b',
       },
     ],
@@ -449,7 +889,6 @@ const DefaultTheme = {
     fontWeightBold: 700,
   },
   palette: {
-    type: 'light',
     primary: {
       light: '#58a5f0',
       main: '#0277bd',

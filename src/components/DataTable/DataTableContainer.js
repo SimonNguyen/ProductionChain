@@ -22,9 +22,9 @@ const StyledTableRow = withStyles((theme) => ({
 class DataTableContainer extends Component {
   render() {
     return (
-      <div style={{ maxWidth: '100%' }} my={2}>
-        <TableContainer component={Paper}>
-          <Table>
+      <Paper variant="outlined" my={2}>
+        <TableContainer>
+          <Table size="small" stickyHeader>
             <TableHead>
               <TableRow>
                 {this.props.headers.map((header) => (
@@ -59,7 +59,7 @@ class DataTableContainer extends Component {
             </TableBody>
           </Table>
         </TableContainer>
-      </div>
+      </Paper>
     );
   }
 }

@@ -1,15 +1,56 @@
 import React, { Component } from 'react';
-import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Topbar from './components/Topbar';
+import {
+  Root,
+  Header,
+  Sidebar,
+  CollapseBtn,
+  CollapseIcon,
+  Content,
+  SidebarTrigger,
+  SidebarTriggerIcon,
+  headerStyles,
+} from '@mui-treasury/layout';
 import { DefaultTheme, Headers, Recipes } from './data';
 import DataTableContainer from './components/DataTable';
+import NavContent from './components/NavContent';
+import HeaderContent from './components/HeaderContent';
+import { Toolbar } from '@material-ui/core';
+
+const config = {
+  sidebar: {
+    anchor: 'left',
+    width: 256,
+    variant: 'permanent',
+    collapsible: true,
+    collapsedWidth: 64,
+  },
+  content: { persistentBehavior: 'fit' },
+  header: {
+    position: 'fixed',
+    clipped: false,
+    persistentBehavior: 'fit',
+    offsetHeight: 64,
+  },
+};
 
 class App extends Component {
   constructor(props) {
     super(props);
+
+    let themeType = window.localStorage.getItem('theme');
+
+    if (themeType === 'undefined') {
+      window.localStorage.setItem('theme', 'dark');
+    } else if (themeType === 'light') {
+      DefaultTheme.palette.type = 'light';
+    } else if (themeType === 'dark') {
+      DefaultTheme.palette.type = 'dark';
+    }
+
     this.state = {
       theme: DefaultTheme,
       headers: Headers,
@@ -19,7 +60,15 @@ class App extends Component {
 
   toggleDarkTheme = () => {
     let theme = this.state.theme;
-    theme.palette.type = theme.palette.type === 'light' ? 'dark' : 'light';
+
+    if (theme.palette.type === 'light') {
+      window.localStorage.setItem('theme', 'dark');
+      theme.palette.type = 'dark';
+    } else {
+      window.localStorage.setItem('theme', 'light');
+      theme.palette.type = 'light';
+    }
+
     this.setState(theme);
   };
 
@@ -28,18 +77,41 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={muiTheme}>
         <CssBaseline />
-        <Topbar
-          onToggleDark={this.toggleDarkTheme}
-          paletteType={muiTheme.palette.type}
-        />
-        <Container maxWidth="xl">
-          <Box my={4}>
-            <DataTableContainer
-              headers={this.state.headers}
-              recipes={this.state.recipes}
-            />
-          </Box>
-        </Container>
+        <Root theme={muiTheme} config={config}>
+          {({ sidebarStyles }) => (
+            <>
+              <Header>
+                <Toolbar>
+                  <SidebarTrigger className={headerStyles.leftTrigger}>
+                    <SidebarTriggerIcon />
+                  </SidebarTrigger>
+                  <HeaderContent
+                    paletteType={this.state.theme.palette.type}
+                    onToggleDark={this.toggleDarkTheme}
+                  />
+                </Toolbar>
+              </Header>
+              <Sidebar>
+                <div className={sidebarStyles.container}>
+                  <NavContent />
+                </div>
+                <CollapseBtn>
+                  <CollapseIcon />
+                </CollapseBtn>
+              </Sidebar>
+              <Content>
+                <Container maxWidth="xl">
+                  <Box my={2}>
+                    <DataTableContainer
+                      headers={this.state.headers}
+                      recipes={this.state.recipes}
+                    />
+                  </Box>
+                </Container>
+              </Content>
+            </>
+          )}
+        </Root>
       </MuiThemeProvider>
     );
   }

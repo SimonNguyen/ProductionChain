@@ -7,7 +7,8 @@ function DataTableCell(props) {
       <TableCell>
         {props.items.map((item) => (
           <div key={item.name + props.step}>
-            {item.quantity + item.unit + ' ' + item.name}
+            <b>{item.quantity + item.unit}</b>
+            {' ' + item.name}
           </div>
         ))}
       </TableCell>
