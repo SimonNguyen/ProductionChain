@@ -11,7 +11,7 @@ import TableChartIcon from '@material-ui/icons/TableChart';
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import Settings from './menus/Settings';
 
-function NavContent(props) {
+const NavContent = React.memo(function NavContent(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -78,9 +78,6 @@ function NavContent(props) {
       />
     </List>
   );
-}
-
-NavContent.propTypes = {};
-NavContent.defaultProps = {};
+});
 
 export default NavContent;

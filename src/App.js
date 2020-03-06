@@ -69,23 +69,21 @@ class App extends Component {
       theme.palette.type = 'light';
     }
 
-    this.setState(theme);
+    this.setState({ theme });
   };
 
   handleOverclock = (step) => {
     let recipes = this.state.recipes;
-
     recipes[step].overclock = !recipes[step].overclock;
 
-    this.setState(recipes);
+    this.setState({ recipes });
   };
 
   handleTier = (step, value) => {
     let recipes = this.state.recipes;
-
     recipes[step].tier = value;
 
-    this.setState(recipes);
+    this.setState({ recipes });
   };
 
   render() {

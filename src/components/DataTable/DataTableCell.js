@@ -1,7 +1,7 @@
 import React from 'react';
 import { TableCell } from '@material-ui/core';
 
-function DataTableCell(props) {
+const DataTableCell = React.memo(function DataTableCell(props) {
   if (typeof props.items !== 'undefined') {
     return (
       <TableCell>
@@ -16,6 +16,6 @@ function DataTableCell(props) {
   } else {
     return <TableCell>No items set.</TableCell>;
   }
-}
+});
 
 export default DataTableCell;

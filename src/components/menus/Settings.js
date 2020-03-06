@@ -5,7 +5,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogContent from '@material-ui/core/DialogContent';
 import Switch from '@material-ui/core/Switch';
 
-function SettingsDialog(props) {
+const SettingsDialog = React.memo(function SettingsDialog(props) {
   const { onClose, open } = props;
   const [state, setState] = React.useState({
     checked: props.themeType === 'dark' ? true : false,
@@ -31,6 +31,6 @@ function SettingsDialog(props) {
       </DialogContent>
     </Dialog>
   );
-}
+});
 
 export default SettingsDialog;
