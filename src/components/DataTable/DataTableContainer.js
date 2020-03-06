@@ -8,8 +8,13 @@ import {
   TableCell,
   Paper,
 } from '@material-ui/core';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import Switch from '@material-ui/core/Switch';
 import { withStyles } from '@material-ui/core/styles';
 import DataTableCell from './DataTableCell';
+import * as data from '../../data/data';
+const tierNames = data.TierNames;
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
@@ -37,8 +42,28 @@ class DataTableContainer extends Component {
                 <StyledTableRow key={recipe.step}>
                   <TableCell>{recipe.step}</TableCell>
                   <TableCell>{recipe.machine}</TableCell>
-                  <TableCell>{recipe.tier}</TableCell>
-                  <TableCell>{recipe.overclock.toString()}</TableCell>
+                  <TableCell>
+                    <Select
+                      id="select"
+                      value={recipe.tier}
+                      onChange={(e) =>
+                        this.props.onChangeTier(recipe.step, e.target.value)
+                      }>
+                      {tierNames.map((tier) => (
+                        <MenuItem key={tier + recipe.step} value={tier}>
+                          {tier}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </TableCell>
+                  <TableCell>
+                    <Switch
+                      value={recipe.step}
+                      checked={recipe.overclock}
+                      color="primary"
+                      onChange={(e) => this.props.onChangeOC(recipe.step)}
+                    />
+                  </TableCell>
                   <TableCell>{recipe.rft}</TableCell>
                   <TableCell>{recipe.time}</TableCell>
                   <TableCell>{recipe.efficiency}</TableCell>

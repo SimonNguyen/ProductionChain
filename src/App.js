@@ -72,6 +72,22 @@ class App extends Component {
     this.setState(theme);
   };
 
+  handleOverclock = (step) => {
+    let recipes = this.state.recipes;
+
+    recipes[step].overclock = !recipes[step].overclock;
+
+    this.setState(recipes);
+  };
+
+  handleTier = (step, value) => {
+    let recipes = this.state.recipes;
+
+    recipes[step].tier = value;
+
+    this.setState(recipes);
+  };
+
   render() {
     let muiTheme = createMuiTheme(this.state.theme);
     return (
@@ -105,6 +121,8 @@ class App extends Component {
                     <DataTableContainer
                       headers={this.state.headers}
                       recipes={this.state.recipes}
+                      onChangeOC={this.handleOverclock}
+                      onChangeTier={this.handleTier}
                     />
                   </Box>
                 </Container>
