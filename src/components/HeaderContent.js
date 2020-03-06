@@ -15,7 +15,7 @@ const styles = () => ({
 
 const HeaderContent = ({ classes }) => (
   <>
-    <Typography noWrap color={'textSecondary'} className={classes.header}>
+    <Typography noWrap color={'textPrimary'} className={classes.header}>
       Production Chain
     </Typography>
   </>

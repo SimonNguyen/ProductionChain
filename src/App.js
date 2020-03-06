@@ -85,15 +85,15 @@ class App extends Component {
                   <SidebarTrigger className={headerStyles.leftTrigger}>
                     <SidebarTriggerIcon />
                   </SidebarTrigger>
-                  <HeaderContent
-                    paletteType={this.state.theme.palette.type}
-                    onToggleDark={this.toggleDarkTheme}
-                  />
+                  <HeaderContent />
                 </Toolbar>
               </Header>
               <Sidebar>
                 <div className={sidebarStyles.container}>
-                  <NavContent />
+                  <NavContent
+                    handleTheme={this.toggleDarkTheme}
+                    themeType={this.state.theme.palette.type}
+                  />
                 </div>
                 <CollapseBtn>
                   <CollapseIcon />
