@@ -11,10 +11,10 @@ import {
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { withStyles } from '@material-ui/core/styles';
 import DataTableCell from './DataTableCell';
-import * as data from '../../data/data';
-const tierNames = data.TierNames;
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
@@ -49,7 +49,7 @@ class DataTableContainer extends Component {
                       onChange={(e) =>
                         this.props.onChangeTier(recipe.step, e.target.value)
                       }>
-                      {tierNames.map((tier) => (
+                      {this.props.tierNames.map((tier) => (
                         <MenuItem key={tier + recipe.step} value={tier}>
                           {tier}
                         </MenuItem>
@@ -78,7 +78,14 @@ class DataTableContainer extends Component {
                     items={recipe.targetOutputs}
                     step={recipe.step}
                   />
-                  <TableCell>No actions.</TableCell>
+                  <TableCell>
+                    <IconButton
+                      key={recipe.step}
+                      aria-label="delete"
+                      onClick={(e) => this.props.onDelete(recipe.step)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
                 </StyledTableRow>
               ))}
             </TableBody>

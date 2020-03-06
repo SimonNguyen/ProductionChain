@@ -14,7 +14,7 @@ import {
   SidebarTriggerIcon,
   headerStyles,
 } from '@mui-treasury/layout';
-import { DefaultTheme, Headers, Recipes } from './data';
+import { DefaultTheme, Headers, Recipes, TierNames } from './data';
 import DataTableContainer from './components/DataTable';
 import NavContent from './components/NavContent';
 import HeaderContent from './components/HeaderContent';
@@ -77,7 +77,7 @@ class App extends Component {
 
     recipes[step].overclock = !recipes[step].overclock;
 
-    this.setState(recipes);
+    this.setState({ recipes });
   };
 
   handleTier = (step, value) => {
@@ -85,7 +85,18 @@ class App extends Component {
 
     recipes[step].tier = value;
 
-    this.setState(recipes);
+    this.setState({ recipes });
+  };
+
+  handleDelete = (step) => {
+    let recipes = this.state.recipes;
+    recipes = recipes.filter((r) => Number(r.step) !== Number(step));
+
+    for (let index in recipes) {
+      recipes[index].step = Number(index);
+    }
+
+    this.setState({ recipes });
   };
 
   render() {
@@ -121,8 +132,10 @@ class App extends Component {
                     <DataTableContainer
                       headers={this.state.headers}
                       recipes={this.state.recipes}
+                      tierNames={TierNames}
                       onChangeOC={this.handleOverclock}
                       onChangeTier={this.handleTier}
+                      onDelete={this.handleDelete}
                     />
                   </Box>
                 </Container>
