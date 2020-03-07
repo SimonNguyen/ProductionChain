@@ -2,351 +2,164 @@
     "Recipes": [
         {
             "step": 0,
-            "machine": "Macerator",
+            "machine": "Brewing Machine",
             "tier": "LV",
             "overclock": false,
-            "rft": 40,
-            "time": 0.8,
+            "rft": 12,
+            "time": 24,
             "efficiency": 100,
             "inputs": [
                 {
-                    "name": "Cobblestone",
+                    "name": "Sugar Canes",
                     "quantity": 1,
                     "unit": "b"
                 }
             ],
             "outputs": [
                 {
-                    "name": "Gravel",
-                    "quantity": 1,
-                    "unit": "b"
+                    "name": "Biomass",
+                    "quantity": 100,
+                    "unit": "mb"
                 }
             ],
             "targetMachines": 1
         },
         {
             "step": 1,
-            "machine": "Macerator",
-            "tier": "LV",
+            "machine": "Distillation Tower",
+            "tier": "MV",
             "overclock": false,
-            "rft": 40,
-            "time": 0.8,
+            "rft": 480,
+            "time": 6,
             "efficiency": 100,
             "inputs": [
                 {
-                    "name": "Gravel",
-                    "quantity": 1,
-                    "unit": "b"
-                }
-            ],
-            "outputs": [
-                {
-                    "name": "Sand",
-                    "quantity": 1,
-                    "unit": "b"
-                }
-            ],
-            "targetMachines": 1
-        },
-        {
-            "step": 2,
-            "machine": "Macerator",
-            "tier": "LV",
-            "overclock": false,
-            "rft": 40,
-            "time": 0.8,
-            "efficiency": 100,
-            "inputs": [
-                {
-                    "name": "Sand",
-                    "quantity": 1,
-                    "unit": "b"
-                }
-            ],
-            "outputs": [
-                {
-                    "name": "Dust",
-                    "quantity": 1,
-                    "unit": "b"
-                }
-            ],
-            "targetMachines": 1
-        },
-        {
-            "step": 3,
-            "machine": "Furnace",
-            "tier": "LV",
-            "overclock": false,
-            "rft": 128,
-            "time": 3.2,
-            "efficiency": 100,
-            "inputs": [
-                {
-                    "name": "Sand",
-                    "quantity": 1,
-                    "unit": "b"
-                }
-            ],
-            "outputs": [
-                {
-                    "name": "Glass",
-                    "quantity": 1,
-                    "unit": "b"
-                }
-            ],
-            "targetMachines": 1
-        },
-        {
-            "step": 4,
-            "machine": "Chemical Reactor",
-            "tier": "LV",
-            "overclock": false,
-            "rft": 60,
-            "time": 1,
-            "efficiency": 100,
-            "inputs": [
-                {
-                    "name": "Dust",
-                    "quantity": 1,
-                    "unit": "b"
-                },
-                {
-                    "name": "Water",
+                    "name": "Biomass",
                     "quantity": 1000,
                     "unit": "mb"
                 }
             ],
             "outputs": [
                 {
-                    "name": "Clay",
+                    "name": "Ethanol",
+                    "quantity": 700,
+                    "unit": "mb"
+                }
+            ],
+            "targetMachines": 1
+        },
+        {
+            "step": 2,
+            "machine": "Chemical Reactor",
+            "tier": "LV",
+            "overclock": false,
+            "rft": 120,
+            "time": 57.5,
+            "efficiency": 100,
+            "inputs": [
+                {
+                    "name": "Sulfur Dust",
                     "quantity": 1,
                     "unit": "b"
+                },
+                {
+                    "name": "Water",
+                    "quantity": 2000,
+                    "unit": "mb"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "Sulfuric Acid",
+                    "quantity": 3000,
+                    "unit": "mb"
+                }
+            ],
+            "targetMachines": 1
+        },
+        {
+            "step": 3,
+            "machine": "Chemical Reactor",
+            "tier": "MV",
+            "overclock": false,
+            "rft": 480,
+            "time": 60,
+            "efficiency": 100,
+            "inputs": [
+                {
+                    "name": "Ethanol",
+                    "quantity": 1000,
+                    "unit": "mb"
+                },
+                {
+                    "name": "Sulfuric Acid",
+                    "quantity": 1000,
+                    "unit": "mb"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "Ethylene",
+                    "quantity": 1000,
+                    "unit": "mb"
+                }
+            ],
+            "targetMachines": 1
+        },
+        {
+            "step": 4,
+            "machine": "Electrolyzer",
+            "tier": "LV",
+            "overclock": false,
+            "rft": 120,
+            "time": 8.4,
+            "efficiency": 100,
+            "inputs": [
+                {
+                    "name": "Carbon Dust",
+                    "quantity": 1,
+                    "unit": "b"
+                },
+                {
+                    "name": "Carbon Dioxide",
+                    "quantity": 3000,
+                    "unit": "mb"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "Oxygen",
+                    "quantity": 1000,
+                    "unit": "mb"
                 }
             ],
             "targetMachines": 1
         },
         {
             "step": 5,
-            "machine": "Electrolyzer",
-            "tier": "LV",
-            "overclock": false,
-            "rft": 40,
-            "time": 5,
-            "efficiency": 100,
-            "inputs": [
-                {
-                    "name": "Glass",
-                    "quantity": 4,
-                    "unit": "b"
-                }
-            ],
-            "outputs": [
-                {
-                    "name": "Quartz",
-                    "quantity": 1,
-                    "unit": "b"
-                }
-            ],
-            "targetMachines": 1
-        },
-        {
-            "step": 6,
-            "machine": "Fluid Extractor",
-            "tier": "LV",
-            "overclock": false,
-            "rft": 128,
-            "time": 2,
-            "efficiency": 100,
-            "inputs": [
-                {
-                    "name": "Ender Pearl",
-                    "quantity": 1,
-                    "unit": "b"
-                }
-            ],
-            "outputs": [
-                {
-                    "name": "Resonant Ender",
-                    "quantity": 250,
-                    "unit": "mb"
-                }
-            ],
-            "targetMachines": 1
-        },
-        {
-            "step": 7,
             "machine": "Chemical Reactor",
-            "tier": "MV",
+            "tier": "LV",
             "overclock": false,
-            "rft": 400,
-            "time": 5,
+            "rft": 120,
+            "time": 8,
             "efficiency": 100,
             "inputs": [
                 {
-                    "name": "Quartz",
-                    "quantity": 1,
-                    "unit": "b"
+                    "name": "Ethylene",
+                    "quantity": 144,
+                    "unit": "mb"
                 },
                 {
-                    "name": "Resonant Ender",
-                    "quantity": 250,
+                    "name": "Oxygen",
+                    "quantity": 1000,
                     "unit": "mb"
                 }
             ],
             "outputs": [
                 {
-                    "name": "Resonant Clathrate",
-                    "quantity": 1,
-                    "unit": "b"
-                }
-            ],
-            "targetMachines": 1
-        },
-        {
-            "step": 8,
-            "machine": "Furnace",
-            "tier": "MV",
-            "overclock": false,
-            "rft": 40,
-            "time": 3.2,
-            "efficiency": 100,
-            "inputs": [
-                {
-                    "name": "Resonant Clathrate",
-                    "quantity": 1,
-                    "unit": "b"
-                }
-            ],
-            "outputs": [
-                {
-                    "name": "Pulsating Dust",
-                    "quantity": 1,
-                    "unit": "b"
-                }
-            ],
-            "targetMachines": 1
-        },
-        {
-            "step": 9,
-            "machine": "Alloy Smelter",
-            "tier": "MV",
-            "overclock": false,
-            "rft": 96,
-            "time": 12,
-            "efficiency": 100,
-            "inputs": [
-                {
-                    "name": "Pulsating Dust",
-                    "quantity": 1,
-                    "unit": "b"
-                },
-                {
-                    "name": "Clay",
-                    "quantity": 1,
-                    "unit": "b"
-                }
-            ],
-            "outputs": [
-                {
-                    "name": "Polymer Clay",
-                    "quantity": 4,
-                    "unit": "b"
-                }
-            ],
-            "targetMachines": 1
-        },
-        {
-            "step": 10,
-            "machine": "Simulation Chamber",
-            "tier": "N/A",
-            "overclock": false,
-            "rft": 2048,
-            "time": 15,
-            "efficiency": 100,
-            "inputs": [
-                {
-                    "name": "Polymer Clay",
-                    "quantity": 1,
-                    "unit": "b"
-                }
-            ],
-            "outputs": [
-                {
-                    "name": "Ender Pristine",
-                    "quantity": 0.3,
-                    "unit": "b"
-                }
-            ],
-            "targetMachines": 1
-        },
-        {
-            "step": 11,
-            "machine": "Simulation Chamber",
-            "tier": "N/A",
-            "overclock": false,
-            "rft": 2048,
-            "time": 15,
-            "efficiency": 100,
-            "inputs": [
-                {
-                    "name": "Polymer Clay",
-                    "quantity": 1,
-                    "unit": "b"
-                }
-            ],
-            "outputs": [
-                {
-                    "name": "Shulker Pristine",
-                    "quantity": 0.3,
-                    "unit": "b"
-                }
-            ],
-            "targetMachines": 1
-        },
-        {
-            "step": 12,
-            "machine": "Loot Fabricator",
-            "tier": "N/A",
-            "overclock": false,
-            "rft": 0,
-            "time": 2.7,
-            "efficiency": 100,
-            "inputs": [
-                {
-                    "name": "Ender Pristine",
-                    "quantity": 1,
-                    "unit": "b"
-                }
-            ],
-            "outputs": [
-                {
-                    "name": "Ender Pearl",
-                    "quantity": 6,
-                    "unit": "b"
-                }
-            ],
-            "targetMachines": 1
-        },
-        {
-            "step": 13,
-            "machine": "Loot Fabricator",
-            "tier": "N/A",
-            "overclock": false,
-            "rft": 0,
-            "time": 2.7,
-            "efficiency": 100,
-            "inputs": [
-                {
-                    "name": "Shulker Pristine",
-                    "quantity": 1,
-                    "unit": "b"
-                }
-            ],
-            "outputs": [
-                {
-                    "name": "Diamond",
-                    "quantity": 6,
-                    "unit": "b"
+                    "name": "Polyethylene",
+                    "quantity": 216,
+                    "unit": "mb"
                 }
             ],
             "targetMachines": 1

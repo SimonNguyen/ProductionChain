@@ -196,7 +196,7 @@ function HexToRGB(hex, opacity) {
  */
 export function GenerateRecipeGraph(recipes, targets) {
     let directedGraph = new DirectedGraph();
-
+    directedGraph.upgradeToMulti();
     recipes.forEach(recipe => {
         directedGraph.addNode(Number(recipe.step), {
             machineName: recipe.machine,
@@ -212,7 +212,9 @@ export function GenerateRecipeGraph(recipes, targets) {
     let reversedGraph = reverse(edgeGraph);
     let acyclicGraph = RemoveCycles(reversedGraph);
 
-    if (targets) return CalculateGraph(acyclicGraph, targets.item.step);
+    if (targets) {
+        return CalculateGraph(acyclicGraph, targets.item.step)
+    };
 
     return acyclicGraph;
 }
@@ -231,6 +233,7 @@ function CalculateEdges(graph) {
                 if (source !== target) {
                     targetAttributes.inputs.forEach(input => {
                         if (input.name === output.name) {
+                            console.log(`Edge for ${input.name}`)
                             edgeGraph.addDirectedEdge(source, target, {
                                 inputName: input.name,
                                 inputQuantity: input.quantity,
@@ -253,20 +256,25 @@ function DepthFirstTraversal(graph, sourceNode) {
     let sourceAttributes = graph.getNodeAttributes(sourceNode);
 
     graph.forEachOutNeighbor(sourceNode, function (targetNode, targetAttributes) {
-        let edge = graph.getEdgeAttributes(sourceNode, targetNode);
-        let inBPS = (edge.inputQuantity / edge.inputTime) * sourceAttributes.targetMachines;
-        let outBPS = edge.outputQuantity / edge.outputTime;
-        let targetMachines = inBPS / outBPS;
+        let edges = graph.edges(sourceNode, targetNode);
 
-        if (targetAttributes.visited && graph.inDegree(targetNode) > 1) {
-            let currentTarget = graph.getNodeAttribute(targetNode, "targetMachines", targetMachines);
-            graph.setNodeAttribute(targetNode, "targetMachines", currentTarget + targetMachines);
-        } else {
-            graph.setNodeAttribute(targetNode, "targetMachines", targetMachines);
-            graph.setNodeAttribute(targetNode, "visited", true);
-        }
+        edges.forEach(edge => {
+            let edgeAttributes = graph.getEdgeAttributes(edge);
+            let inBPS = (edgeAttributes.inputQuantity / edgeAttributes.inputTime) * sourceAttributes.targetMachines;
+            let outBPS = edgeAttributes.outputQuantity / edgeAttributes.outputTime;
+            let targetMachines = inBPS / outBPS;
+    
+            if (targetAttributes.visited && graph.inDegree(targetNode) > 1) {
+                let currentTarget = graph.getNodeAttribute(targetNode, "targetMachines", targetMachines);
+                graph.setNodeAttribute(targetNode, "targetMachines", currentTarget + targetMachines);
+            } else {
+                graph.setNodeAttribute(targetNode, "targetMachines", targetMachines);
+                graph.setNodeAttribute(targetNode, "visited", true);
+            }
+    
+            return DepthFirstTraversal(graph, targetNode);
+        })
 
-        return DepthFirstTraversal(graph, targetNode);
     })
 
     return graph;
@@ -307,8 +315,11 @@ function FixGraph(graph, cycles) {
         let source = cycle[0];
         let target = cycle[1];
 
-        tmpGraph.dropEdge((tmpGraph.edge(source, target)));
+        let edges = tmpGraph.edges(source, target);
+        edges.forEach(edge => {
+            tmpGraph.dropEdge(edge)
+        });
     }
 
-    return graph;
+    return tmpGraph;
 }
