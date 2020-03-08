@@ -16,6 +16,7 @@
     "@material-ui/icons": "^4.9.1",
     "@mui-treasury/layout": "^3.3.3",
     "clsx": "latest",
+    "material-table": "^1.57.2",
     "react": "latest",
     "react-dom": "latest",
     "react-scripts": "latest"

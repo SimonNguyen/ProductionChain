@@ -14,8 +14,8 @@ import {
   SidebarTriggerIcon,
   headerStyles,
 } from '@mui-treasury/layout';
-import { DefaultTheme, Headers, Recipes } from './data';
-import DataTableContainer from './components/DataTable';
+import { DefaultTheme, Recipes } from './data';
+import DataTable from './components/DataTable';
 import NavContent from './components/NavContent';
 import HeaderContent from './components/HeaderContent';
 import { Toolbar } from '@material-ui/core';
@@ -116,8 +116,7 @@ class App extends Component {
               <Content>
                 <Container maxWidth="xl">
                   <Box my={2}>
-                    <DataTableContainer
-                      headers={this.state.headers}
+                    <DataTable
                       recipes={this.state.recipes}
                       onChangeOC={this.handleOverclock}
                       onChangeTier={this.handleTier}
