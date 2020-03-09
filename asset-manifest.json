@@ -1,17 +1,19 @@
 {
-  "main.css": "/ProductionChain/static/css/main.e9388e68.chunk.css",
-  "main.js": "/ProductionChain/static/js/main.b5b3bac0.chunk.js",
-  "main.js.map": "/ProductionChain/static/js/main.b5b3bac0.chunk.js.map",
-  "static/css/1.8378f9c0.chunk.css": "/ProductionChain/static/css/1.8378f9c0.chunk.css",
-  "static/js/1.e7637a48.chunk.js": "/ProductionChain/static/js/1.e7637a48.chunk.js",
-  "static/js/1.e7637a48.chunk.js.map": "/ProductionChain/static/js/1.e7637a48.chunk.js.map",
-  "runtime~main.js": "/ProductionChain/static/js/runtime~main.feb990c7.js",
-  "runtime~main.js.map": "/ProductionChain/static/js/runtime~main.feb990c7.js.map",
-  "static/media/mdb.css": "/ProductionChain/static/media/arrow_right.8ef6a08c.svg",
-  "static/media/all.min.css": "/ProductionChain/static/media/fa-regular-400.73cf49a2.woff",
-  "static/css/1.8378f9c0.chunk.css.map": "/ProductionChain/static/css/1.8378f9c0.chunk.css.map",
-  "static/css/main.e9388e68.chunk.css.map": "/ProductionChain/static/css/main.e9388e68.chunk.css.map",
-  "index.html": "/ProductionChain/index.html",
-  "precache-manifest.d595ad42363f1f2d0078c1ac1e7e6f0b.js": "/ProductionChain/precache-manifest.d595ad42363f1f2d0078c1ac1e7e6f0b.js",
-  "service-worker.js": "/ProductionChain/service-worker.js"
+  "files": {
+    "main.js": "/ProductionChain/static/js/main.fe6dda84.chunk.js",
+    "main.js.map": "/ProductionChain/static/js/main.fe6dda84.chunk.js.map",
+    "runtime-main.js": "/ProductionChain/static/js/runtime-main.a796e7b6.js",
+    "runtime-main.js.map": "/ProductionChain/static/js/runtime-main.a796e7b6.js.map",
+    "static/js/2.8dd81e01.chunk.js": "/ProductionChain/static/js/2.8dd81e01.chunk.js",
+    "static/js/2.8dd81e01.chunk.js.map": "/ProductionChain/static/js/2.8dd81e01.chunk.js.map",
+    "index.html": "/ProductionChain/index.html",
+    "precache-manifest.fdcaf2547f2bc43eb585e2ef1a7ffe75.js": "/ProductionChain/precache-manifest.fdcaf2547f2bc43eb585e2ef1a7ffe75.js",
+    "service-worker.js": "/ProductionChain/service-worker.js",
+    "static/js/2.8dd81e01.chunk.js.LICENSE.txt": "/ProductionChain/static/js/2.8dd81e01.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a796e7b6.js",
+    "static/js/2.8dd81e01.chunk.js",
+    "static/js/main.fe6dda84.chunk.js"
+  ]
 }
