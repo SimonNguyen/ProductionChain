@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Paper } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import Switch from '@material-ui/core/Switch';
 import MaterialTable from 'material-table';
-import { TierNames } from '../../data';
+import { TierNames, Recipes } from '../../data';
 
 function DataTableCell(props) {
   return (
@@ -48,6 +50,14 @@ class DataTable extends Component {
               .toString()
               .charAt(0)
               .toUpperCase() + rowData.overclock.toString().slice(1),
+          editComponent: (props) => (
+            <Switch
+              checked={props.overclock}
+              onChange={() => null}
+              value={props.overclock}
+              inputProps={{ 'aria-label': 'secondary checkbox' }}
+            />
+          ),
         },
         {
           title: 'RF/t',
@@ -70,6 +80,7 @@ class DataTable extends Component {
         {
           title: 'Base Inputs',
           field: 'inputs',
+          width: 150,
           render: (rowData) => (
             <DataTableCell
               items={rowData.inputs}
@@ -77,11 +88,12 @@ class DataTable extends Component {
               type={'input'}
             />
           ),
-          width: 150,
+          editComponent: () => <Button variant="outlined">Modify</Button>,
         },
         {
           title: 'Base Outputs',
           field: 'outputs',
+          width: 150,
           render: (rowData) => (
             <DataTableCell
               items={rowData.outputs}
@@ -89,7 +101,7 @@ class DataTable extends Component {
               type={'output'}
             />
           ),
-          width: 150,
+          editComponent: () => <Button variant="outlined">Modify</Button>,
         },
         {
           title: 'Target Machines',
@@ -111,7 +123,6 @@ class DataTable extends Component {
           editable: 'never',
         },
       ],
-      data: this.props.recipes,
     };
   }
 
@@ -119,32 +130,22 @@ class DataTable extends Component {
     return (
       <Paper variant="outlined" my={2}>
         <MaterialTable
-          title="Recipe List"
           columns={this.state.columns}
-          data={this.state.data}
+          data={this.props.recipes.map((recipe) => Object.assign({}, recipe))}
           options={{
             sorting: false,
             paging: true,
-            pageSize: 10,
             tableLayout: 'fixed',
+            actionsColumnIndex: -1,
+            maxBodyHeight: '77vh',
+            showTitle: false,
           }}
           editable={{
-            onRowAdd: (newData) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  {
-                    const data = this.state.data;
-                    data.push(newData);
-                    this.setState({ data }, () => resolve());
-                  }
-                  resolve();
-                }, 1000);
-              }),
             onRowUpdate: (newData, oldData) =>
               new Promise((resolve, reject) => {
                 setTimeout(() => {
                   {
-                    const data = this.state.data;
+                    const data = [...this.state.data];
                     const index = data.indexOf(oldData);
                     data[index] = newData;
                     this.setState({ data }, () => resolve());
@@ -156,7 +157,7 @@ class DataTable extends Component {
               new Promise((resolve, reject) => {
                 setTimeout(() => {
                   {
-                    let data = this.state.data;
+                    let data = [...this.state.data];
                     const index = data.indexOf(oldData);
                     data.splice(index, 1);
                     this.setState({ data }, () => resolve());

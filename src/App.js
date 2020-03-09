@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+import Toolbar from '@material-ui/core/Toolbar';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {
@@ -18,9 +19,8 @@ import { DefaultTheme, Recipes } from './data';
 import DataTable from './components/DataTable';
 import NavContent from './components/NavContent';
 import HeaderContent from './components/HeaderContent';
-import { Toolbar } from '@material-ui/core';
 
-const config = {
+let config = {
   sidebar: {
     anchor: 'left',
     width: 256,
@@ -42,8 +42,9 @@ class App extends Component {
     super(props);
 
     let themeType = window.localStorage.getItem('theme');
+    let collapsed = window.localStorage.getItem('collapsed');
 
-    if (themeType === 'undefined') {
+    if (themeType === null) {
       window.localStorage.setItem('theme', 'dark');
     } else if (themeType === 'light') {
       DefaultTheme.palette.type = 'light';
@@ -51,10 +52,15 @@ class App extends Component {
       DefaultTheme.palette.type = 'dark';
     }
 
+    if (collapsed === null) {
+      window.localStorage.setItem('collapsed', 'false');
+    }
+
     this.state = {
       theme: DefaultTheme,
       headers: Headers,
       recipes: Recipes,
+      collapsed: collapsed === 'true',
     };
   }
 
@@ -86,13 +92,31 @@ class App extends Component {
     this.setState({ recipes });
   };
 
+  handleClear = (clear) => {
+    if (clear === 'clear') {
+      let recipes = this.state.recipes;
+      recipes.length = 0;
+
+      this.setState({ recipes });
+      console.log(this.state.recipes);
+    }
+  };
+
+  handleCollapse = (collapsed) => {
+    window.localStorage.setItem('collapsed', !collapsed);
+    this.setState({ collapsed: !collapsed });
+  };
+
   render() {
     let muiTheme = createMuiTheme(this.state.theme);
     return (
       <MuiThemeProvider theme={muiTheme}>
         <CssBaseline />
-        <Root theme={muiTheme} config={config}>
-          {({ sidebarStyles }) => (
+        <Root
+          theme={muiTheme}
+          config={config}
+          initialCollapsed={this.state.collapsed}>
+          {({ sidebarStyles, collapsed }) => (
             <>
               <Header>
                 <Toolbar>
@@ -107,9 +131,10 @@ class App extends Component {
                   <NavContent
                     handleTheme={this.toggleDarkTheme}
                     themeType={this.state.theme.palette.type}
+                    handleClear={this.handleClear}
                   />
                 </div>
-                <CollapseBtn>
+                <CollapseBtn onClick={() => this.handleCollapse(collapsed)}>
                   <CollapseIcon />
                 </CollapseBtn>
               </Sidebar>

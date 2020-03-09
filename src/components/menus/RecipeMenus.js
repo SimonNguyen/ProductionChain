@@ -3,14 +3,9 @@ import Switch from '@material-ui/core/Switch';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-const SettingsDialog = React.memo(function SettingsDialog(props) {
-  const [state, setState] = React.useState({
-    checked: props.themeType === 'dark' ? true : false,
-  });
-
-  const handleChange = (name) => (event) => {
-    props.handleTheme();
-    setState({ ...state, [name]: event.target.checked });
+const ClearRecipesDialog = React.memo(function ClearRecipesDialog(props) {
+  const handleClear = (event) => {
+    props.handleClear();
   };
 
   return (

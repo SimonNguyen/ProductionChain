@@ -14,11 +14,9 @@ const styles = () => ({
 });
 
 const HeaderContent = ({ classes }) => (
-  <>
-    <Typography noWrap color={'textPrimary'} className={classes.header}>
-      Production Chain
-    </Typography>
-  </>
+  <Typography noWrap color={'textPrimary'} className={classes.header}>
+    Production Chain
+  </Typography>
 );
 
 export default withStyles(styles)(HeaderContent);
