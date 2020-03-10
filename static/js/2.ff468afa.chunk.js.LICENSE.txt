@@ -10,6 +10,24 @@ object-assign
   http://jedwatson.github.io/classnames
 */
 
+/*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <http://feross.org>
+ * @license  MIT
+ */
+
+/*!
+ LZ-UTF8 v0.5.5
+
+ Copyright (c) 2018, Rotem Dan
+ Released under the MIT license.
+
+ Build date: 2018-07-30 
+
+ Please report any issue at https://github.com/rotemdan/lzutf8.js/issues
+*/
+
 /**
  * A better abstraction over CSS.
  *
