@@ -91,7 +91,7 @@ class App extends Component {
   };
 
   handleUpdate = (newRecipes) => {
-    let recipes = Array.from(newRecipes);
+    let recipes = newRecipes;
     this.setState({ recipes });
   };
 

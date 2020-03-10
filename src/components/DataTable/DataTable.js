@@ -128,11 +128,11 @@ class DataTable extends Component {
               new Promise((resolve, reject) => {
                 setTimeout(() => {
                   {
-                    let recipes = [...this.state.recipes];
+                    let recipes = this.state.recipes;
                     let index = recipes.indexOf(oldData);
                     recipes[index] = newData;
                     this.setState({ recipes }, () => resolve());
-                    this.props.handleUpdate({ recipes });
+                    this.props.handleUpdate(recipes);
                   }
                   resolve();
                 }, 1000);
@@ -144,8 +144,13 @@ class DataTable extends Component {
                     let recipes = [...this.state.recipes];
                     let index = recipes.indexOf(oldData);
                     recipes.splice(index, 1);
+
+                    recipes.forEach((recipe, index) => {
+                      recipe.step = index + 1;
+                    });
+
                     this.setState({ recipes }, () => resolve());
-                    this.props.handleUpdate({ recipes });
+                    this.props.handleUpdate(recipes);
                   }
                   resolve();
                 }, 1000);
