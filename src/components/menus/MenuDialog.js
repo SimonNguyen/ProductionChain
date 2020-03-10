@@ -1,58 +1,53 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Settings from './Settings';
+
+import AboutMenu from './AboutMenu';
+import ImportExportMenu from './ImportExportMenu';
+import ClearMenu from './ClearMenu';
+import RecipeMenu from './RecipeMenu';
+import SettingsMenu from './SettingsMenu';
 
 const MenuDialog = ({
-  isOpen,
-  handleClose,
-  title,
-  size,
   contentType,
-  confirmation,
-  handleTheme,
+  isOpen,
+  recipes,
+  size,
   themeType,
+  title,
+  handleClose,
+  handleClear,
+  handleRecipes,
+  handleTheme,
 }) => {
   return (
     <Dialog fullWidth maxWidth={size} open={isOpen} onClose={handleClose}>
-      <DialogTitle>{title}</DialogTitle>
-      <DialogContent>
-        {contentType === 'about' ? (
-          <DialogContentText>
-            A production chain calculator inspired by the Kirk McDonald factory
-            calculator for Factorio.
-          </DialogContentText>
-        ) : contentType === 'import' ? (
-          'Import'
-        ) : contentType === 'clear' ? (
-          'Clear'
-        ) : contentType === 'add' ? (
-          'Add'
-        ) : contentType === 'settings' ? (
-          <Settings handleTheme={handleTheme} themeType={themeType} />
-        ) : (
-          <DialogContentText>No valid content type selected.</DialogContentText>
-        )}
-      </DialogContent>
-      {confirmation ? (
-        <DialogActions>
-          <Button onClick={() => handleClose('clear')} color="default">
-            Accept
-          </Button>
-          <Button onClick={handleClose} color="default">
-            Cancel
-          </Button>
-        </DialogActions>
+      {contentType === 'about' ? (
+        <AboutMenu title={title} handleClose={handleClose} />
+      ) : contentType === 'import' ? (
+        <ImportExportMenu
+          title={title}
+          handleClose={handleClose}
+          handleRecipes={handleRecipes}
+          recipes={recipes}
+        />
+      ) : contentType === 'clear' ? (
+        <ClearMenu
+          title={title}
+          handleClear={handleClear}
+          handleClose={handleClose}
+        />
+      ) : contentType === 'add' ? (
+        <RecipeMenu title={title} handleClose={handleClose} />
+      ) : contentType === 'settings' ? (
+        <SettingsMenu
+          title={title}
+          handleClose={handleClose}
+          handleTheme={handleTheme}
+          themeType={themeType}
+        />
       ) : (
-        <DialogActions>
-          <Button onClick={handleClose} color="default">
-            Close
-          </Button>
-        </DialogActions>
+        <DialogContentText>No valid content type selected.</DialogContentText>
       )}
     </Dialog>
   );

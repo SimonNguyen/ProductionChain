@@ -15,22 +15,30 @@ const NavContent = React.memo(function NavContent(props) {
   const [open, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState('');
   const [type, setType] = React.useState('');
+  const [size, setSize] = React.useState('xs');
 
-  const handleDialogOpen = (type, title) => {
-    setTitle(title);
+  const handleDialogOpen = (type, title, size) => {
     setType(type);
+    setTitle(title);
+    setSize(size);
     setOpen(true);
   };
 
-  const handleDialogClose = (clear) => {
-    props.handleClear(clear);
+  const handleDialogClose = () => {
+    setOpen(false);
+  };
+
+  const handleClear = () => {
+    props.handleClear();
     setOpen(false);
   };
 
   return (
     <>
       <List>
-        <ListItem button onClick={() => handleDialogOpen('about', 'About')}>
+        <ListItem
+          button
+          onClick={() => handleDialogOpen('about', 'About', 'xs')}>
           <ListItemIcon>
             <InfoIcon />
           </ListItemIcon>
@@ -42,7 +50,7 @@ const NavContent = React.memo(function NavContent(props) {
         <ListItem
           button
           onClick={() =>
-            handleDialogOpen('import', 'Import or export a recipe list')
+            handleDialogOpen('import', 'Import or export a recipe list', 'sm')
           }>
           <ListItemIcon>
             <ImportExportIcon />
@@ -57,7 +65,8 @@ const NavContent = React.memo(function NavContent(props) {
           onClick={() =>
             handleDialogOpen(
               'clear',
-              'Are you sure you want to clear all recipes?'
+              'Are you sure you want to clear all recipes?',
+              'xs'
             )
           }>
           <ListItemIcon>
@@ -70,7 +79,7 @@ const NavContent = React.memo(function NavContent(props) {
         </ListItem>
         <ListItem
           button
-          onClick={() => handleDialogOpen('add', 'Add a recipe')}>
+          onClick={() => handleDialogOpen('add', 'Add a recipe', 'md')}>
           <ListItemIcon>
             <PlaylistAddIcon />
           </ListItemIcon>
@@ -82,7 +91,7 @@ const NavContent = React.memo(function NavContent(props) {
         <Divider style={{ margin: '12px 0' }} />
         <ListItem
           button
-          onClick={() => handleDialogOpen('settings', 'Settings')}>
+          onClick={() => handleDialogOpen('settings', 'Settings', 'xs')}>
           <ListItemIcon>
             <SettingsIcon />
           </ListItemIcon>
@@ -93,14 +102,16 @@ const NavContent = React.memo(function NavContent(props) {
         </ListItem>
       </List>
       <MenuDialog
-        isOpen={open}
-        handleClose={handleDialogClose}
-        title={title}
         contentType={type}
-        confirmation={type === 'clear'}
-        size="xs"
-        handleTheme={props.handleTheme}
+        isOpen={open}
+        recipes={props.recipes}
+        size={size}
         themeType={props.themeType}
+        title={title}
+        handleClear={handleClear}
+        handleClose={handleDialogClose}
+        handleRecipes={props.handleRecipes}
+        handleTheme={props.handleTheme}
       />
     </>
   );

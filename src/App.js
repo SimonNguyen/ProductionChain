@@ -78,33 +78,21 @@ class App extends Component {
     this.setState({ theme });
   };
 
-  handleOverclock = (step) => {
-    let recipes = this.state.recipes;
-    recipes[step].overclock = !recipes[step].overclock;
-
-    this.setState({ recipes });
-  };
-
-  handleTier = (step, value) => {
-    let recipes = this.state.recipes;
-    recipes[step].tier = value;
-
-    this.setState({ recipes });
-  };
-
-  handleClear = (clear) => {
-    if (clear === 'clear') {
-      let recipes = this.state.recipes;
-      recipes.length = 0;
-
-      this.setState({ recipes });
-      console.log(this.state.recipes);
-    }
-  };
-
   handleCollapse = (collapsed) => {
     window.localStorage.setItem('collapsed', !collapsed);
     this.setState({ collapsed: !collapsed });
+  };
+
+  handleClear = () => {
+    let recipes = this.state.recipes;
+    recipes.length = 0;
+
+    this.setState({ recipes });
+  };
+
+  handleUpdate = (newRecipes) => {
+    let recipes = Array.from(newRecipes);
+    this.setState({ recipes });
   };
 
   render() {
@@ -130,8 +118,10 @@ class App extends Component {
                 <div className={sidebarStyles.container}>
                   <NavContent
                     handleTheme={this.toggleDarkTheme}
-                    themeType={this.state.theme.palette.type}
+                    handleRecipes={this.handleUpdate}
                     handleClear={this.handleClear}
+                    recipes={this.state.recipes}
+                    themeType={this.state.theme.palette.type}
                   />
                 </div>
                 <CollapseBtn onClick={() => this.handleCollapse(collapsed)}>
@@ -143,6 +133,7 @@ class App extends Component {
                   <Box my={2}>
                     <DataTable
                       recipes={this.state.recipes}
+                      handleUpdate={this.handleUpdate}
                       onChangeOC={this.handleOverclock}
                       onChangeTier={this.handleTier}
                     />

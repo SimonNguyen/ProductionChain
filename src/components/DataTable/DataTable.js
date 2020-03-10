@@ -3,7 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Switch from '@material-ui/core/Switch';
 import MaterialTable from 'material-table';
-import { TierNames, Recipes } from '../../data';
+import { TierNames } from '../../data';
 
 function DataTableCell(props) {
   return (
@@ -103,26 +103,8 @@ class DataTable extends Component {
           ),
           editComponent: () => <Button variant="outlined">Modify</Button>,
         },
-        {
-          title: 'Target Machines',
-          field: 'targetMachines',
-          width: 75,
-          editable: 'never',
-          type: 'numeric',
-        },
-        {
-          title: 'Inputs per Second',
-          field: 'targetInputs',
-          width: 150,
-          editable: 'never',
-        },
-        {
-          title: 'Outputs per Second',
-          field: 'targetOutputs',
-          width: 150,
-          editable: 'never',
-        },
       ],
+      recipes: Array.from(this.props.recipes),
     };
   }
 
@@ -131,10 +113,11 @@ class DataTable extends Component {
       <Paper variant="outlined" my={2}>
         <MaterialTable
           columns={this.state.columns}
-          data={this.props.recipes.map((recipe) => Object.assign({}, recipe))}
+          data={Array.from(this.props.recipes)}
           options={{
             sorting: false,
             paging: true,
+            pageSizeOptions: [5, 10, 15, 20],
             tableLayout: 'fixed',
             actionsColumnIndex: -1,
             maxBodyHeight: '77vh',
@@ -145,10 +128,11 @@ class DataTable extends Component {
               new Promise((resolve, reject) => {
                 setTimeout(() => {
                   {
-                    const data = [...this.state.data];
-                    const index = data.indexOf(oldData);
-                    data[index] = newData;
-                    this.setState({ data }, () => resolve());
+                    let recipes = [...this.state.recipes];
+                    let index = recipes.indexOf(oldData);
+                    recipes[index] = newData;
+                    this.setState({ recipes }, () => resolve());
+                    this.props.handleUpdate({ recipes });
                   }
                   resolve();
                 }, 1000);
@@ -157,10 +141,11 @@ class DataTable extends Component {
               new Promise((resolve, reject) => {
                 setTimeout(() => {
                   {
-                    let data = [...this.state.data];
-                    const index = data.indexOf(oldData);
-                    data.splice(index, 1);
-                    this.setState({ data }, () => resolve());
+                    let recipes = [...this.state.recipes];
+                    let index = recipes.indexOf(oldData);
+                    recipes.splice(index, 1);
+                    this.setState({ recipes }, () => resolve());
+                    this.props.handleUpdate({ recipes });
                   }
                   resolve();
                 }, 1000);

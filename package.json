@@ -2,6 +2,7 @@
   "name": "production-chain",
   "version": "1.0.0",
   "private": true,
+  "homepage": "https://simonnguyen.github.com/ProductionChain/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -9,13 +10,16 @@
     "eject": "react-scripts eject",
     "clean": "rm -rf node_modules",
     "reinstall": "npm run clean && npm install",
-    "rebuild": "npm run clean && npm install && npm run build"
+    "rebuild": "npm run clean && npm install && npm run build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@material-ui/core": "latest",
     "@material-ui/icons": "^4.9.1",
     "@mui-treasury/layout": "^3.3.3",
     "clsx": "latest",
+    "lzutf8": "^0.5.5",
     "material-table": "^1.57.2",
     "react": "latest",
     "react-dom": "latest",
@@ -34,6 +38,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^2.2.0",
     "prettier": "^1.19.1"
   }
 }
