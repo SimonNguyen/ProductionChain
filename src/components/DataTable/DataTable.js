@@ -50,14 +50,12 @@ class DataTable extends Component {
               .toString()
               .charAt(0)
               .toUpperCase() + rowData.overclock.toString().slice(1),
-          editComponent: (props) => (
-            <Switch
-              checked={props.overclock}
-              onChange={() => null}
-              value={props.overclock}
-              inputProps={{ 'aria-label': 'secondary checkbox' }}
-            />
-          ),
+          customFilterAndSearch: (search, rowData) => {
+            return (
+              rowData.overclock.toString().toUpperCase() ===
+              search.toUpperCase()
+            );
+          },
         },
         {
           title: 'RF/t',
@@ -89,6 +87,24 @@ class DataTable extends Component {
             />
           ),
           editComponent: () => <Button variant="outlined">Modify</Button>,
+          customFilterAndSearch: (search, rowData) => {
+            let found = false;
+            rowData.inputs.forEach((input) => {
+              let values = Object.values(input);
+              values.forEach((value) => {
+                if (
+                  value
+                    .toString()
+                    .toUpperCase()
+                    .includes(search.toUpperCase())
+                ) {
+                  found = found || true;
+                }
+              });
+            });
+
+            return found;
+          },
         },
         {
           title: 'Base Outputs',
@@ -102,6 +118,24 @@ class DataTable extends Component {
             />
           ),
           editComponent: () => <Button variant="outlined">Modify</Button>,
+          customFilterAndSearch: (search, rowData) => {
+            let found = false;
+            rowData.outputs.forEach((output) => {
+              let values = Object.values(output);
+              values.forEach((value) => {
+                if (
+                  value
+                    .toString()
+                    .toUpperCase()
+                    .includes(search.toUpperCase())
+                ) {
+                  found = found || true;
+                }
+              });
+            });
+
+            return found;
+          },
         },
       ],
       recipes: Array.from(this.props.recipes),
