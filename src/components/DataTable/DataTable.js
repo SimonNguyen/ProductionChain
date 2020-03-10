@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import Switch from '@material-ui/core/Switch';
 import MaterialTable from 'material-table';
 import { TierNames } from '../../data';
 
@@ -26,59 +25,47 @@ class DataTable extends Component {
           title: 'Step',
           field: 'step',
           readonly: true,
-          width: 50,
           editable: 'never',
+          width: 100,
         },
         {
           title: 'Machine Name',
           field: 'machineName',
-          width: 125,
+          width: 200,
         },
         {
           title: 'Machine Tier',
           field: 'machineTier',
           lookup: Object.assign({}, TierNames),
-          width: 100,
+          width: 200,
         },
         {
           title: 'Overclock',
           field: 'overclock',
-          width: 75,
           type: 'boolean',
-          render: (rowData) =>
-            rowData.overclock
-              .toString()
-              .charAt(0)
-              .toUpperCase() + rowData.overclock.toString().slice(1),
           customFilterAndSearch: (search, rowData) => {
             return (
               rowData.overclock.toString().toUpperCase() ===
               search.toUpperCase()
             );
           },
+          width: 100,
         },
         {
           title: 'RF/t',
           field: 'rft',
-          width: 75,
           type: 'numeric',
+          width: 100,
         },
         {
           title: 'Time (s)',
           field: 'time',
-          width: 75,
           type: 'numeric',
-        },
-        {
-          title: 'Efficiency (%)',
-          field: 'efficiency',
-          width: 75,
-          editable: 'never',
+          width: 100,
         },
         {
           title: 'Base Inputs',
           field: 'inputs',
-          width: 150,
           render: (rowData) => (
             <DataTableCell
               items={rowData.inputs}
@@ -109,7 +96,6 @@ class DataTable extends Component {
         {
           title: 'Base Outputs',
           field: 'outputs',
-          width: 150,
           render: (rowData) => (
             <DataTableCell
               items={rowData.outputs}
@@ -149,13 +135,13 @@ class DataTable extends Component {
           columns={this.state.columns}
           data={Array.from(this.props.recipes)}
           options={{
-            sorting: false,
-            paging: true,
-            pageSizeOptions: [5, 10, 15, 20],
-            tableLayout: 'fixed',
             actionsColumnIndex: -1,
             maxBodyHeight: '77vh',
+            paging: true,
+            pageSizeOptions: [5, 10, 15, 20],
             showTitle: false,
+            sorting: false,
+            tableLayout: 'auto',
           }}
           editable={{
             onRowUpdate: (newData, oldData) =>
@@ -190,6 +176,42 @@ class DataTable extends Component {
                 }, 1000);
               }),
           }}
+          actions={[
+            {
+              icon: 'arrow_upward',
+              tooltip: 'Move up',
+              onClick: (event, rowData) => {
+                let recipes = [...this.state.recipes];
+                let index = recipes.indexOf(rowData);
+
+                if (index > 0) {
+                  let temp = recipes[index - 1];
+                  recipes[index - 1] = recipes[index];
+                  recipes[index] = temp;
+                }
+
+                this.setState({ recipes });
+                this.props.handleUpdate(recipes);
+              },
+            },
+            {
+              icon: 'arrow_downward',
+              tooltip: 'Move down',
+              onClick: (event, rowData) => {
+                let recipes = [...this.state.recipes];
+                let index = recipes.indexOf(rowData);
+
+                if (index < recipes.length - 1) {
+                  let temp = recipes[index + 1];
+                  recipes[index + 1] = recipes[index];
+                  recipes[index] = temp;
+                }
+
+                this.setState({ recipes });
+                this.props.handleUpdate(recipes);
+              },
+            },
+          ]}
         />
       </Paper>
     );

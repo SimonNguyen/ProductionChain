@@ -38,7 +38,6 @@ const Recipes = [
     overclock: false,
     rft: 24,
     time: 3.15,
-    efficiency: 100,
     inputs: [
       {
         name: 'Copper Ingot',
@@ -62,7 +61,6 @@ const Recipes = [
     overclock: false,
     rft: 24,
     time: 10,
-    efficiency: 100,
     inputs: [
       {
         name: 'Copper Wire',
@@ -86,7 +84,6 @@ const Recipes = [
     overclock: false,
     rft: 48,
     time: 10,
-    efficiency: 100,
     inputs: [
       {
         name: 'Coal',
@@ -110,7 +107,6 @@ const Recipes = [
     overclock: false,
     rft: 24,
     time: 8,
-    efficiency: 100,
     inputs: [
       {
         name: 'Fine Copper Wire',
@@ -139,7 +135,6 @@ const Recipes = [
     overclock: false,
     rft: 0,
     time: 1.28,
-    efficiency: 100,
     inputs: [
       {
         name: 'Aluminium Dust',
@@ -163,7 +158,6 @@ const Recipes = [
     overclock: false,
     rft: 40,
     time: 5,
-    efficiency: 100,
     inputs: [
       {
         name: 'Aluminium Ingot',
@@ -187,7 +181,6 @@ const Recipes = [
     overclock: false,
     rft: 96,
     time: 1.3,
-    efficiency: 100,
     inputs: [
       {
         name: 'Aluminium Plate',
@@ -211,7 +204,6 @@ const Recipes = [
     overclock: false,
     rft: 384,
     time: 4,
-    efficiency: 100,
     inputs: [
       {
         name: 'Aluminium Foil',
@@ -240,7 +232,6 @@ const Recipes = [
     overclock: false,
     rft: 40,
     time: 5,
-    efficiency: 100,
     inputs: [
       {
         name: 'Tin Ingot',
@@ -264,7 +255,6 @@ const Recipes = [
     overclock: false,
     rft: 96,
     time: 5.9,
-    efficiency: 100,
     inputs: [
       {
         name: 'Tin Plate',
@@ -288,7 +278,6 @@ const Recipes = [
     overclock: false,
     rft: 0,
     time: 1.28,
-    efficiency: 100,
     inputs: [
       {
         name: 'Silicon Dust',
@@ -312,7 +301,6 @@ const Recipes = [
     overclock: false,
     rft: 40,
     time: 5,
-    efficiency: 100,
     inputs: [
       {
         name: 'Silicon Ingot',
@@ -336,7 +324,6 @@ const Recipes = [
     overclock: false,
     rft: 120,
     time: 30,
-    efficiency: 100,
     inputs: [
       {
         name: 'Wood',
@@ -365,7 +352,6 @@ const Recipes = [
     overclock: false,
     rft: 256,
     time: 4,
-    efficiency: 100,
     inputs: [
       {
         name: 'Wood Gas',
@@ -389,7 +375,6 @@ const Recipes = [
     overclock: false,
     rft: 120,
     time: 8,
-    efficiency: 100,
     inputs: [
       {
         name: 'Ethylene',
@@ -418,7 +403,6 @@ const Recipes = [
     overclock: false,
     rft: 96,
     time: 4,
-    efficiency: 100,
     inputs: [
       {
         name: 'Tin Foil',
@@ -452,7 +436,6 @@ const Recipes = [
     overclock: false,
     rft: 64,
     time: 5,
-    efficiency: 100,
     inputs: [
       {
         name: 'Tin Ingot',
@@ -481,7 +464,6 @@ const Recipes = [
     overclock: false,
     rft: 32,
     time: 20,
-    efficiency: 100,
     inputs: [
       {
         name: 'Tin Alloy Ingot',
@@ -505,7 +487,6 @@ const Recipes = [
     overclock: false,
     rft: 480,
     time: 300,
-    efficiency: 100,
     inputs: [
       {
         name: 'Silicon Dust',
@@ -534,7 +515,6 @@ const Recipes = [
     overclock: false,
     rft: 32,
     time: 20,
-    efficiency: 100,
     inputs: [
       {
         name: 'Water',
@@ -563,7 +543,6 @@ const Recipes = [
     overclock: false,
     rft: 480,
     time: 45,
-    efficiency: 100,
     inputs: [
       {
         name: 'Wafer',
@@ -587,7 +566,6 @@ const Recipes = [
     overclock: false,
     rft: 32,
     time: 60,
-    efficiency: 100,
     inputs: [
       {
         name: 'Water',
@@ -616,7 +594,6 @@ const Recipes = [
     overclock: false,
     rft: 32,
     time: 2,
-    efficiency: 100,
     inputs: [
       {
         name: 'Polyethylene',
@@ -640,7 +617,6 @@ const Recipes = [
     overclock: false,
     rft: 40,
     time: 5,
-    efficiency: 100,
     inputs: [
       {
         name: 'Copper Ingot',
@@ -664,7 +640,6 @@ const Recipes = [
     overclock: false,
     rft: 96,
     time: 3.15,
-    efficiency: 100,
     inputs: [
       {
         name: 'Copper Plate',
@@ -688,7 +663,6 @@ const Recipes = [
     overclock: false,
     rft: 40,
     time: 30,
-    efficiency: 100,
     inputs: [
       {
         name: 'Water',
@@ -717,7 +691,6 @@ const Recipes = [
     overclock: false,
     rft: 40,
     time: 30,
-    efficiency: 100,
     inputs: [
       {
         name: 'Polyethylene Sheet',
@@ -751,7 +724,6 @@ const Recipes = [
     overclock: false,
     rft: 128,
     time: 4,
-    efficiency: 100,
     inputs: [
       {
         name: 'Soldering Alloy Ingot',
@@ -775,7 +747,6 @@ const Recipes = [
     overclock: false,
     rft: 240,
     time: 10,
-    efficiency: 100,
     inputs: [
       {
         name: 'Resistor',
