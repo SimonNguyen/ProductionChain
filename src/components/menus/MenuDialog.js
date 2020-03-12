@@ -21,7 +21,12 @@ const MenuDialog = ({
   handleTheme,
 }) => {
   return (
-    <Dialog fullWidth maxWidth={size} open={isOpen} onClose={handleClose}>
+    <Dialog
+      disableBackdropClick={contentType === 'add'}
+      fullWidth
+      maxWidth={size}
+      open={isOpen}
+      onClose={handleClose}>
       {contentType === 'about' ? (
         <AboutMenu title={title} handleClose={handleClose} />
       ) : contentType === 'import' ? (

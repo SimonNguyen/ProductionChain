@@ -79,7 +79,7 @@ const NavContent = React.memo(function NavContent(props) {
         </ListItem>
         <ListItem
           button
-          onClick={() => handleDialogOpen('add', 'Add a recipe', 'md')}>
+          onClick={() => handleDialogOpen('add', 'Add a recipe', 'lg')}>
           <ListItemIcon>
             <PlaylistAddIcon />
           </ListItemIcon>
