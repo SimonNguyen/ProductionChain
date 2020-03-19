@@ -94,10 +94,10 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
       <DialogTitle>{props.title}</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          By default, the calculator will consider a target output to be
-          produced by 1 machine. The number of machines or outputs per second
-          must be set if the default values are not sufficient. Once targets are
-          set, the calculate button will determine the requirements of the
+          The default setting for the calculator is a single machine producing
+          the final product. If you require more or less product, adjust the
+          machines or outputs per second. Once you have set custom targets,
+          press the 'calculate' button to redetermine the requirements for the
           recipe.
         </DialogContentText>
         <Grid container direction="row" alignItems="center">

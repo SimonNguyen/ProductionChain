@@ -27,7 +27,7 @@ const SettingsMenu = React.memo(function SettingsMenu(props) {
           justify="space-between"
           alignItems="center">
           <Typography color={'textPrimary'} variant="subtitle1">
-            DARK THEME
+            Dark Theme
           </Typography>
           <Switch checked={state.checked} onChange={handleChange('checked')} />
         </Grid>
