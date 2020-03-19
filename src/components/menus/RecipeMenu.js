@@ -197,8 +197,8 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
           </Grid>
           <Grid item xs={6}>
             <DialogContentText>
-              Outputs:{' '}
-              {outputs.length === 0 ? 'This recipe has no outputs.' : ''}
+              Outputs:
+              {outputs.length === 0 ? ' This recipe has no outputs.' : ''}
             </DialogContentText>
           </Grid>
         </Grid>

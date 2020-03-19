@@ -7,8 +7,10 @@ import Divider from '@material-ui/core/Divider';
 import SettingsIcon from '@material-ui/icons/Settings';
 import InfoIcon from '@material-ui/icons/Info';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
-import TableChartIcon from '@material-ui/icons/TableChart';
-import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import AddIcon from '@material-ui/icons/Add';
+import FunctionsIcon from '@material-ui/icons/Functions';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
 import MenuDialog from './menus/MenuDialog';
 
 const NavContent = React.memo(function NavContent(props) {
@@ -18,9 +20,9 @@ const NavContent = React.memo(function NavContent(props) {
   const [size, setSize] = React.useState('xs');
 
   const handleDialogOpen = (type, title, size) => {
-    setType(type);
-    setTitle(title);
     setSize(size);
+    setTitle(title);
+    setType(type);
     setOpen(true);
   };
 
@@ -70,10 +72,10 @@ const NavContent = React.memo(function NavContent(props) {
             )
           }>
           <ListItemIcon>
-            <TableChartIcon />
+            <DeleteForeverIcon />
           </ListItemIcon>
           <ListItemText
-            primary={'Clear Recipes'}
+            primary={'Clear All Recipes'}
             primaryTypographyProps={{ noWrap: true }}
           />
         </ListItem>
@@ -81,10 +83,44 @@ const NavContent = React.memo(function NavContent(props) {
           button
           onClick={() => handleDialogOpen('add', 'Add a recipe', 'lg')}>
           <ListItemIcon>
-            <PlaylistAddIcon />
+            <AddIcon />
           </ListItemIcon>
           <ListItemText
             primary={'Add Recipe'}
+            primaryTypographyProps={{ noWrap: true }}
+          />
+        </ListItem>
+        <ListItem
+          button
+          onClick={() =>
+            handleDialogOpen(
+              'calculator',
+              'Calculated requirements for this recipe',
+              'lg'
+            )
+          }>
+          <ListItemIcon>
+            <FunctionsIcon />
+          </ListItemIcon>
+          <ListItemText
+            primary={'Calculator'}
+            primaryTypographyProps={{ noWrap: true }}
+          />
+        </ListItem>
+        <ListItem
+          button
+          onClick={() =>
+            handleDialogOpen(
+              'chart',
+              'Calculate requirements for this recipe',
+              'lg'
+            )
+          }>
+          <ListItemIcon>
+            <EqualizerIcon />
+          </ListItemIcon>
+          <ListItemText
+            primary={'Charts'}
             primaryTypographyProps={{ noWrap: true }}
           />
         </ListItem>
@@ -103,11 +139,12 @@ const NavContent = React.memo(function NavContent(props) {
       </List>
       <MenuDialog
         contentType={type}
-        isOpen={open}
+        graph={props.graph}
         recipes={props.recipes}
         size={size}
         themeType={props.themeType}
         title={title}
+        isOpen={open}
         handleClear={handleClear}
         handleClose={handleDialogClose}
         handleRecipes={props.handleRecipes}

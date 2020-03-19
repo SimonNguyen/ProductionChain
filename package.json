@@ -17,8 +17,12 @@
   "dependencies": {
     "@material-ui/core": "latest",
     "@material-ui/icons": "^4.9.1",
+    "@mrblenny/react-flow-chart": "0.0.11",
     "@mui-treasury/layout": "^3.3.3",
     "clsx": "latest",
+    "elementary-circuits-directed-graph": "^1.2.0",
+    "graphology": "^0.16.1",
+    "graphology-operators": "^1.0.0",
     "lzutf8": "^0.5.5",
     "material-table": "^1.57.2",
     "react": "latest",

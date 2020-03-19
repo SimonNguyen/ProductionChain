@@ -16,6 +16,7 @@ import {
   headerStyles,
 } from '@mui-treasury/layout';
 import { DefaultTheme, Recipes } from './data';
+import { GenerateGraph } from './components/utils/graph';
 import DataTable from './components/DataTable';
 import NavContent from './components/NavContent';
 import HeaderContent from './components/HeaderContent';
@@ -43,6 +44,7 @@ class App extends Component {
 
     let themeType = window.localStorage.getItem('theme');
     let collapsed = window.localStorage.getItem('collapsed');
+    let graph = GenerateGraph(Recipes);
 
     if (themeType === null) {
       window.localStorage.setItem('theme', 'dark');
@@ -61,6 +63,7 @@ class App extends Component {
       headers: Headers,
       recipes: Recipes,
       collapsed: collapsed === 'true',
+      graph: graph,
     };
   }
 
@@ -117,6 +120,7 @@ class App extends Component {
               <Sidebar>
                 <div className={sidebarStyles.container}>
                   <NavContent
+                    graph={this.state.graph}
                     handleTheme={this.toggleDarkTheme}
                     handleRecipes={this.handleUpdate}
                     handleClear={this.handleClear}

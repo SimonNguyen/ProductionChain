@@ -187,7 +187,9 @@ class DataTable extends Component {
                 if (index > 0) {
                   let temp = recipes[index - 1];
                   recipes[index - 1] = recipes[index];
+                  recipes[index - 1].step = index;
                   recipes[index] = temp;
+                  recipes[index].step = index + 1;
                 }
 
                 this.setState({ recipes });

@@ -6,10 +6,12 @@ import AboutMenu from './AboutMenu';
 import ImportExportMenu from './ImportExportMenu';
 import ClearMenu from './ClearMenu';
 import RecipeMenu from './RecipeMenu';
+import CalculatorMenu from './CalculatorMenu';
 import SettingsMenu from './SettingsMenu';
 
 const MenuDialog = ({
   contentType,
+  graph,
   isOpen,
   recipes,
   size,
@@ -22,7 +24,10 @@ const MenuDialog = ({
 }) => {
   return (
     <Dialog
-      disableBackdropClick={contentType === 'add'}
+      disableBackdropClick={
+        contentType === 'add' || contentType === 'calculator'
+      }
+      fullScreen={contentType === 'chart'}
       fullWidth
       maxWidth={size}
       open={isOpen}
@@ -50,6 +55,13 @@ const MenuDialog = ({
           handleClose={handleClose}
           handleTheme={handleTheme}
           themeType={themeType}
+        />
+      ) : contentType === 'calculator' ? (
+        <CalculatorMenu
+          title={title}
+          graph={graph}
+          recipes={recipes}
+          handleClose={handleClose}
         />
       ) : (
         <DialogContentText>No valid content type selected.</DialogContentText>
