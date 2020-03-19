@@ -46,8 +46,6 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
   const [targetOps, setTargetOps] = React.useState(targetRatio);
   const [targetLabelWidth, setTargetLabelWidth] = React.useState(0);
 
-  const [targets, setTargets] = React.useState(0);
-
   const targetLabel = React.useRef(null);
   React.useEffect(() => {
     setTargetLabelWidth(targetLabel.current.offsetWidth);
@@ -206,7 +204,11 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
               .sort()
               .map(([key, value]) => (
                 <React.Fragment key={key}>
-                  {key} : {(value.quantity * value.targetMachines).toFixed(2)}
+                  {key} :{' '}
+                  {(
+                    (value.quantity / value.time) *
+                    value.targetMachines
+                  ).toFixed(2)}
                   <br />
                 </React.Fragment>
               ))}
@@ -216,7 +218,11 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
               .sort()
               .map(([key, value]) => (
                 <React.Fragment key={key}>
-                  {key} : {(value.quantity * value.targetMachines).toFixed(2)}
+                  {key} :{' '}
+                  {(
+                    (value.quantity / value.time) *
+                    value.targetMachines
+                  ).toFixed(2)}
                   <br />
                 </React.Fragment>
               ))}

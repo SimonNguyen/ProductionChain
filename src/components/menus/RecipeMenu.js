@@ -47,6 +47,7 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
   const [isEu, setIsEu] = React.useState(false);
   const [machineName, setMachineName] = React.useState('');
   const [machineTier, setMachineTier] = React.useState(0);
+  const [overclock, setOverclock] = React.useState(false);
   const [rft, setRft] = React.useState(0);
   const [time, setTime] = React.useState(0);
   const [numInputs, setNumInputs] = React.useState(1);
@@ -123,6 +124,18 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
             ))}
           </Select>
         </FormControl>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={overclock === true}
+              onChange={() => setOverclock(!overclock)}
+              value={overclock}
+              color="primary"
+            />
+          }
+          label="Overclock"
+          labelPlacement="top"
+        />
         <FormControl className={classes.formControlSmall}>
           <TextField
             error={!regAnyNumber.test(rft)}

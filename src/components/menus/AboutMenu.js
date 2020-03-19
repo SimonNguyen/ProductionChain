@@ -27,6 +27,10 @@ const SettingsMenu = React.memo(function SettingsMenu(props) {
             GitHub
           </Link>
           .
+          <br />
+          <br />
+          Shortcuts: <br />
+          <code>ESC</code> closes dialog menus.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
