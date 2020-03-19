@@ -1,58 +1,3 @@
-const Headers = [
-  {
-    title: 'Step',
-    field: 'step',
-  },
-  {
-    title: 'Machine Name',
-    field: 'machineName',
-  },
-  {
-    title: 'Machine Tier',
-    field: 'machineTier',
-  },
-  {
-    title: 'Overclock',
-    field: 'overclock',
-  },
-  {
-    title: 'RF/t',
-    field: 'rft',
-  },
-  {
-    title: 'Time (s)',
-    field: 'time',
-  },
-  {
-    title: 'Efficiency (%)',
-    field: 'efficiency',
-  },
-  {
-    title: 'Base Inputs',
-    field: 'inputs',
-  },
-  {
-    title: 'Base Outputs',
-    field: 'outputs',
-  },
-  {
-    title: 'Target Machines',
-    field: 'targetMachines',
-  },
-  {
-    title: 'Target Inputs',
-    field: 'targetInputs',
-  },
-  {
-    title: 'Target Outputs',
-    field: 'targetOutputs',
-  },
-  {
-    title: 'Actions',
-    field: 'actions',
-  },
-];
-
 const TierNames = [
   'N/A',
   'ULV',
@@ -84,16 +29,377 @@ const Colors = [
   '#1E1B1B',
   '#B3312C',
 ];
+const Recipes2 = [
+  {
+    step: 0,
+    machineName: 'Macerator',
+    machineTier: 2,
+    overclock: false,
+    rft: 40,
+    time: 0.8,
+    inputs: [
+      {
+        name: 'Cobblestone',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Gravel',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 1,
+    machineName: 'Macerator',
+    machineTier: 2,
+    overclock: false,
+    rft: 40,
+    time: 0.8,
+    inputs: [
+      {
+        name: 'Gravel',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Sand',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 2,
+    machineName: 'Macerator',
+    machineTier: 2,
+    overclock: false,
+    rft: 40,
+    time: 0.8,
+    inputs: [
+      {
+        name: 'Sand',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Dust',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 3,
+    machineName: 'Furnace',
+    machineTier: 2,
+    overclock: false,
+    rft: 128,
+    time: 3.2,
+    inputs: [
+      {
+        name: 'Sand',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Glass',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 4,
+    machineName: 'Chemical Reactor',
+    machineTier: 2,
+    overclock: false,
+    rft: 60,
+    time: 1,
+    inputs: [
+      {
+        name: 'Dust',
+        quantity: 1,
+        unit: 'b',
+      },
+      {
+        name: 'Water',
+        quantity: 1000,
+        unit: 'mb',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Clay',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 5,
+    machineName: 'Electrolyzer',
+    machineTier: 2,
+    overclock: false,
+    rft: 40,
+    time: 5,
+    inputs: [
+      {
+        name: 'Glass',
+        quantity: 4,
+        unit: 'b',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Quartz',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 6,
+    machineName: 'Fluid Extractor',
+    machineTier: 2,
+    overclock: false,
+    rft: 128,
+    time: 2,
+    inputs: [
+      {
+        name: 'Ender Pearl',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Resonant Ender',
+        quantity: 250,
+        unit: 'mb',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 7,
+    machineName: 'Chemical Reactor',
+    machineTier: 3,
+    overclock: false,
+    rft: 400,
+    time: 5,
+    inputs: [
+      {
+        name: 'Quartz',
+        quantity: 1,
+        unit: 'b',
+      },
+      {
+        name: 'Resonant Ender',
+        quantity: 250,
+        unit: 'mb',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Resonant Clathrate',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 8,
+    machineName: 'Furnace',
+    machineTier: 2,
+    overclock: false,
+    rft: 40,
+    time: 3.2,
+    inputs: [
+      {
+        name: 'Resonant Clathrate',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Pulsating Dust',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 9,
+    machineName: 'Alloy Smelter',
+    machineTier: 2,
+    overclock: false,
+    rft: 96,
+    time: 12,
+    inputs: [
+      {
+        name: 'Pulsating Dust',
+        quantity: 1,
+        unit: 'b',
+      },
+      {
+        name: 'Clay',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Polymer Clay',
+        quantity: 4,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 10,
+    machineName: 'Simulation Chamber',
+    machineTier: 0,
+    overclock: false,
+    rft: 2048,
+    time: 15,
+    inputs: [
+      {
+        name: 'Polymer Clay',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Ender Pristine',
+        quantity: 0.3,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 11,
+    machineName: 'Simulation Chamber',
+    machineTier: 0,
+    overclock: false,
+    rft: 2048,
+    time: 15,
+    inputs: [
+      {
+        name: 'Polymer Clay',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Shulker Pristine',
+        quantity: 0.3,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 12,
+    machineName: 'Loot Fabricator',
+    machineTier: 0,
+    overclock: false,
+    rft: 0,
+    time: 2.7,
+    inputs: [
+      {
+        name: 'Ender Pristine',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Ender Pearl',
+        quantity: 6,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 13,
+    machineName: 'Loot Fabricator',
+    machineTier: 0,
+    overclock: false,
+    rft: 0,
+    time: 2.7,
+    inputs: [
+      {
+        name: 'Shulker Pristine',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    outputs: [
+      {
+        name: 'Diamond',
+        quantity: 6,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+  {
+    step: 14,
+    machineName: 'Numismatic Dynamo',
+    machineTier: 0,
+    overclock: false,
+    rft: 0,
+    time: 10.32,
+    inputs: [
+      {
+        name: 'Diamond',
+        quantity: 1,
+        unit: 'b',
+      },
+    ],
+    outputs: [
+      {
+        name: 'RF/t',
+        quantity: 12500,
+        unit: 'b',
+      },
+    ],
+    targetMachines: 1,
+  },
+];
 
 const Recipes = [
   {
     step: 0,
-    machine: 'Wiremill',
-    tier: 'LV',
+    machineName: 'Wiremill',
+    machineTier: 2,
     overclock: false,
     rft: 24,
     time: 3.15,
-    efficiency: 100,
     inputs: [
       {
         name: 'Copper Ingot',
@@ -112,12 +418,11 @@ const Recipes = [
   },
   {
     step: 1,
-    machine: 'Wiremill',
-    tier: 'LV',
+    machineName: 'Wiremill',
+    machineTier: 2,
     overclock: false,
     rft: 24,
     time: 10,
-    efficiency: 100,
     inputs: [
       {
         name: 'Copper Wire',
@@ -136,12 +441,11 @@ const Recipes = [
   },
   {
     step: 2,
-    machine: 'Macerator',
-    tier: 'LV',
+    machineName: 'Macerator',
+    machineTier: 2,
     overclock: false,
     rft: 48,
     time: 10,
-    efficiency: 100,
     inputs: [
       {
         name: 'Coal',
@@ -160,12 +464,11 @@ const Recipes = [
   },
   {
     step: 3,
-    machine: 'Assembler',
-    tier: 'LV',
+    machineName: 'Assembler',
+    machineTier: 2,
     overclock: false,
     rft: 24,
     time: 8,
-    efficiency: 100,
     inputs: [
       {
         name: 'Fine Copper Wire',
@@ -189,36 +492,11 @@ const Recipes = [
   },
   {
     step: 4,
-    machine: 'Diamond Furnace',
-    tier: 'N/A',
-    overclock: false,
-    rft: 0,
-    time: 1.28,
-    efficiency: 100,
-    inputs: [
-      {
-        name: 'Aluminium Dust',
-        quantity: 1,
-        unit: 'b',
-      },
-    ],
-    outputs: [
-      {
-        name: 'Aluminium Ingot',
-        quantity: 1,
-        unit: 'b',
-      },
-    ],
-    targetMachines: 1,
-  },
-  {
-    step: 5,
-    machine: 'Compressor',
-    tier: 'LV',
+    machineName: 'Compressor',
+    machineTier: 2,
     overclock: false,
     rft: 40,
     time: 5,
-    efficiency: 100,
     inputs: [
       {
         name: 'Aluminium Ingot',
@@ -236,13 +514,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 6,
-    machine: 'Cluster Mill',
-    tier: 'LV',
+    step: 5,
+    machineName: 'Cluster Mill',
+    machineTier: 2,
     overclock: false,
     rft: 96,
     time: 1.3,
-    efficiency: 100,
     inputs: [
       {
         name: 'Aluminium Plate',
@@ -260,13 +537,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 7,
-    machine: 'Assembler',
-    tier: 'MV',
+    step: 6,
+    machineName: 'Assembler',
+    machineTier: 3,
     overclock: false,
     rft: 384,
     time: 4,
-    efficiency: 100,
     inputs: [
       {
         name: 'Aluminium Foil',
@@ -289,13 +565,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 8,
-    machine: 'Compressor',
-    tier: 'LV',
+    step: 7,
+    machineName: 'Compressor',
+    machineTier: 2,
     overclock: false,
     rft: 40,
     time: 5,
-    efficiency: 100,
     inputs: [
       {
         name: 'Tin Ingot',
@@ -313,13 +588,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 9,
-    machine: 'Cluster Mill',
-    tier: 'LV',
+    step: 8,
+    machineName: 'Cluster Mill',
+    machineTier: 2,
     overclock: false,
     rft: 96,
     time: 5.9,
-    efficiency: 100,
     inputs: [
       {
         name: 'Tin Plate',
@@ -337,13 +611,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 10,
-    machine: 'Diamond Furnace',
-    tier: 'N/A',
+    step: 9,
+    machineName: 'Diamond Furnace',
+    machineTier: 0,
     overclock: false,
     rft: 0,
     time: 1.28,
-    efficiency: 100,
     inputs: [
       {
         name: 'Silicon Dust',
@@ -361,13 +634,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 11,
-    machine: 'Compressor',
-    tier: 'LV',
+    step: 10,
+    machineName: 'Compressor',
+    machineTier: 2,
     overclock: false,
     rft: 40,
     time: 5,
-    efficiency: 100,
     inputs: [
       {
         name: 'Silicon Ingot',
@@ -385,13 +657,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 12,
-    machine: 'Pyrolyse Oven',
-    tier: 'MV',
+    step: 11,
+    machineName: 'Pyrolyse Oven',
+    machineTier: 3,
     overclock: false,
     rft: 120,
     time: 30,
-    efficiency: 100,
     inputs: [
       {
         name: 'Wood',
@@ -414,13 +685,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 13,
-    machine: 'Distillery',
-    tier: 'MV',
+    step: 12,
+    machineName: 'Distillery',
+    machineTier: 3,
     overclock: false,
     rft: 256,
     time: 4,
-    efficiency: 100,
     inputs: [
       {
         name: 'Wood Gas',
@@ -438,13 +708,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 14,
-    machine: 'Chemical Reactor',
-    tier: 'LV',
+    step: 13,
+    machineName: 'Chemical Reactor',
+    machineTier: 2,
     overclock: false,
     rft: 120,
     time: 8,
-    efficiency: 100,
     inputs: [
       {
         name: 'Ethylene',
@@ -467,13 +736,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 15,
-    machine: 'Assembler',
-    tier: 'LV',
+    step: 14,
+    machineName: 'Assembler',
+    machineTier: 2,
     overclock: false,
     rft: 96,
     time: 4,
-    efficiency: 100,
     inputs: [
       {
         name: 'Tin Foil',
@@ -501,13 +769,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 16,
-    machine: 'Alloy Smelter',
-    tier: 'LV',
+    step: 15,
+    machineName: 'Alloy Smelter',
+    machineTier: 2,
     overclock: false,
     rft: 64,
     time: 5,
-    efficiency: 100,
     inputs: [
       {
         name: 'Tin Ingot',
@@ -530,13 +797,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 17,
-    machine: 'Wiremill',
-    tier: 'LV',
+    step: 16,
+    machineName: 'Wiremill',
+    machineTier: 2,
     overclock: false,
     rft: 32,
     time: 20,
-    efficiency: 100,
     inputs: [
       {
         name: 'Tin Alloy Ingot',
@@ -554,13 +820,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 18,
-    machine: 'Blast Furnace',
-    tier: 'MV',
+    step: 17,
+    machineName: 'Blast Furnace',
+    machineTier: 3,
     overclock: false,
     rft: 480,
     time: 300,
-    efficiency: 100,
     inputs: [
       {
         name: 'Silicon Dust',
@@ -583,13 +848,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 19,
-    machine: 'Cutting Saw',
-    tier: 'MV',
+    step: 18,
+    machineName: 'Cutting Saw',
+    machineTier: 3,
     overclock: false,
     rft: 32,
     time: 20,
-    efficiency: 100,
     inputs: [
       {
         name: 'Water',
@@ -612,13 +876,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 20,
-    machine: 'Precision Laser Engraver',
-    tier: 'MV',
+    step: 19,
+    machineName: 'Precision Laser Engraver',
+    machineTier: 3,
     overclock: false,
     rft: 480,
     time: 45,
-    efficiency: 100,
     inputs: [
       {
         name: 'Wafer',
@@ -636,13 +899,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 21,
-    machine: 'Cutting Saw',
-    tier: 'MV',
+    step: 20,
+    machineName: 'Cutting Saw',
+    machineTier: 3,
     overclock: false,
     rft: 32,
     time: 60,
-    efficiency: 100,
     inputs: [
       {
         name: 'Water',
@@ -665,13 +927,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 22,
-    machine: 'Fluid Solidifier',
-    tier: 'LV',
+    step: 21,
+    machineName: 'Fluid Solidifier',
+    machineTier: 2,
     overclock: false,
     rft: 32,
     time: 2,
-    efficiency: 100,
     inputs: [
       {
         name: 'Polyethylene',
@@ -689,13 +950,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 23,
-    machine: 'Compressor',
-    tier: 'LV',
+    step: 22,
+    machineName: 'Compressor',
+    machineTier: 2,
     overclock: false,
     rft: 40,
     time: 5,
-    efficiency: 100,
     inputs: [
       {
         name: 'Copper Ingot',
@@ -713,13 +973,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 24,
-    machine: 'Cluster Mill',
-    tier: 'LV',
+    step: 23,
+    machineName: 'Cluster Mill',
+    machineTier: 2,
     overclock: false,
     rft: 96,
     time: 3.15,
-    efficiency: 100,
     inputs: [
       {
         name: 'Copper Plate',
@@ -737,13 +996,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 25,
-    machine: 'Chemical Reactor',
-    tier: 'LV',
+    step: 24,
+    machineName: 'Chemical Reactor',
+    machineTier: 2,
     overclock: false,
     rft: 40,
     time: 30,
-    efficiency: 100,
     inputs: [
       {
         name: 'Water',
@@ -766,13 +1024,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 26,
-    machine: 'Chemical Reactor',
-    tier: 'LV',
+    step: 25,
+    machineName: 'Chemical Reactor',
+    machineTier: 2,
     overclock: false,
     rft: 40,
     time: 30,
-    efficiency: 100,
     inputs: [
       {
         name: 'Polyethylene Sheet',
@@ -800,13 +1057,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 27,
-    machine: 'Fluid Extractor',
-    tier: 'LV',
+    step: 26,
+    machineName: 'Fluid Extractor',
+    machineTier: 2,
     overclock: false,
     rft: 128,
     time: 4,
-    efficiency: 100,
     inputs: [
       {
         name: 'Soldering Alloy Ingot',
@@ -824,13 +1080,12 @@ const Recipes = [
     targetMachines: 1,
   },
   {
-    step: 28,
-    machine: 'Assembler',
-    tier: 'MV',
+    step: 27,
+    machineName: 'Assembler',
+    machineTier: 3,
     overclock: false,
     rft: 240,
     time: 10,
-    efficiency: 100,
     inputs: [
       {
         name: 'Resistor',
@@ -905,4 +1160,4 @@ const DefaultTheme = {
   },
 };
 
-export { Headers, TierNames, Voltages, Colors, Recipes, DefaultTheme };
+export { TierNames, Voltages, Colors, Recipes, DefaultTheme };

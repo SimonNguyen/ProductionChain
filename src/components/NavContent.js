@@ -7,61 +7,151 @@ import Divider from '@material-ui/core/Divider';
 import SettingsIcon from '@material-ui/icons/Settings';
 import InfoIcon from '@material-ui/icons/Info';
 import ImportExportIcon from '@material-ui/icons/ImportExport';
-import TableChartIcon from '@material-ui/icons/TableChart';
-import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import AddIcon from '@material-ui/icons/Add';
+import FunctionsIcon from '@material-ui/icons/Functions';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
+import MenuDialog from './menus/MenuDialog';
 
-const NavContent = () => (
-  <List>
-    <ListItem button>
-      <ListItemIcon>
-        <InfoIcon />
-      </ListItemIcon>
-      <ListItemText
-        primary={'About'}
-        primaryTypographyProps={{ noWrap: true }}
-      />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <ImportExportIcon />
-      </ListItemIcon>
-      <ListItemText
-        primary={'Import/Export Recipe'}
-        primaryTypographyProps={{ noWrap: true }}
-      />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <TableChartIcon />
-      </ListItemIcon>
-      <ListItemText
-        primary={'Clear Recipes'}
-        primaryTypographyProps={{ noWrap: true }}
-      />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PlaylistAddIcon />
-      </ListItemIcon>
-      <ListItemText
-        primary={'Add Recipe'}
-        primaryTypographyProps={{ noWrap: true }}
-      />
-    </ListItem>
-    <Divider style={{ margin: '12px 0' }} />
-    <ListItem button>
-      <ListItemIcon>
-        <SettingsIcon />
-      </ListItemIcon>
-      <ListItemText
-        primary={'Settings'}
-        primaryTypographyProps={{ noWrap: true }}
-      />
-    </ListItem>
-  </List>
-);
+const NavContent = React.memo(function NavContent(props) {
+  const [open, setOpen] = React.useState(false);
+  const [title, setTitle] = React.useState('');
+  const [type, setType] = React.useState('');
+  const [size, setSize] = React.useState('xs');
 
-NavContent.propTypes = {};
-NavContent.defaultProps = {};
+  const handleDialogOpen = (type, title, size) => {
+    setSize(size);
+    setTitle(title);
+    setType(type);
+    setOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setOpen(false);
+  };
+
+  const handleClear = () => {
+    props.handleClear();
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <List>
+        <ListItem
+          button
+          onClick={() => handleDialogOpen('about', 'About', 'xs')}>
+          <ListItemIcon>
+            <InfoIcon />
+          </ListItemIcon>
+          <ListItemText
+            primary={'About'}
+            primaryTypographyProps={{ noWrap: true }}
+          />
+        </ListItem>
+        <ListItem
+          button
+          onClick={() =>
+            handleDialogOpen('import', 'Import or export a recipe list', 'sm')
+          }>
+          <ListItemIcon>
+            <ImportExportIcon />
+          </ListItemIcon>
+          <ListItemText
+            primary={'Import/Export Recipe'}
+            primaryTypographyProps={{ noWrap: true }}
+          />
+        </ListItem>
+        <ListItem
+          button
+          onClick={() =>
+            handleDialogOpen(
+              'clear',
+              'Are you sure you want to clear all recipes?',
+              'xs'
+            )
+          }>
+          <ListItemIcon>
+            <DeleteForeverIcon />
+          </ListItemIcon>
+          <ListItemText
+            primary={'Clear All Recipes'}
+            primaryTypographyProps={{ noWrap: true }}
+          />
+        </ListItem>
+        <ListItem
+          button
+          onClick={() => handleDialogOpen('add', 'Add a recipe', 'lg')}>
+          <ListItemIcon>
+            <AddIcon />
+          </ListItemIcon>
+          <ListItemText
+            primary={'Add Recipe'}
+            primaryTypographyProps={{ noWrap: true }}
+          />
+        </ListItem>
+        <ListItem
+          button
+          onClick={() =>
+            handleDialogOpen(
+              'calculator',
+              'Calculated requirements for this recipe',
+              'lg'
+            )
+          }>
+          <ListItemIcon>
+            <FunctionsIcon />
+          </ListItemIcon>
+          <ListItemText
+            primary={'Calculator'}
+            primaryTypographyProps={{ noWrap: true }}
+          />
+        </ListItem>
+        <ListItem
+          button
+          onClick={() =>
+            handleDialogOpen(
+              'chart',
+              'Calculate requirements for this recipe',
+              'lg'
+            )
+          }>
+          <ListItemIcon>
+            <EqualizerIcon />
+          </ListItemIcon>
+          <ListItemText
+            primary={'Charts'}
+            primaryTypographyProps={{ noWrap: true }}
+          />
+        </ListItem>
+        <Divider style={{ margin: '12px 0' }} />
+        <ListItem
+          button
+          onClick={() => handleDialogOpen('settings', 'Settings', 'xs')}>
+          <ListItemIcon>
+            <SettingsIcon />
+          </ListItemIcon>
+          <ListItemText
+            primary={'Settings'}
+            primaryTypographyProps={{ noWrap: true }}
+          />
+        </ListItem>
+      </List>
+      <MenuDialog
+        contentType={type}
+        graph={props.graph}
+        recipes={props.recipes}
+        size={size}
+        themeType={props.themeType}
+        title={title}
+        isOpen={open}
+        handleClear={handleClear}
+        handleClose={handleDialogClose}
+        handleRecipes={props.handleRecipes}
+        handleTheme={props.handleTheme}
+      />
+    </>
+  );
+});
 
 export default NavContent;

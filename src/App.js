@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+import Toolbar from '@material-ui/core/Toolbar';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {
@@ -14,13 +15,13 @@ import {
   SidebarTriggerIcon,
   headerStyles,
 } from '@mui-treasury/layout';
-import { DefaultTheme, Headers, Recipes, TierNames } from './data';
-import DataTableContainer from './components/DataTable';
+import { DefaultTheme, Recipes } from './data';
+import { GenerateGraph } from './components/utils/graph';
+import DataTable from './components/DataTable';
 import NavContent from './components/NavContent';
 import HeaderContent from './components/HeaderContent';
-import { Toolbar } from '@material-ui/core';
 
-const config = {
+let config = {
   sidebar: {
     anchor: 'left',
     width: 256,
@@ -42,8 +43,10 @@ class App extends Component {
     super(props);
 
     let themeType = window.localStorage.getItem('theme');
+    let collapsed = window.localStorage.getItem('collapsed');
+    let graph = GenerateGraph(Recipes);
 
-    if (themeType === 'undefined') {
+    if (themeType === null) {
       window.localStorage.setItem('theme', 'dark');
     } else if (themeType === 'light') {
       DefaultTheme.palette.type = 'light';
@@ -51,10 +54,16 @@ class App extends Component {
       DefaultTheme.palette.type = 'dark';
     }
 
+    if (collapsed === null) {
+      window.localStorage.setItem('collapsed', 'false');
+    }
+
     this.state = {
       theme: DefaultTheme,
       headers: Headers,
       recipes: Recipes,
+      collapsed: collapsed === 'true',
+      graph: graph,
     };
   }
 
@@ -69,7 +78,24 @@ class App extends Component {
       theme.palette.type = 'light';
     }
 
-    this.setState(theme);
+    this.setState({ theme });
+  };
+
+  handleCollapse = (collapsed) => {
+    window.localStorage.setItem('collapsed', !collapsed);
+    this.setState({ collapsed: !collapsed });
+  };
+
+  handleClear = () => {
+    let recipes = this.state.recipes;
+    recipes.length = 0;
+
+    this.setState({ recipes });
+  };
+
+  handleUpdate = (newRecipes) => {
+    let recipes = newRecipes;
+    this.setState({ recipes });
   };
 
   handleOverclock = (step) => {
@@ -104,38 +130,43 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={muiTheme}>
         <CssBaseline />
-        <Root theme={muiTheme} config={config}>
-          {({ sidebarStyles }) => (
+        <Root
+          theme={muiTheme}
+          config={config}
+          initialCollapsed={this.state.collapsed}>
+          {({ sidebarStyles, collapsed }) => (
             <>
               <Header>
                 <Toolbar>
                   <SidebarTrigger className={headerStyles.leftTrigger}>
                     <SidebarTriggerIcon />
                   </SidebarTrigger>
-                  <HeaderContent
-                    paletteType={this.state.theme.palette.type}
-                    onToggleDark={this.toggleDarkTheme}
-                  />
+                  <HeaderContent />
                 </Toolbar>
               </Header>
               <Sidebar>
                 <div className={sidebarStyles.container}>
-                  <NavContent />
+                  <NavContent
+                    graph={this.state.graph}
+                    handleTheme={this.toggleDarkTheme}
+                    handleRecipes={this.handleUpdate}
+                    handleClear={this.handleClear}
+                    recipes={this.state.recipes}
+                    themeType={this.state.theme.palette.type}
+                  />
                 </div>
-                <CollapseBtn>
+                <CollapseBtn onClick={() => this.handleCollapse(collapsed)}>
                   <CollapseIcon />
                 </CollapseBtn>
               </Sidebar>
               <Content>
                 <Container maxWidth="xl">
                   <Box my={2}>
-                    <DataTableContainer
-                      headers={this.state.headers}
+                    <DataTable
                       recipes={this.state.recipes}
-                      tierNames={TierNames}
+                      handleUpdate={this.handleUpdate}
                       onChangeOC={this.handleOverclock}
                       onChangeTier={this.handleTier}
-                      onDelete={this.handleDelete}
                     />
                   </Box>
                 </Container>
