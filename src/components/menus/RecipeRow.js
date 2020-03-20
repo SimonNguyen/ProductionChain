@@ -26,11 +26,7 @@ class RecipeRow extends Component {
     this.unitLabelRef = React.createRef();
     this.state = {
       unitLabelWidth: 0,
-      item: {
-        quantity: 1,
-        unit: 'b',
-        name: '',
-      },
+      item: this.props.item,
     };
   }
 
@@ -92,7 +88,7 @@ class RecipeRow extends Component {
         </FormControl>
         <FormControl className={this.props.classes.formControl}>
           <TextField
-            error={!regAnyNumber.test(this.props.item.name)}
+            error={this.props.item.name.length === 0}
             label="Item Name"
             required
             type="string"

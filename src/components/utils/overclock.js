@@ -1,4 +1,4 @@
-import { TierNames } from '../../data';
+import { TierNames, Voltages } from '../../data';
 /**
  * Adapted from GregTech Community Edition calculateOverclock function.
  * https://github.com/GregTechCE/GregTech/blob/master/src/main/java/gregtech/api/capability/impl/AbstractRecipeLogic.java
@@ -6,17 +6,17 @@ import { TierNames } from '../../data';
  *
  * @export
  * @param {Number} EUt - EU per tick
- * @param {String} tierName - GregTech machine tier
+ * @param {Number} tierIndex - GregTech machine tier
  * @param {Number} duration - Recipe duration in ticks
  * @returns
  */
-export function Overclock(EUt, tierName, duration) {
-  let tier = TierNames.indexOf(tierName) - 1;
+function Overclock(EUt, tierIndex, duration) {
+  let tier = TierNames[tierIndex] - 1;
   let resultEUt = EUt;
   let resultDuration = duration;
   let multiplier = 0;
 
-  if (voltages[tier] <= EUt || tier === 0 || tier === -1 || EUt === 0) {
+  if (Voltages[tier] <= EUt || tier === 0 || tier === -1 || EUt === 0) {
     return {
       eut: resultEUt,
       ticks: resultDuration,
@@ -38,7 +38,7 @@ export function Overclock(EUt, tierName, duration) {
       ticks: resultDuration,
     };
   } else {
-    while (resultDuration >= 3 && resultEUt <= voltages[tier - 1]) {
+    while (resultDuration >= 3 && resultEUt <= Voltages[tierIndex - 1]) {
       resultEUt = resultEUt * 4;
       resultDuration = resultDuration / 2.8;
     }
@@ -49,3 +49,16 @@ export function Overclock(EUt, tierName, duration) {
     ticks: Math.ceil(resultDuration),
   };
 }
+
+function AddOverclock(recipes) {
+  recipes.forEach((recipe) => {
+    let oc = Overclock(recipe.rft / 4, recipe.machineTier, recipe.time);
+
+    recipe.rftoc = oc.eut * 4;
+    recipe.timeoc = oc.ticks;
+  });
+
+  return recipes;
+}
+
+export { Overclock, AddOverclock };

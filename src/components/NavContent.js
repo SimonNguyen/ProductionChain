@@ -10,7 +10,6 @@ import ImportExportIcon from '@material-ui/icons/ImportExport';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import AddIcon from '@material-ui/icons/Add';
 import FunctionsIcon from '@material-ui/icons/Functions';
-import EqualizerIcon from '@material-ui/icons/Equalizer';
 import MenuDialog from './menus/MenuDialog';
 
 const NavContent = React.memo(function NavContent(props) {
@@ -104,23 +103,6 @@ const NavContent = React.memo(function NavContent(props) {
           </ListItemIcon>
           <ListItemText
             primary={'Calculator'}
-            primaryTypographyProps={{ noWrap: true }}
-          />
-        </ListItem>
-        <ListItem
-          button
-          onClick={() =>
-            handleDialogOpen(
-              'chart',
-              'Calculate requirements for this recipe',
-              'lg'
-            )
-          }>
-          <ListItemIcon>
-            <EqualizerIcon />
-          </ListItemIcon>
-          <ListItemText
-            primary={'Charts'}
             primaryTypographyProps={{ noWrap: true }}
           />
         </ListItem>

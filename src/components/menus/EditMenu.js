@@ -42,23 +42,51 @@ function pushDefault(array, n) {
   return newArray;
 }
 
-const RecipeMenu = React.memo(function RecipeMenu(props) {
+function updatedRecipe(
+  isEu,
+  step,
+  machineName,
+  machineTier,
+  overclock,
+  rft,
+  time,
+  inputs,
+  outputs
+) {
+  let recipe = {
+    step: step,
+    machineName: machineName,
+    machineTier: machineTier,
+    overclock: overclock,
+    rft: isEu ? rft * 4 : rft,
+    time: time,
+    inputs: inputs,
+    outputs: outputs,
+    targetMachines: 1,
+  };
+
+  return recipe;
+}
+
+const EditMenu = React.memo(function EditMenu(props) {
   const classes = useStyles();
   const [isEu, setIsEu] = React.useState(false);
-  const [machineName, setMachineName] = React.useState('');
-  const [machineTier, setMachineTier] = React.useState(0);
-  const [overclock, setOverclock] = React.useState(false);
-  const [rft, setRft] = React.useState(0);
-  const [time, setTime] = React.useState(0);
-  const [numInputs, setNumInputs] = React.useState(1);
-  const [numOutputs, setNumOutputs] = React.useState(1);
-
-  const [inputs, setInputs] = React.useState([
-    { name: '', quantity: 1, unit: 'b' },
-  ]);
-  const [outputs, setOutputs] = React.useState([
-    { name: '', quantity: 1, unit: 'b' },
-  ]);
+  const [machineName, setMachineName] = React.useState(
+    props.rowData.machineName
+  );
+  const [machineTier, setMachineTier] = React.useState(
+    props.rowData.machineTier
+  );
+  const [overclock, setOverclock] = React.useState(props.rowData.overclock);
+  const [rft, setRft] = React.useState(props.rowData.rft);
+  const [time, setTime] = React.useState(props.rowData.time);
+  const [numInputs, setNumInputs] = React.useState(props.rowData.inputs.length);
+  const [numOutputs, setNumOutputs] = React.useState(
+    props.rowData.outputs.length
+  );
+  const [inputs, setInputs] = React.useState(props.rowData.inputs);
+  const [outputs, setOutputs] = React.useState(props.rowData.outputs);
+  const [valid, setValid] = React.useState(true);
 
   const regAnyNumber = /^-?\d+\.?\d*$/;
   const regWholeNumber = /^\d+$/;
@@ -84,15 +112,62 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
     }
   };
 
+  const handleUpdateMachineName = (value) => {
+    setMachineName(value);
+
+    if (value.length === 0) {
+      setValid(false);
+    } else {
+      setValid(true);
+    }
+  };
+
   const handleUpdateInputs = (id, item) => {
     let newInputs = inputs;
     newInputs[id] = item;
     setInputs(newInputs);
+
+    newInputs.forEach((input) => {
+      if (input.name.length === 0) {
+        setValid(false);
+      } else {
+        setValid(true);
+      }
+    });
   };
+
   const handleUpdateOutputs = (id, item) => {
-    let newOutputs = inputs;
+    let newOutputs = outputs;
     newOutputs[id] = item;
     setOutputs(newOutputs);
+
+    newOutputs.forEach((output) => {
+      if (output.name.length === 0) {
+        setValid(false);
+      } else {
+        setValid(true);
+      }
+    });
+  };
+
+  const handleUpdateRecipes = () => {
+    let recipes = props.recipes;
+    let index = recipes.indexOf(props.rowData);
+
+    recipes[index] = updatedRecipe(
+      isEu,
+      props.rowData.step,
+      machineName,
+      machineTier,
+      overclock,
+      rft,
+      time,
+      inputs,
+      outputs
+    );
+
+    props.handleUpdate(recipes);
+    props.handleClose();
   };
 
   return (
@@ -108,7 +183,7 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
             required
             value={machineName}
             variant="outlined"
-            onChange={(event) => setMachineName(event.target.value)}
+            onChange={(event) => handleUpdateMachineName(event.target.value)}
           />
         </FormControl>
         <FormControl variant="outlined" className={classes.formControl}>
@@ -199,6 +274,7 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
         />
 
         <Divider style={{ margin: '12px 0' }} />
+
         <Grid
           container
           direction="row"
@@ -244,8 +320,8 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={props.handleClose} color="default">
-          Add
+        <Button onClick={handleUpdateRecipes} color="default" disabled={!valid}>
+          Save
         </Button>
         <Button onClick={props.handleClose} color="default">
           Close
@@ -255,4 +331,4 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
   );
 });
 
-export default RecipeMenu;
+export default EditMenu;

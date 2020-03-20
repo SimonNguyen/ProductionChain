@@ -17,7 +17,6 @@
   "dependencies": {
     "@material-ui/core": "latest",
     "@material-ui/icons": "^4.9.1",
-    "@mrblenny/react-flow-chart": "0.0.11",
     "@mui-treasury/layout": "^3.3.3",
     "clsx": "latest",
     "elementary-circuits-directed-graph": "^1.2.0",

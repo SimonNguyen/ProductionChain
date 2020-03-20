@@ -22,7 +22,7 @@ function GenerateGraph(recipes) {
       machineTier: recipe.machineTier,
       outputs: recipe.outputs,
       targetMachines: 1,
-      time: recipe.overclock === 'true' ? recipe.timeoc : recipe.time,
+      time: recipe.overclock ? recipe.timeoc : recipe.time,
       visitedCount: 0,
     });
   });
@@ -109,15 +109,23 @@ function MachineRequirements(recipes, graph) {
   let machineTotals = [];
   let machineSteps = [];
   let rft = 0;
+  let inputs = [];
+  let outputs = [];
 
-  let inputs = FindInitialInputs(graph);
-  let outputs = FindFinalOutputs(graph);
+  if (typeof recipes === 'undefined' || recipes.length === 0) {
+    return { machineTotals, machineSteps, rft, inputs, outputs };
+  }
+
+  inputs = FindInitialInputs(graph);
+  outputs = FindFinalOutputs(graph);
 
   graph.forEachNode((node, attributes) => {
     let tier = TierNames[attributes.machineTier];
     let prefix = tier !== 'N/A' ? tier + ' ' : '';
     let machineName = attributes.machineName;
     let machine = prefix + machineName;
+    let recipe = recipes[node];
+    let recipeRft = recipe.overclock ? recipe.rftoc : recipe.rft;
 
     if (!(machine in machineTotals)) {
       machineTotals[machine] = Math.ceil(attributes.targetMachines);
@@ -128,7 +136,7 @@ function MachineRequirements(recipes, graph) {
 
     machineSteps[node] = machine + ' ' + Math.ceil(attributes.targetMachines);
 
-    rft = rft + Math.ceil(attributes.targetMachines) * recipes[node].rft;
+    rft = rft + Math.ceil(attributes.targetMachines) * recipeRft;
   });
 
   return { machineTotals, machineSteps, rft, inputs, outputs };

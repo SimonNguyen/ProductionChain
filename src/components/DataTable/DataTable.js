@@ -3,6 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import MaterialTable from 'material-table';
 import { TierNames } from '../../data';
+import MenuDialog from '../menus/MenuDialog';
 
 function DataTableCell(props) {
   return (
@@ -125,57 +126,24 @@ class DataTable extends Component {
         },
       ],
       recipes: Array.from(this.props.recipes),
+      dialog: false,
+      editable: [],
     };
   }
+
+  handleDialogOpen = (rowData) => {
+    this.setState({ editable: rowData });
+    this.setState({ dialog: true });
+  };
+
+  handleDialogClose = () => {
+    this.setState({ dialog: false });
+  };
 
   render() {
     return (
       <Paper variant="outlined" my={2}>
         <MaterialTable
-          columns={this.state.columns}
-          data={Array.from(this.props.recipes)}
-          options={{
-            actionsColumnIndex: -1,
-            maxBodyHeight: '77vh',
-            paging: true,
-            pageSizeOptions: [5, 10, 15, 20],
-            showTitle: false,
-            sorting: false,
-            tableLayout: 'auto',
-          }}
-          editable={{
-            onRowUpdate: (newData, oldData) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  {
-                    let recipes = this.state.recipes;
-                    let index = recipes.indexOf(oldData);
-                    recipes[index] = newData;
-                    this.setState({ recipes }, () => resolve());
-                    this.props.handleUpdate(recipes);
-                  }
-                  resolve();
-                }, 1000);
-              }),
-            onRowDelete: (oldData) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  {
-                    let recipes = [...this.state.recipes];
-                    let index = recipes.indexOf(oldData);
-                    recipes.splice(index, 1);
-
-                    recipes.forEach((recipe, index) => {
-                      recipe.step = index + 1;
-                    });
-
-                    this.setState({ recipes }, () => resolve());
-                    this.props.handleUpdate(recipes);
-                  }
-                  resolve();
-                }, 1000);
-              }),
-          }}
           actions={[
             {
               icon: 'arrow_upward',
@@ -187,9 +155,9 @@ class DataTable extends Component {
                 if (index > 0) {
                   let temp = recipes[index - 1];
                   recipes[index - 1] = recipes[index];
-                  recipes[index - 1].step = index;
+                  recipes[index - 1].step = index - 1;
                   recipes[index] = temp;
-                  recipes[index].step = index + 1;
+                  recipes[index].step = index;
                 }
 
                 this.setState({ recipes });
@@ -206,14 +174,67 @@ class DataTable extends Component {
                 if (index < recipes.length - 1) {
                   let temp = recipes[index + 1];
                   recipes[index + 1] = recipes[index];
+                  recipes[index + 1].step = index + 1;
                   recipes[index] = temp;
+                  recipes[index].step = index;
                 }
 
                 this.setState({ recipes });
                 this.props.handleUpdate(recipes);
               },
             },
+            {
+              icon: 'edit',
+              tooltip: 'Edit Recipe',
+              onClick: (event, rowData) => {
+                this.handleDialogOpen(rowData);
+              },
+            },
           ]}
+          columns={this.state.columns}
+          data={Array.from(this.props.recipes)}
+          editable={{
+            onRowDelete: (oldData) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  {
+                    let recipes = [...this.state.recipes];
+                    let index = recipes.indexOf(oldData);
+                    recipes.splice(index, 1);
+
+                    recipes.forEach((recipe, index) => {
+                      recipe.step = index + 1;
+                    });
+
+                    this.setState({ recipes }, () => resolve());
+                    this.props.handleUpdate(recipes);
+                  }
+                  resolve();
+                }, 200);
+              }),
+          }}
+          localization={{
+            body: { emptyDataSourceMessage: 'No recipes to display' },
+          }}
+          options={{
+            actionsColumnIndex: -1,
+            maxBodyHeight: '77vh',
+            paging: true,
+            pageSizeOptions: [5, 10, 15, 20],
+            showTitle: false,
+            sorting: false,
+            tableLayout: 'auto',
+          }}
+        />
+        <MenuDialog
+          contentType={'edit'}
+          size={'lg'}
+          title={'Edit a recipe'}
+          recipes={this.state.recipes}
+          rowData={this.state.editable}
+          isOpen={this.state.dialog}
+          handleClose={this.handleDialogClose}
+          handleUpdate={this.props.handleUpdate}
         />
       </Paper>
     );
