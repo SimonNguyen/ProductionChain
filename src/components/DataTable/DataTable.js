@@ -185,7 +185,7 @@ class DataTable extends Component {
                     this.props.handleUpdate(recipes);
                   }
                   resolve();
-                }, 1000);
+                }, 200);
               }),
           }}
           actions={[
