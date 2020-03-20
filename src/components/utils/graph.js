@@ -22,7 +22,7 @@ function GenerateGraph(recipes) {
       machineTier: recipe.machineTier,
       outputs: recipe.outputs,
       targetMachines: 1,
-      time: recipe.overclock === 'true' ? recipe.timeoc : recipe.time,
+      time: recipe.overclock ? recipe.timeoc : recipe.time,
       visitedCount: 0,
     });
   });
@@ -118,6 +118,8 @@ function MachineRequirements(recipes, graph) {
     let prefix = tier !== 'N/A' ? tier + ' ' : '';
     let machineName = attributes.machineName;
     let machine = prefix + machineName;
+    let recipe = recipes[node];
+    let recipeRft = recipe.overclock ? recipe.rftoc : recipe.rft;
 
     if (!(machine in machineTotals)) {
       machineTotals[machine] = Math.ceil(attributes.targetMachines);
@@ -128,7 +130,7 @@ function MachineRequirements(recipes, graph) {
 
     machineSteps[node] = machine + ' ' + Math.ceil(attributes.targetMachines);
 
-    rft = rft + Math.ceil(attributes.targetMachines) * recipes[node].rft;
+    rft = rft + Math.ceil(attributes.targetMachines) * recipeRft;
   });
 
   return { machineTotals, machineSteps, rft, inputs, outputs };

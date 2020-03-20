@@ -107,23 +107,6 @@ const NavContent = React.memo(function NavContent(props) {
             primaryTypographyProps={{ noWrap: true }}
           />
         </ListItem>
-        <ListItem
-          button
-          onClick={() =>
-            handleDialogOpen(
-              'chart',
-              'Calculate requirements for this recipe',
-              'lg'
-            )
-          }>
-          <ListItemIcon>
-            <EqualizerIcon />
-          </ListItemIcon>
-          <ListItemText
-            primary={'Charts'}
-            primaryTypographyProps={{ noWrap: true }}
-          />
-        </ListItem>
         <Divider style={{ margin: '12px 0' }} />
         <ListItem
           button

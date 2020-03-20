@@ -61,6 +61,7 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
   ]);
 
   const regAnyNumber = /^-?\d+\.?\d*$/;
+  const regWholeNumber = /^\d+$/;
 
   const tierLabel = React.useRef(null);
   const [tierLabelWidth, setTierLabelWidth] = React.useState(0);
@@ -70,14 +71,14 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
   }, []);
 
   const handleNumInputs = (value) => {
-    if (value >= 0) {
+    if (value >= 0 && regWholeNumber.test(value)) {
       setNumInputs(value);
       setInputs((prevInputs) => pushDefault(prevInputs, value));
     }
   };
 
   const handleNumOutputs = (value) => {
-    if (value >= 0) {
+    if (value >= 0 && regWholeNumber.test(value)) {
       setNumOutputs(value);
       setOutputs((prevOutputs) => pushDefault(prevOutputs, value));
     }
@@ -162,7 +163,7 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
         </FormControl>
         <FormControl className={classes.formControlSmall}>
           <TextField
-            error={!regAnyNumber.test(numInputs)}
+            error={!regWholeNumber.test(numInputs)}
             label="# Inputs"
             placeholder={numInputs.toString()}
             required
@@ -174,7 +175,7 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
         </FormControl>
         <FormControl className={classes.formControlSmall}>
           <TextField
-            error={!regAnyNumber.test(numOutputs)}
+            error={!regWholeNumber.test(numOutputs)}
             label="# Outputs"
             placeholder={numOutputs.toString()}
             required

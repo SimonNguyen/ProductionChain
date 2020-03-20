@@ -21,6 +21,8 @@ import DataTable from './components/DataTable';
 import NavContent from './components/NavContent';
 import HeaderContent from './components/HeaderContent';
 
+import { AddOverclock } from './components/utils/overclock';
+
 let config = {
   sidebar: {
     anchor: 'left',
@@ -44,7 +46,8 @@ class App extends Component {
 
     let themeType = window.localStorage.getItem('theme');
     let collapsed = window.localStorage.getItem('collapsed');
-    let graph = GenerateGraph(Recipes);
+    let recipes = AddOverclock(Recipes);
+    let graph = GenerateGraph(recipes);
 
     if (themeType === null) {
       window.localStorage.setItem('theme', 'dark');
@@ -61,7 +64,7 @@ class App extends Component {
     this.state = {
       theme: DefaultTheme,
       headers: Headers,
-      recipes: Recipes,
+      recipes: recipes,
       collapsed: collapsed === 'true',
       graph: graph,
     };
@@ -95,7 +98,9 @@ class App extends Component {
 
   handleUpdate = (newRecipes) => {
     let recipes = newRecipes;
+    let graph = GenerateGraph(recipes);
     this.setState({ recipes });
+    this.setState({ graph });
   };
 
   render() {
