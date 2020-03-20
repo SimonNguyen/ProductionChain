@@ -385,7 +385,7 @@ const Recipes = [
     outputs: [
       {
         name: 'RF/t',
-        quantity: 12500,
+        quantity: 12500 * 10.32,
         unit: 'b',
       },
     ],
