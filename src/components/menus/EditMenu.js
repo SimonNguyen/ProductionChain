@@ -15,7 +15,6 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Infinite from 'react-infinite';
-import { SizeMe } from 'react-sizeme';
 import RecipeRow from './RecipeRow';
 
 import { TierNames } from '../../data';
