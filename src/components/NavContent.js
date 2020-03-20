@@ -10,7 +10,6 @@ import ImportExportIcon from '@material-ui/icons/ImportExport';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import AddIcon from '@material-ui/icons/Add';
 import FunctionsIcon from '@material-ui/icons/Functions';
-import EqualizerIcon from '@material-ui/icons/Equalizer';
 import MenuDialog from './menus/MenuDialog';
 
 const NavContent = React.memo(function NavContent(props) {
