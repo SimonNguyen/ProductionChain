@@ -3,6 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import MaterialTable from 'material-table';
 import { TierNames } from '../../data';
+import MenuDialog from '../menus/MenuDialog';
 
 function DataTableCell(props) {
   return (
@@ -125,8 +126,19 @@ class DataTable extends Component {
         },
       ],
       recipes: Array.from(this.props.recipes),
+      dialog: false,
+      editable: [],
     };
   }
+
+  handleDialogOpen = (rowData) => {
+    this.setState({ editable: rowData });
+    this.setState({ dialog: true });
+  };
+
+  handleDialogClose = () => {
+    this.setState({ dialog: false });
+  };
 
   render() {
     return (
@@ -144,19 +156,19 @@ class DataTable extends Component {
             tableLayout: 'auto',
           }}
           editable={{
-            onRowUpdate: (newData, oldData) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  {
-                    let recipes = this.state.recipes;
-                    let index = recipes.indexOf(oldData);
-                    recipes[index] = newData;
-                    this.setState({ recipes }, () => resolve());
-                    this.props.handleUpdate(recipes);
-                  }
-                  resolve();
-                }, 1000);
-              }),
+            // onRowUpdate: (newData, oldData) =>
+            //   new Promise((resolve, reject) => {
+            //     setTimeout(() => {
+            //       {
+            //         let recipes = this.state.recipes;
+            //         let index = recipes.indexOf(oldData);
+            //         recipes[index] = newData;
+            //         this.setState({ recipes }, () => resolve());
+            //         this.props.handleUpdate(recipes);
+            //       }
+            //       resolve();
+            //     }, 1000);
+            //   }),
             onRowDelete: (oldData) =>
               new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -215,18 +227,24 @@ class DataTable extends Component {
                 this.props.handleUpdate(recipes);
               },
             },
-            // {
-            //   icon: 'edit',
-            //   tooltip: 'Edit Recipe',
-            //   onClick: (event, rowData) => {
-            //     let recipes = this.state.recipes;
-            //     let index = recipes.indexOf(oldData);
-            //     recipes[index] = newData;
-            //     this.setState({ recipes }, () => resolve());
-            //     this.props.handleUpdate(recipes);
-            //   },
-            // },
+            {
+              icon: 'edit',
+              tooltip: 'Edit Recipe',
+              onClick: (event, rowData) => {
+                this.handleDialogOpen(rowData);
+              },
+            },
           ]}
+        />
+        <MenuDialog
+          contentType={'edit'}
+          size={'lg'}
+          title={'Edit a recipe'}
+          recipes={this.state.recipes}
+          rowData={this.state.editable}
+          isOpen={this.state.dialog}
+          handleClose={this.handleDialogClose}
+          handleUpdate={this.props.handleUpdate}
         />
       </Paper>
     );

@@ -7,6 +7,7 @@ import ImportExportMenu from './ImportExportMenu';
 import ClearMenu from './ClearMenu';
 import RecipeMenu from './RecipeMenu';
 import CalculatorMenu from './CalculatorMenu';
+import EditMenu from './EditMenu';
 import SettingsMenu from './SettingsMenu';
 
 const MenuDialog = ({
@@ -14,6 +15,7 @@ const MenuDialog = ({
   graph,
   isOpen,
   recipes,
+  rowData,
   size,
   themeType,
   title,
@@ -21,6 +23,7 @@ const MenuDialog = ({
   handleClear,
   handleRecipes,
   handleTheme,
+  handleUpdate,
 }) => {
   return (
     <Dialog
@@ -48,7 +51,7 @@ const MenuDialog = ({
           handleClose={handleClose}
         />
       ) : contentType === 'add' ? (
-        <RecipeMenu title={title} handleClose={handleClose} />
+        <RecipeMenu title={title} recipes={recipes} handleClose={handleClose} />
       ) : contentType === 'settings' ? (
         <SettingsMenu
           title={title}
@@ -62,6 +65,16 @@ const MenuDialog = ({
           graph={graph}
           recipes={recipes}
           handleClose={handleClose}
+          handleUpdate={handleUpdate}
+        />
+      ) : contentType === 'edit' ? (
+        <EditMenu
+          title={title}
+          recipes={recipes}
+          rowData={rowData}
+          handleEdit={handleClose}
+          handleClose={handleClose}
+          handleUpdate={handleUpdate}
         />
       ) : (
         <DialogContentText>No valid content type selected.</DialogContentText>
