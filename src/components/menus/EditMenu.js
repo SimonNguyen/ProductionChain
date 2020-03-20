@@ -85,8 +85,12 @@ const EditMenu = React.memo(function EditMenu(props) {
   const [numOutputs, setNumOutputs] = React.useState(
     props.rowData.outputs.length
   );
-  const [inputs, setInputs] = React.useState(props.rowData.inputs.slice());
-  const [outputs, setOutputs] = React.useState(props.rowData.outputs.slice());
+  const [inputs, setInputs] = React.useState(
+    props.rowData.inputs.slice(0, props.rowData.inputs.length)
+  );
+  const [outputs, setOutputs] = React.useState(
+    props.rowData.outputs.slice(0, props.rowData.outputs.length)
+  );
   const [valid, setValid] = React.useState(true);
 
   const regAnyNumber = /^-?\d+\.?\d*$/;

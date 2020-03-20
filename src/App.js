@@ -46,7 +46,7 @@ class App extends Component {
 
     let themeType = window.localStorage.getItem('theme');
     let collapsed = window.localStorage.getItem('collapsed');
-    let recipes = AddOverclock(Recipes);
+    let recipes = AddOverclock(Recipes.slice(0, Recipes.length));
     let graph = GenerateGraph(recipes);
 
     if (themeType === null) {

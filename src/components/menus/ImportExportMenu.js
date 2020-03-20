@@ -6,6 +6,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import { compress, decompress } from 'lzutf8';
+import { Recipes } from '../../data';
 
 const ImportExportMenu = React.memo(function ImportExportMenu(props) {
   const [data, setData] = React.useState('');
@@ -27,13 +28,29 @@ const ImportExportMenu = React.memo(function ImportExportMenu(props) {
     setData(compressedData.toString());
   };
 
+  const handleDefaultImport = () => {
+    let recipes = Recipes;
+    props.handleRecipes(recipes);
+  };
+
   return (
     <>
       <DialogTitle>{props.title}</DialogTitle>
       <DialogContent>
         <DialogContentText>
           Paste a recipe string below to import a recipe.
+          <br />
+          <br />
+          Alternatively, you may import a sample recipe:
         </DialogContentText>
+        <Button
+          onClick={handleDefaultImport}
+          color="default"
+          variant="outlined">
+          Numismatic Generators
+        </Button>
+        <br />
+        <br />
         <TextField
           multiline
           fullWidth
