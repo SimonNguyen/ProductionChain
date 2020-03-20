@@ -14,6 +14,8 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import Infinite from 'react-infinite';
+import { SizeMe } from 'react-sizeme';
 import RecipeRow from './RecipeRow';
 
 import { TierNames } from '../../data';
@@ -298,24 +300,37 @@ const EditMenu = React.memo(function EditMenu(props) {
           justify="space-between"
           alignitems="center">
           <Grid item xs={6}>
-            {inputs.map((input, index) => (
-              <RecipeRow
-                key={'input' + index}
-                id={index}
-                item={input}
-                handleUpdateItems={handleUpdateInputs}
-              />
-            ))}
+            <Infinite
+              containerHeight={
+                inputs.length * 72 > (window.innerHeight * 3) / 5
+                  ? (window.innerHeight * 3) / 5
+                  : inputs.length * 72
+              }
+              elementHeight={72}>
+              {
+                (console.log(window.innerHeight),
+                inputs.map((input, index) => (
+                  <RecipeRow
+                    key={'input' + index}
+                    id={index}
+                    item={input}
+                    handleUpdateItems={handleUpdateInputs}
+                  />
+                )))
+              }
+            </Infinite>
           </Grid>
           <Grid item xs={6}>
-            {outputs.map((output, index) => (
-              <RecipeRow
-                key={'output' + index}
-                id={index}
-                item={output}
-                handleUpdateItems={handleUpdateOutputs}
-              />
-            ))}
+            <Infinite containerHeight={65} elementHeight={65}>
+              {outputs.map((output, index) => (
+                <RecipeRow
+                  key={'output' + index}
+                  id={index}
+                  item={output}
+                  handleUpdateItems={handleUpdateOutputs}
+                />
+              ))}
+            </Infinite>
           </Grid>
         </Grid>
       </DialogContent>

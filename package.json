@@ -26,6 +26,7 @@
     "material-table": "^1.57.2",
     "react": "latest",
     "react-dom": "latest",
+    "react-infinite": "^0.13.0",
     "react-scripts": "latest"
   },
   "browserslist": {
