@@ -109,9 +109,15 @@ function MachineRequirements(recipes, graph) {
   let machineTotals = [];
   let machineSteps = [];
   let rft = 0;
+  let inputs = [];
+  let outputs = [];
 
-  let inputs = FindInitialInputs(graph);
-  let outputs = FindFinalOutputs(graph);
+  if (typeof recipes === 'undefined' || recipes.length === 0) {
+    return { machineTotals, machineSteps, rft, inputs, outputs };
+  }
+
+  inputs = FindInitialInputs(graph);
+  outputs = FindFinalOutputs(graph);
 
   graph.forEachNode((node, attributes) => {
     let tier = TierNames[attributes.machineTier];

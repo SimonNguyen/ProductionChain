@@ -35,21 +35,27 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
   );
   const [targetMachines, setTargetMachines] = React.useState(1);
   const [targetItem, setTargetItem] = React.useState(
-    Object.keys(requirements.outputs)[0]
+    requirements.outputs.length !== 0 ? Object.keys(requirements.outputs)[0] : 0
   );
   const [targetQuantity, setTargetQuantity] = React.useState(
-    requirements.outputs[targetItem].quantity
+    requirements.outputs.length !== 0
+      ? requirements.outputs[targetItem].quantity
+      : 0
   );
   const [targetRatio, setTargetRatio] = React.useState(
-    targetQuantity / requirements.outputs[targetItem].time
+    requirements.outputs.length !== 0
+      ? targetQuantity / requirements.outputs[targetItem].time
+      : 0
   );
   const [targetOps, setTargetOps] = React.useState(targetRatio);
   const [targetLabelWidth, setTargetLabelWidth] = React.useState(0);
 
   const targetLabel = React.useRef(null);
   React.useEffect(() => {
-    setTargetLabelWidth(targetLabel.current.offsetWidth);
-  }, []);
+    if (props.recipes.length !== 0) {
+      setTargetLabelWidth(targetLabel.current.offsetWidth);
+    }
+  }, [props.recipes.length]);
 
   const handleOps = (value) => {
     setTargetOps(value);
@@ -91,147 +97,157 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
     <>
       <DialogTitle>{props.title}</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          The default setting for the calculator is a single machine producing
-          the final product. If you require more or less product, adjust the
-          machines or outputs per second. Once you have set custom targets,
-          press the 'calculate' button to redetermine the requirements for the
-          recipe.
-        </DialogContentText>
-        <Grid container direction="row" alignItems="center">
-          <FormControl className={classes.formControl}>
-            <TextField
-              error={!regAnyNumber.test(targetOps)}
-              label="Output per second"
-              placeholder="1"
-              required
-              type="number"
-              value={targetOps}
-              variant="outlined"
-              onChange={(event) => handleOps(Number(event.target.value))}
-            />
-          </FormControl>
-          <FormControl variant="outlined" className={classes.formControl}>
-            <TextField
-              error={!regAnyNumber.test(targetMachines)}
-              label="Number of machines"
-              placeholder="1"
-              required
-              type="number"
-              value={targetMachines}
-              variant="outlined"
-              onChange={(event) => handleMachines(Number(event.target.value))}
-            />
-          </FormControl>
-          <FormControl variant="outlined" className={classes.formControl}>
-            <InputLabel ref={targetLabel}>Target Output</InputLabel>
-            <Select
-              label="Target Output"
-              labelWidth={targetLabelWidth}
-              value={targetItem}
-              onChange={(event) => handleItem(event.target.value)}>
-              {Object.entries(requirements.outputs)
-                .sort()
-                .map(([key, value]) => (
-                  <MenuItem key={'select' + key} value={key}>
-                    {key}
-                  </MenuItem>
-                ))}
-            </Select>
-          </FormControl>
-          <div>
-            <Button
-              className={classes.margin}
-              onClick={handleTarget}
-              color="default"
-              variant="outlined">
-              Set Target
-            </Button>
-            <Button
-              className={classes.margin}
-              onClick={handleCalculate}
-              color="default"
-              variant="outlined">
-              Calculate
-            </Button>
-          </div>
-        </Grid>
-        <Divider style={{ margin: '12px 0' }} />
-        <Grid
-          container
-          direction="row"
-          justify="space-between"
-          alignitems="center">
-          <Grid item xs={3}>
-            <DialogContentText>Machines per Step</DialogContentText>
-          </Grid>
-          <Grid item xs={3}>
-            <DialogContentText>Machine Totals</DialogContentText>
-          </Grid>
-          <Grid item xs={2}>
-            <DialogContentText>Inputs/s</DialogContentText>
-          </Grid>
-          <Grid item xs={2}>
-            <DialogContentText>Outputs/s</DialogContentText>
-          </Grid>
-          <Grid item xs={2}>
-            <DialogContentText>Power Consumed</DialogContentText>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          direction="row"
-          justify="space-between"
-          alignitems="center">
-          <Grid item xs={3}>
-            {Object.entries(requirements.machineSteps).map(([key, value]) => (
-              <React.Fragment key={key}>
-                Step {key} : {value} <br />
-              </React.Fragment>
-            ))}
-          </Grid>
-          <Grid item xs={3}>
-            {Object.entries(requirements.machineTotals)
-              .sort()
-              .map(([key, value]) => (
-                <React.Fragment key={key}>
-                  {key} : {value} <br />
-                </React.Fragment>
-              ))}
-          </Grid>
-          <Grid item xs={2}>
-            {Object.entries(requirements.inputs)
-              .sort()
-              .map(([key, value]) => (
-                <React.Fragment key={key}>
-                  {key} :{' '}
-                  {(
-                    (value.quantity / value.time) *
-                    value.targetMachines
-                  ).toFixed(2)}
-                  <br />
-                </React.Fragment>
-              ))}
-          </Grid>
-          <Grid item xs={2}>
-            {Object.entries(requirements.outputs)
-              .sort()
-              .map(([key, value]) => (
-                <React.Fragment key={key}>
-                  {key} :{' '}
-                  {(
-                    (value.quantity / value.time) *
-                    value.targetMachines
-                  ).toFixed(2)}
-                  <br />
-                </React.Fragment>
-              ))}
-          </Grid>
-          <Grid item xs={2}>
-            RF/t: {requirements.rft} <br />
-            EU/t: {requirements.rft / 4}
-          </Grid>
-        </Grid>
+        {props.recipes.length !== 0 ? (
+          <>
+            <DialogContentText>
+              The default setting for the calculator is a single machine
+              producing the final product. If you require more or less product,
+              adjust the machines or outputs per second. Once you have set
+              custom targets, press the 'calculate' button to redetermine the
+              requirements for the recipe.
+            </DialogContentText>
+            <Grid container direction="row" alignItems="center">
+              <FormControl className={classes.formControl}>
+                <TextField
+                  error={!regAnyNumber.test(targetOps)}
+                  label="Output per second"
+                  placeholder="1"
+                  required
+                  type="number"
+                  value={targetOps}
+                  variant="outlined"
+                  onChange={(event) => handleOps(Number(event.target.value))}
+                />
+              </FormControl>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <TextField
+                  error={!regAnyNumber.test(targetMachines)}
+                  label="Number of machines"
+                  placeholder="1"
+                  required
+                  type="number"
+                  value={targetMachines}
+                  variant="outlined"
+                  onChange={(event) =>
+                    handleMachines(Number(event.target.value))
+                  }
+                />
+              </FormControl>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel ref={targetLabel}>Target Output</InputLabel>
+                <Select
+                  label="Target Output"
+                  labelWidth={targetLabelWidth}
+                  value={targetItem}
+                  onChange={(event) => handleItem(event.target.value)}>
+                  {Object.entries(requirements.outputs)
+                    .sort()
+                    .map(([key, value]) => (
+                      <MenuItem key={'select' + key} value={key}>
+                        {key}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+              <div>
+                <Button
+                  className={classes.margin}
+                  onClick={handleTarget}
+                  color="default"
+                  variant="outlined">
+                  Set Target
+                </Button>
+                <Button
+                  className={classes.margin}
+                  onClick={handleCalculate}
+                  color="default"
+                  variant="outlined">
+                  Calculate
+                </Button>
+              </div>
+            </Grid>
+            <Divider style={{ margin: '12px 0' }} />
+            <Grid
+              container
+              direction="row"
+              justify="space-between"
+              alignitems="center">
+              <Grid item xs={3}>
+                <DialogContentText>Machines per Step</DialogContentText>
+              </Grid>
+              <Grid item xs={3}>
+                <DialogContentText>Machine Totals</DialogContentText>
+              </Grid>
+              <Grid item xs={2}>
+                <DialogContentText>Inputs/s</DialogContentText>
+              </Grid>
+              <Grid item xs={2}>
+                <DialogContentText>Outputs/s</DialogContentText>
+              </Grid>
+              <Grid item xs={2}>
+                <DialogContentText>Power Consumed</DialogContentText>
+              </Grid>
+            </Grid>
+            <Grid
+              container
+              direction="row"
+              justify="space-between"
+              alignitems="center">
+              <Grid item xs={3}>
+                {Object.entries(requirements.machineSteps).map(
+                  ([key, value]) => (
+                    <React.Fragment key={key}>
+                      Step {key} : {value} <br />
+                    </React.Fragment>
+                  )
+                )}
+              </Grid>
+              <Grid item xs={3}>
+                {Object.entries(requirements.machineTotals)
+                  .sort()
+                  .map(([key, value]) => (
+                    <React.Fragment key={key}>
+                      {key} : {value} <br />
+                    </React.Fragment>
+                  ))}
+              </Grid>
+              <Grid item xs={2}>
+                {Object.entries(requirements.inputs)
+                  .sort()
+                  .map(([key, value]) => (
+                    <React.Fragment key={key}>
+                      {key} :{' '}
+                      {(
+                        (value.quantity / value.time) *
+                        value.targetMachines
+                      ).toFixed(2)}
+                      <br />
+                    </React.Fragment>
+                  ))}
+              </Grid>
+              <Grid item xs={2}>
+                {Object.entries(requirements.outputs)
+                  .sort()
+                  .map(([key, value]) => (
+                    <React.Fragment key={key}>
+                      {key} :{' '}
+                      {(
+                        (value.quantity / value.time) *
+                        value.targetMachines
+                      ).toFixed(2)}
+                      <br />
+                    </React.Fragment>
+                  ))}
+              </Grid>
+              <Grid item xs={2}>
+                RF/t: {requirements.rft} <br />
+                EU/t: {requirements.rft / 4}
+              </Grid>
+            </Grid>
+          </>
+        ) : (
+          <DialogContentText>No recipe information.</DialogContentText>
+        )}
       </DialogContent>
       <DialogActions>
         <Button onClick={props.handleClose} color="default">
