@@ -85,8 +85,8 @@ const EditMenu = React.memo(function EditMenu(props) {
   const [numOutputs, setNumOutputs] = React.useState(
     props.rowData.outputs.length
   );
-  const [inputs, setInputs] = React.useState(props.rowData.inputs);
-  const [outputs, setOutputs] = React.useState(props.rowData.outputs);
+  const [inputs, setInputs] = React.useState(props.rowData.inputs.slice());
+  const [outputs, setOutputs] = React.useState(props.rowData.outputs.slice());
   const [valid, setValid] = React.useState(true);
 
   const regAnyNumber = /^-?\d+\.?\d*$/;
@@ -103,6 +103,7 @@ const EditMenu = React.memo(function EditMenu(props) {
     if (value >= 0 && regWholeNumber.test(value)) {
       setNumInputs(value);
       setInputs((prevInputs) => pushDefault(prevInputs, value));
+      setValid(false);
     }
   };
 
@@ -110,6 +111,7 @@ const EditMenu = React.memo(function EditMenu(props) {
     if (value >= 0 && regWholeNumber.test(value)) {
       setNumOutputs(value);
       setOutputs((prevOutputs) => pushDefault(prevOutputs, value));
+      setValid(false);
     }
   };
 
@@ -128,13 +130,14 @@ const EditMenu = React.memo(function EditMenu(props) {
     newInputs[id] = item;
     setInputs(newInputs);
 
+    let valid = true;
     newInputs.forEach((input) => {
       if (input.name.length === 0) {
-        setValid(false);
-      } else {
-        setValid(true);
+        valid = valid && false;
       }
     });
+
+    setValid(valid);
   };
 
   const handleUpdateOutputs = (id, item) => {
@@ -142,33 +145,35 @@ const EditMenu = React.memo(function EditMenu(props) {
     newOutputs[id] = item;
     setOutputs(newOutputs);
 
+    let valid = true;
     newOutputs.forEach((output) => {
       if (output.name.length === 0) {
-        setValid(false);
-      } else {
-        setValid(true);
+        valid = valid && false;
       }
     });
+
+    setValid(valid);
   };
 
   const handleUpdateRecipes = () => {
     let recipes = props.recipes;
     let index = recipes.indexOf(props.rowData);
 
-    recipes[index] = updatedRecipe(
-      isEu,
-      props.rowData.step,
-      machineName,
-      machineTier,
-      overclock,
-      rft,
-      time,
-      inputs,
-      outputs
-    );
-
-    props.handleUpdate(recipes);
-    props.handleClose();
+    if (valid) {
+      recipes[index] = updatedRecipe(
+        isEu,
+        props.rowData.step,
+        machineName,
+        machineTier,
+        overclock,
+        rft,
+        time,
+        inputs,
+        outputs
+      );
+      props.handleUpdate(recipes);
+      props.handleClose();
+    }
   };
 
   return (
@@ -303,24 +308,31 @@ const EditMenu = React.memo(function EditMenu(props) {
               containerHeight={
                 inputs.length * 72 > (window.innerHeight * 3) / 5
                   ? (window.innerHeight * 3) / 5
+                  : inputs.length === 0
+                  ? 72
                   : inputs.length * 72
               }
               elementHeight={72}>
-              {
-                (console.log(window.innerHeight),
-                inputs.map((input, index) => (
-                  <RecipeRow
-                    key={'input' + index}
-                    id={index}
-                    item={input}
-                    handleUpdateItems={handleUpdateInputs}
-                  />
-                )))
-              }
+              {inputs.map((input, index) => (
+                <RecipeRow
+                  key={'input' + index}
+                  id={index}
+                  item={input}
+                  handleUpdateItems={handleUpdateInputs}
+                />
+              ))}
             </Infinite>
           </Grid>
           <Grid item xs={6}>
-            <Infinite containerHeight={65} elementHeight={65}>
+            <Infinite
+              containerHeight={
+                outputs.length * 72 > (window.innerHeight * 3) / 5
+                  ? (window.innerHeight * 3) / 5
+                  : outputs.length === 0
+                  ? 72
+                  : outputs.length * 72
+              }
+              elementHeight={72}>
               {outputs.map((output, index) => (
                 <RecipeRow
                   key={'output' + index}
