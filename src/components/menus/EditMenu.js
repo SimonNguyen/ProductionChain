@@ -100,7 +100,7 @@ const EditMenu = React.memo(function EditMenu(props) {
   }, []);
 
   const handleNumInputs = (value) => {
-    if (value >= 0 && regWholeNumber.test(value)) {
+    if (value >= 0 && value <= 100 && regWholeNumber.test(value)) {
       setNumInputs(value);
       setInputs((prevInputs) => pushDefault(prevInputs, value));
       setValid(false);
@@ -108,7 +108,7 @@ const EditMenu = React.memo(function EditMenu(props) {
   };
 
   const handleNumOutputs = (value) => {
-    if (value >= 0 && regWholeNumber.test(value)) {
+    if (value >= 0 && value <= 100 && regWholeNumber.test(value)) {
       setNumOutputs(value);
       setOutputs((prevOutputs) => pushDefault(prevOutputs, value));
       setValid(false);
