@@ -144,50 +144,6 @@ class DataTable extends Component {
     return (
       <Paper variant="outlined" my={2}>
         <MaterialTable
-          columns={this.state.columns}
-          data={Array.from(this.props.recipes)}
-          options={{
-            actionsColumnIndex: -1,
-            maxBodyHeight: '77vh',
-            paging: true,
-            pageSizeOptions: [5, 10, 15, 20],
-            showTitle: false,
-            sorting: false,
-            tableLayout: 'auto',
-          }}
-          editable={{
-            // onRowUpdate: (newData, oldData) =>
-            //   new Promise((resolve, reject) => {
-            //     setTimeout(() => {
-            //       {
-            //         let recipes = this.state.recipes;
-            //         let index = recipes.indexOf(oldData);
-            //         recipes[index] = newData;
-            //         this.setState({ recipes }, () => resolve());
-            //         this.props.handleUpdate(recipes);
-            //       }
-            //       resolve();
-            //     }, 1000);
-            //   }),
-            onRowDelete: (oldData) =>
-              new Promise((resolve, reject) => {
-                setTimeout(() => {
-                  {
-                    let recipes = [...this.state.recipes];
-                    let index = recipes.indexOf(oldData);
-                    recipes.splice(index, 1);
-
-                    recipes.forEach((recipe, index) => {
-                      recipe.step = index + 1;
-                    });
-
-                    this.setState({ recipes }, () => resolve());
-                    this.props.handleUpdate(recipes);
-                  }
-                  resolve();
-                }, 200);
-              }),
-          }}
           actions={[
             {
               icon: 'arrow_upward',
@@ -235,6 +191,40 @@ class DataTable extends Component {
               },
             },
           ]}
+          columns={this.state.columns}
+          data={Array.from(this.props.recipes)}
+          editable={{
+            onRowDelete: (oldData) =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  {
+                    let recipes = [...this.state.recipes];
+                    let index = recipes.indexOf(oldData);
+                    recipes.splice(index, 1);
+
+                    recipes.forEach((recipe, index) => {
+                      recipe.step = index + 1;
+                    });
+
+                    this.setState({ recipes }, () => resolve());
+                    this.props.handleUpdate(recipes);
+                  }
+                  resolve();
+                }, 200);
+              }),
+          }}
+          localization={{
+            body: { emptyDataSourceMessage: 'No recipes to display' },
+          }}
+          options={{
+            actionsColumnIndex: -1,
+            maxBodyHeight: '77vh',
+            paging: true,
+            pageSizeOptions: [5, 10, 15, 20],
+            showTitle: false,
+            sorting: false,
+            tableLayout: 'auto',
+          }}
         />
         <MenuDialog
           contentType={'edit'}
