@@ -11,7 +11,7 @@ import { TierNames, Voltages } from '../../data';
  * @returns
  */
 function Overclock(EUt, tierIndex, duration) {
-  let tier = TierNames[tierIndex] - 1;
+  let tier = TierNames.indexOf(TierNames[tierIndex]) - 1;
   let resultEUt = EUt;
   let resultDuration = duration;
   let multiplier = 0;
