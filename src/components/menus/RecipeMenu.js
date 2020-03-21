@@ -78,6 +78,7 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
   const [time, setTime] = React.useState(0);
   const [numInputs, setNumInputs] = React.useState(1);
   const [numOutputs, setNumOutputs] = React.useState(1);
+  const [valid, setValid] = React.useState(false);
 
   const [inputs, setInputs] = React.useState([
     { name: '', quantity: 1, unit: 'b' },
@@ -126,11 +127,24 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
     let newInputs = inputs;
     newInputs[id] = item;
     setInputs(newInputs);
+
+    if (value.length === 0) {
+      setValid(false);
+    } else {
+      setValid(true);
+    }
   };
+
   const handleUpdateOutputs = (id, item) => {
     let newOutputs = inputs;
     newOutputs[id] = item;
     setOutputs(newOutputs);
+
+    if (value.length === 0) {
+      setValid(false);
+    } else {
+      setValid(true);
+    }
   };
 
   const handleUpdateRecipes = () => {
@@ -304,7 +318,7 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleUpdateRecipes} color="default">
+        <Button onClick={handleUpdateRecipes} color="default" disabled={!valid}>
           Add
         </Button>
         <Button onClick={props.handleClose} color="default">
