@@ -46,8 +46,7 @@ class App extends Component {
 
     let themeType = window.localStorage.getItem('theme');
     let collapsed = window.localStorage.getItem('collapsed');
-    let recipes = AddOverclock(Recipes.slice(0, Recipes.length));
-    let graph = GenerateGraph(recipes);
+    let storedRecipes = JSON.parse(window.localStorage.getItem('recipes'));
 
     if (themeType === null) {
       window.localStorage.setItem('theme', 'dark');
@@ -60,6 +59,14 @@ class App extends Component {
     if (collapsed === null) {
       window.localStorage.setItem('collapsed', 'false');
     }
+
+    if (storedRecipes === null) {
+      window.localStorage.setItem('recipes', '[]');
+      storedRecipes = [];
+    }
+
+    let recipes = AddOverclock(storedRecipes.slice(0, storedRecipes.length));
+    let graph = GenerateGraph(recipes);
 
     this.state = {
       theme: DefaultTheme,
@@ -94,6 +101,7 @@ class App extends Component {
     recipes.length = 0;
 
     this.setState({ recipes });
+    window.localStorage.setItem('recipes', JSON.stringify(recipes));
   };
 
   handleUpdate = (newRecipes) => {
@@ -101,6 +109,7 @@ class App extends Component {
     let graph = GenerateGraph(recipes);
     this.setState({ recipes });
     this.setState({ graph });
+    window.localStorage.setItem('recipes', JSON.stringify(recipes));
   };
 
   render() {

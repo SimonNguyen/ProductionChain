@@ -19,7 +19,7 @@ const ImportExportMenu = React.memo(function ImportExportMenu(props) {
     let array = data.split(',');
     let uint8array = Uint8Array.from(array);
     let recipes = JSON.parse(decompress(uint8array));
-    props.handleRecipes(recipes);
+    props.handleUpdate(recipes);
   };
 
   const handleExport = () => {
@@ -30,7 +30,7 @@ const ImportExportMenu = React.memo(function ImportExportMenu(props) {
 
   const handleDefaultImport = () => {
     let recipes = Recipes;
-    props.handleRecipes(recipes);
+    props.handleUpdate(recipes);
   };
 
   return (

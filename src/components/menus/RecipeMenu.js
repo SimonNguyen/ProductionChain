@@ -114,6 +114,7 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
     if (value >= 0 && regWholeNumber.test(value)) {
       setNumInputs(value);
       setInputs((prevInputs) => pushDefault(prevInputs, value));
+      setValid(false);
     }
   };
 
@@ -121,6 +122,17 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
     if (value >= 0 && regWholeNumber.test(value)) {
       setNumOutputs(value);
       setOutputs((prevOutputs) => pushDefault(prevOutputs, value));
+      setValid(false);
+    }
+  };
+
+  const handleUpdateMachineName = (value) => {
+    setMachineName(value);
+
+    if (value.length === 0) {
+      setValid(false);
+    } else {
+      setValid(true);
     }
   };
 
@@ -156,7 +168,7 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
 
   const handleUpdateRecipes = () => {
     let recipes = props.recipes;
-    let index = Object.keys(recipes).length;
+    let index = recipes.length;
 
     recipes.push(
       newRecipe(
@@ -189,7 +201,7 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
             required
             value={machineName}
             variant="outlined"
-            onChange={(event) => setMachineName(event.target.value)}
+            onChange={(event) => handleUpdateMachineName(event.target.value)}
           />
         </FormControl>
         <FormControl variant="outlined" className={classes.formControl}>
