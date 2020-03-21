@@ -140,6 +140,12 @@ class DataTable extends Component {
     this.setState({ dialog: false });
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.recipes !== this.props.recipes) {
+      this.setState({ recipes: Array.from(this.props.recipes) });
+    }
+  }
+
   render() {
     return (
       <Paper variant="outlined" my={2}>
@@ -190,6 +196,21 @@ class DataTable extends Component {
                 this.handleDialogOpen(rowData);
               },
             },
+            {
+              icon: 'delete_outline',
+              tooltip: 'Delete Recipe',
+              onClick: (event, rowData) => {
+                let recipes = [...this.state.recipes];
+                recipes.splice(rowData.step, 1);
+
+                recipes.forEach((recipe, index) => {
+                  recipe.step = index;
+                });
+
+                this.setState({ recipes });
+                this.props.handleUpdate(recipes);
+              },
+            },
           ]}
           columns={this.state.columns}
           data={Array.from(this.props.recipes)}
@@ -199,18 +220,17 @@ class DataTable extends Component {
                 setTimeout(() => {
                   {
                     let recipes = [...this.state.recipes];
-                    let index = recipes.indexOf(oldData);
-                    recipes.splice(index, 1);
+                    recipes.splice(oldData.step, 1);
 
                     recipes.forEach((recipe, index) => {
-                      recipe.step = index + 1;
+                      recipe.step = index;
                     });
 
                     this.setState({ recipes }, () => resolve());
                     this.props.handleUpdate(recipes);
                   }
                   resolve();
-                }, 200);
+                }, 0);
               }),
           }}
           localization={{

@@ -35,7 +35,9 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
   );
   const [targetMachines, setTargetMachines] = React.useState(1);
   const [targetItem, setTargetItem] = React.useState(
-    requirements.outputs.length !== 0 ? Object.keys(requirements.outputs)[0] : 0
+    Object.keys(requirements.outputs).length !== 0
+      ? Object.keys(requirements.outputs)[0]
+      : ''
   );
   const [targetQuantity, setTargetQuantity] = React.useState(
     requirements.outputs.length !== 0
@@ -246,7 +248,9 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
             </Grid>
           </>
         ) : (
-          <DialogContentText>No recipe information.</DialogContentText>
+          <DialogContentText>
+            No recipe information to calculate.
+          </DialogContentText>
         )}
       </DialogContent>
       <DialogActions>
