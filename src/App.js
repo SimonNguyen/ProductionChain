@@ -20,7 +20,6 @@ import { GenerateGraph } from './components/utils/graph';
 import DataTable from './components/DataTable';
 import NavContent from './components/NavContent';
 import HeaderContent from './components/HeaderContent';
-import { decompress } from 'lzutf8';
 
 import { AddOverclock } from './components/utils/overclock';
 
@@ -47,18 +46,9 @@ class App extends Component {
 
     let themeType = window.localStorage.getItem('theme');
     let collapsed = window.localStorage.getItem('collapsed');
-    let queryString = window.location.search;
-    let urlParams = new URLSearchParams(queryString);
-    let urlRecipes = urlParams.get('recipes');
-    let storedRecipes = [];
-
-    if (urlRecipes === 'null') {
-      storedRecipes = JSON.parse(window.localStorage.getItem('recipes'));
-    } else {
-      let array = urlRecipes.split(',');
-      let uint8array = Uint8Array.from(array);
-      storedRecipes = JSON.parse(decompress(uint8array));
-    }
+    let storedRecipes = (storedRecipes = JSON.parse(
+      window.localStorage.getItem('recipes')
+    ));
 
     if (themeType === null) {
       window.localStorage.setItem('theme', 'dark');

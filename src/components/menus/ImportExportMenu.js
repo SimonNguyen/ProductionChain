@@ -11,7 +11,6 @@ import { Recipes } from '../../data';
 
 const ImportExportMenu = React.memo(function ImportExportMenu(props) {
   const [data, setData] = React.useState('');
-  const url = window.location.href;
 
   const handleChange = (event) => {
     setData(event.target.value);
@@ -60,18 +59,6 @@ const ImportExportMenu = React.memo(function ImportExportMenu(props) {
           variant="outlined"
           value={data}
           onChange={handleChange}
-        />
-        <Divider style={{ margin: '12px 0' }} />
-        <TextField
-          fullWidth
-          size="medium"
-          rowsMax="1"
-          variant="outlined"
-          value={
-            url.substring(0, url.indexOf('?')) +
-            '?recipes=' +
-            encodeURIComponent(data)
-          }
         />
       </DialogContent>
       <DialogActions>
