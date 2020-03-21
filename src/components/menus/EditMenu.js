@@ -103,6 +103,18 @@ const EditMenu = React.memo(function EditMenu(props) {
     setTierLabelWidth(tierLabel.current.offsetWidth);
   }, []);
 
+  const handleNumRft = (value) => {
+    if (value >= 0) {
+      setRft(value);
+    }
+  };
+
+  const handleNumTime = (value) => {
+    if (value >= 0) {
+      setTime(value);
+    }
+  };
+
   const handleNumInputs = (value) => {
     if (value >= 0 && value <= 100 && regWholeNumber.test(value)) {
       setNumInputs(value);
@@ -231,9 +243,21 @@ const EditMenu = React.memo(function EditMenu(props) {
             type="number"
             value={rft}
             variant="outlined"
-            onChange={(event) => setRft(Number(event.target.value))}
+            onChange={(event) => handleNumRft(Number(event.target.value))}
           />
         </FormControl>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={isEu === true}
+              onChange={() => setIsEu(!isEu)}
+              value={isEu}
+              color="primary"
+            />
+          }
+          label="Use EU/t"
+          labelPlacement="top"
+        />
         <FormControl className={classes.formControlSmall}>
           <TextField
             error={!regAnyNumber.test(time)}
@@ -243,7 +267,7 @@ const EditMenu = React.memo(function EditMenu(props) {
             type="number"
             value={time}
             variant="outlined"
-            onChange={(event) => setTime(Number(event.target.value))}
+            onChange={(event) => handleNumTime(Number(event.target.value))}
           />
         </FormControl>
         <FormControl className={classes.formControlSmall}>
@@ -270,18 +294,6 @@ const EditMenu = React.memo(function EditMenu(props) {
             onChange={(event) => handleNumOutputs(Number(event.target.value))}
           />
         </FormControl>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={isEu === true}
-              onChange={() => setIsEu(!isEu)}
-              value={isEu}
-              color="primary"
-            />
-          }
-          label="Use EU/t"
-          labelPlacement="top"
-        />
 
         <Divider style={{ margin: '12px 0' }} />
 

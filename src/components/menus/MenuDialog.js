@@ -51,7 +51,12 @@ const MenuDialog = ({
           handleClose={handleClose}
         />
       ) : contentType === 'add' ? (
-        <RecipeMenu title={title} recipes={recipes} handleClose={handleClose} />
+        <RecipeMenu
+          title={title}
+          recipes={recipes}
+          handleClose={handleClose}
+          handleUpdate={handleUpdate}
+        />
       ) : contentType === 'settings' ? (
         <SettingsMenu
           title={title}

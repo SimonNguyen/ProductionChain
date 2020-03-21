@@ -42,6 +42,32 @@ function pushDefault(array, n) {
   return newArray;
 }
 
+function newRecipe(
+  isEu,
+  step,
+  machineName,
+  machineTier,
+  overclock,
+  rft,
+  time,
+  inputs,
+  outputs
+) {
+  let recipe = {
+    step: step,
+    machineName: machineName,
+    machineTier: machineTier,
+    overclock: overclock,
+    rft: isEu ? rft * 4 : rft,
+    time: time,
+    inputs: inputs,
+    outputs: outputs,
+    targetMachines: 1,
+  };
+
+  return recipe;
+}
+
 const RecipeMenu = React.memo(function RecipeMenu(props) {
   const classes = useStyles();
   const [isEu, setIsEu] = React.useState(false);
@@ -70,6 +96,18 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
     setTierLabelWidth(tierLabel.current.offsetWidth);
   }, []);
 
+  const handleNumRft = (value) => {
+    if (value >= 0) {
+      setRft(value);
+    }
+  };
+
+  const handleNumTime = (value) => {
+    if (value >= 0) {
+      setTime(value);
+    }
+  };
+
   const handleNumInputs = (value) => {
     if (value >= 0 && regWholeNumber.test(value)) {
       setNumInputs(value);
@@ -93,6 +131,28 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
     let newOutputs = inputs;
     newOutputs[id] = item;
     setOutputs(newOutputs);
+  };
+
+  const handleUpdateRecipes = () => {
+    let recipes = props.recipes;
+    let index = Object.keys(recipes).length;
+
+    recipes.push(
+      newRecipe(
+        isEu,
+        index,
+        machineName,
+        machineTier,
+        overclock,
+        rft,
+        time,
+        inputs,
+        outputs
+      )
+    );
+
+    props.handleUpdate(recipes);
+    props.handleClose();
   };
 
   return (
@@ -146,9 +206,21 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
             type="number"
             value={rft}
             variant="outlined"
-            onChange={(event) => setRft(Number(event.target.value))}
+            onChange={(event) => handleNumRft(Number(event.target.value))}
           />
         </FormControl>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={isEu === true}
+              onChange={() => setIsEu(!isEu)}
+              value={isEu}
+              color="primary"
+            />
+          }
+          label="Use EU/t"
+          labelPlacement="top"
+        />
         <FormControl className={classes.formControlSmall}>
           <TextField
             error={!regAnyNumber.test(time)}
@@ -158,7 +230,7 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
             type="number"
             value={time}
             variant="outlined"
-            onChange={(event) => setTime(Number(event.target.value))}
+            onChange={(event) => handleNumTime(Number(event.target.value))}
           />
         </FormControl>
         <FormControl className={classes.formControlSmall}>
@@ -185,18 +257,6 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
             onChange={(event) => handleNumOutputs(Number(event.target.value))}
           />
         </FormControl>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={isEu === true}
-              onChange={() => setIsEu(!isEu)}
-              value={isEu}
-              color="primary"
-            />
-          }
-          label="Use EU/t"
-          labelPlacement="top"
-        />
 
         <Divider style={{ margin: '12px 0' }} />
         <Grid
@@ -244,7 +304,7 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={props.handleClose} color="default">
+        <Button onClick={handleUpdateRecipes} color="default">
           Add
         </Button>
         <Button onClick={props.handleClose} color="default">

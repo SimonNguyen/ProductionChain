@@ -18,6 +18,7 @@ const styles = (theme) => ({
 });
 
 const regAnyNumber = /^-?\d+\.?\d*$/;
+const regWholeNumber = /^\d+$/;
 
 class RecipeRow extends Component {
   constructor(props) {
@@ -32,10 +33,12 @@ class RecipeRow extends Component {
 
   handleQuantity = (event) => {
     const value = Number(event.target.value);
-    let item = this.state.item;
-    item.quantity = value;
-    this.setState({ item });
-    this.props.handleUpdateItems(this.props.id, this.state.item);
+    if (value >= 1 && regWholeNumber.test(value)) {
+      let item = this.state.item;
+      item.quantity = value;
+      this.setState({ item });
+      this.props.handleUpdateItems(this.props.id, this.state.item);
+    }
   };
 
   handleUnit = (event) => {

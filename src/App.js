@@ -157,6 +157,7 @@ class App extends Component {
                     handleRecipes={this.handleUpdate}
                     handleClear={this.handleClear}
                     recipes={this.state.recipes}
+                    handleUpdate={this.handleUpdate}
                     themeType={this.state.theme.palette.type}
                   />
                 </div>
