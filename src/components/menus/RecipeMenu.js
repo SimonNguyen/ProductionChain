@@ -139,7 +139,7 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
   };
 
   const handleUpdateOutputs = (id, item) => {
-    let newOutputs = inputs;
+    let newOutputs = outputs;
     newOutputs[id] = item;
     setOutputs(newOutputs);
 
