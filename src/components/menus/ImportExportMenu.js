@@ -4,12 +4,14 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import { compress, decompress } from 'lzutf8';
 import { Recipes } from '../../data';
 
 const ImportExportMenu = React.memo(function ImportExportMenu(props) {
   const [data, setData] = React.useState('');
+  const url = window.location.href;
 
   const handleChange = (event) => {
     setData(event.target.value);
@@ -49,8 +51,7 @@ const ImportExportMenu = React.memo(function ImportExportMenu(props) {
           variant="outlined">
           Numismatic Generators
         </Button>
-        <br />
-        <br />
+        <Divider style={{ margin: '12px 0' }} />
         <TextField
           multiline
           fullWidth
@@ -59,6 +60,18 @@ const ImportExportMenu = React.memo(function ImportExportMenu(props) {
           variant="outlined"
           value={data}
           onChange={handleChange}
+        />
+        <Divider style={{ margin: '12px 0' }} />
+        <TextField
+          fullWidth
+          size="medium"
+          rowsMax="1"
+          variant="outlined"
+          value={
+            url.substring(0, url.indexOf('?')) +
+            '?recipes=' +
+            encodeURIComponent(data)
+          }
         />
       </DialogContent>
       <DialogActions>
