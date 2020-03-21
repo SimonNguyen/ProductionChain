@@ -89,17 +89,12 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
       targetMachines
     );
 
-    if (typeof targetStored[targetItem] === 'undefined') {
-      let targets = targetStored;
-      targets[targetItem] = {
-        targetOps: targetOps,
-        targetMachines: targetMachines,
-      };
-      setTargetStored(targets);
-    } else {
-      setTargetOps(targetStored[targetItem].targetOps);
-      setTargetMachines(targetStored[targetItem].targetMachines);
-    }
+    let targets = targetStored;
+    targets[targetItem] = {
+      targetOps: targetOps,
+      targetMachines: targetMachines,
+    };
+    setTargetStored(targets);
   };
 
   const handleCalculate = () => {
