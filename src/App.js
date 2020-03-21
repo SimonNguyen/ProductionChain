@@ -46,9 +46,7 @@ class App extends Component {
 
     let themeType = window.localStorage.getItem('theme');
     let collapsed = window.localStorage.getItem('collapsed');
-    let storedRecipes = (storedRecipes = JSON.parse(
-      window.localStorage.getItem('recipes')
-    ));
+    let storedRecipes = JSON.parse(window.localStorage.getItem('recipes'));
 
     if (themeType === null) {
       window.localStorage.setItem('theme', 'dark');
