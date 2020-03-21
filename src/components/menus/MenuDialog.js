@@ -21,7 +21,6 @@ const MenuDialog = ({
   title,
   handleClose,
   handleClear,
-  handleRecipes,
   handleTheme,
   handleUpdate,
 }) => {
@@ -41,7 +40,7 @@ const MenuDialog = ({
         <ImportExportMenu
           title={title}
           handleClose={handleClose}
-          handleRecipes={handleRecipes}
+          handleUpdate={handleUpdate}
           recipes={recipes}
         />
       ) : contentType === 'clear' ? (
@@ -51,7 +50,12 @@ const MenuDialog = ({
           handleClose={handleClose}
         />
       ) : contentType === 'add' ? (
-        <RecipeMenu title={title} recipes={recipes} handleClose={handleClose} />
+        <RecipeMenu
+          title={title}
+          recipes={recipes}
+          handleClose={handleClose}
+          handleUpdate={handleUpdate}
+        />
       ) : contentType === 'settings' ? (
         <SettingsMenu
           title={title}

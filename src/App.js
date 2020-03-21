@@ -127,9 +127,9 @@ class App extends Component {
                   <NavContent
                     graph={this.state.graph}
                     handleTheme={this.toggleDarkTheme}
-                    handleRecipes={this.handleUpdate}
                     handleClear={this.handleClear}
                     recipes={this.state.recipes}
+                    handleUpdate={this.handleUpdate}
                     themeType={this.state.theme.palette.type}
                   />
                 </div>
