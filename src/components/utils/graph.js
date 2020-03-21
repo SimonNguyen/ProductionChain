@@ -134,7 +134,13 @@ function MachineRequirements(recipes, graph) {
         machineTotals[machine] + Math.ceil(attributes.targetMachines);
     }
 
-    machineSteps[node] = machine + ' ' + Math.ceil(attributes.targetMachines);
+    machineSteps[node] =
+      machine +
+      ' ' +
+      attributes.targetMachines.toFixed(2) +
+      ' (' +
+      Math.ceil(attributes.targetMachines) +
+      ')';
 
     rft = rft + Math.ceil(attributes.targetMachines) * recipeRft;
   });
