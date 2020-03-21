@@ -50,6 +50,7 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
       : 0
   );
   const [targetOps, setTargetOps] = React.useState(targetRatio);
+  const [targetStored, setTargetStored] = React.useState([]);
   const [targetLabelWidth, setTargetLabelWidth] = React.useState(0);
 
   const targetLabel = React.useRef(null);
@@ -74,6 +75,11 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
     setTargetItem(value);
     setTargetQuantity(quantity);
     setTargetRatio(quantity / requirements.outputs[value].time);
+
+    if (typeof targetStored[value] !== 'undefined') {
+      setTargetOps(targetStored[value].targetOps);
+      setTargetMachines(targetStored[value].targetMachines);
+    }
   };
 
   const handleTarget = () => {
@@ -82,6 +88,18 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
       'targetMachines',
       targetMachines
     );
+
+    if (typeof targetStored[targetItem] === 'undefined') {
+      let targets = targetStored;
+      targets[targetItem] = {
+        targetOps: targetOps,
+        targetMachines: targetMachines,
+      };
+      setTargetStored(targets);
+    } else {
+      setTargetOps(targetStored[targetItem].targetOps);
+      setTargetMachines(targetStored[targetItem].targetMachines);
+    }
   };
 
   const handleCalculate = () => {
@@ -93,7 +111,7 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
     setRequirements(MachineRequirements(props.recipes, calculatedGraph));
   };
 
-  const regAnyNumber = /^-?\d+\.?\d*$/;
+  const regAnyPositiveNumber = /^\d+\.?\d*$/;
 
   return (
     <>
@@ -111,33 +129,32 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
             <Grid container direction="row" alignItems="center">
               <FormControl className={classes.formControl}>
                 <TextField
-                  error={!regAnyNumber.test(targetOps) || targetOps === 0}
+                  error={
+                    !regAnyPositiveNumber.test(targetOps) || targetOps === 0
+                  }
                   label="Output per second"
                   placeholder="1"
                   required
                   type="number"
-                  value={targetOps.toString().replace(/^0+/, '')}
+                  value={targetOps}
                   variant="outlined"
-                  onChange={(event) =>
-                    handleOps(Number(event.target.value.replace(/^0+/, '')))
-                  }
+                  onChange={(event) => handleOps(Number(event.target.value))}
                 />
               </FormControl>
               <FormControl variant="outlined" className={classes.formControl}>
                 <TextField
                   error={
-                    !regAnyNumber.test(targetMachines) || targetMachines === 0
+                    !regAnyPositiveNumber.test(targetMachines) ||
+                    targetMachines === 0
                   }
                   label="Number of machines"
                   placeholder="1"
                   required
                   type="number"
-                  value={targetMachines.toString().replace(/^0+/, '')}
+                  value={targetMachines}
                   variant="outlined"
                   onChange={(event) =>
-                    handleMachines(
-                      Number(event.target.value.replace(/^0+/, ''))
-                    )
+                    handleMachines(Number(event.target.value))
                   }
                 />
               </FormControl>

@@ -15,7 +15,7 @@ import {
   SidebarTriggerIcon,
   headerStyles,
 } from '@mui-treasury/layout';
-import { DefaultTheme, Recipes } from './data';
+import { DefaultTheme } from './data';
 import { GenerateGraph } from './components/utils/graph';
 import DataTable from './components/DataTable';
 import NavContent from './components/NavContent';
