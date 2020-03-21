@@ -40,12 +40,12 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
       : ''
   );
   const [targetQuantity, setTargetQuantity] = React.useState(
-    requirements.outputs.length !== 0
+    Object.keys(requirements.outputs).length !== 0
       ? requirements.outputs[targetItem].quantity
       : 0
   );
   const [targetRatio, setTargetRatio] = React.useState(
-    requirements.outputs.length !== 0
+    Object.keys(requirements.outputs).length !== 0
       ? targetQuantity / requirements.outputs[targetItem].time
       : 0
   );
@@ -111,27 +111,33 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
             <Grid container direction="row" alignItems="center">
               <FormControl className={classes.formControl}>
                 <TextField
-                  error={!regAnyNumber.test(targetOps)}
+                  error={!regAnyNumber.test(targetOps) || targetOps === 0}
                   label="Output per second"
                   placeholder="1"
                   required
                   type="number"
-                  value={targetOps}
+                  value={targetOps.toString().replace(/^0+/, '')}
                   variant="outlined"
-                  onChange={(event) => handleOps(Number(event.target.value))}
+                  onChange={(event) =>
+                    handleOps(Number(event.target.value.replace(/^0+/, '')))
+                  }
                 />
               </FormControl>
               <FormControl variant="outlined" className={classes.formControl}>
                 <TextField
-                  error={!regAnyNumber.test(targetMachines)}
+                  error={
+                    !regAnyNumber.test(targetMachines) || targetMachines === 0
+                  }
                   label="Number of machines"
                   placeholder="1"
                   required
                   type="number"
-                  value={targetMachines}
+                  value={targetMachines.toString().replace(/^0+/, '')}
                   variant="outlined"
                   onChange={(event) =>
-                    handleMachines(Number(event.target.value))
+                    handleMachines(
+                      Number(event.target.value.replace(/^0+/, ''))
+                    )
                   }
                 />
               </FormControl>

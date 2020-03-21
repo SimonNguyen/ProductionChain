@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import MaterialTable from 'material-table';
 import { TierNames } from '../../data';
 import MenuDialog from '../menus/MenuDialog';
+import isEqual from 'lodash/isEqual';
 
 function DataTableCell(props) {
   return (
@@ -141,7 +142,10 @@ class DataTable extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.recipes !== this.props.recipes) {
+    if (!isEqual(prevState.recipes, this.state.recipes)) {
+      this.setState({ recipes: Array.from(this.props.recipes) });
+    }
+    if (!isEqual(this.props.recipes, this.state.recipes)) {
       this.setState({ recipes: Array.from(this.props.recipes) });
     }
   }
@@ -194,21 +198,6 @@ class DataTable extends Component {
               tooltip: 'Edit Recipe',
               onClick: (event, rowData) => {
                 this.handleDialogOpen(rowData);
-              },
-            },
-            {
-              icon: 'delete_outline',
-              tooltip: 'Delete Recipe',
-              onClick: (event, rowData) => {
-                let recipes = [...this.state.recipes];
-                recipes.splice(rowData.step, 1);
-
-                recipes.forEach((recipe, index) => {
-                  recipe.step = index;
-                });
-
-                this.setState({ recipes });
-                this.props.handleUpdate(recipes);
               },
             },
           ]}
