@@ -129,7 +129,6 @@ const NavContent = React.memo(function NavContent(props) {
         isOpen={open}
         handleClear={handleClear}
         handleClose={handleDialogClose}
-        handleRecipes={props.handleRecipes}
         handleUpdate={props.handleUpdate}
         handleTheme={props.handleTheme}
       />

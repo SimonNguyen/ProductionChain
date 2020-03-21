@@ -128,11 +128,14 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
     newInputs[id] = item;
     setInputs(newInputs);
 
-    if (value.length === 0) {
-      setValid(false);
-    } else {
-      setValid(true);
-    }
+    let valid = true;
+    newInputs.forEach((input) => {
+      if (input.name.length === 0) {
+        valid = valid && false;
+      }
+    });
+
+    setValid(valid);
   };
 
   const handleUpdateOutputs = (id, item) => {
@@ -140,11 +143,14 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
     newOutputs[id] = item;
     setOutputs(newOutputs);
 
-    if (value.length === 0) {
-      setValid(false);
-    } else {
-      setValid(true);
-    }
+    let valid = true;
+    newOutputs.forEach((output) => {
+      if (output.name.length === 0) {
+        valid = valid && false;
+      }
+    });
+
+    setValid(valid);
   };
 
   const handleUpdateRecipes = () => {

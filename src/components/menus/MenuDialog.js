@@ -21,7 +21,6 @@ const MenuDialog = ({
   title,
   handleClose,
   handleClear,
-  handleRecipes,
   handleTheme,
   handleUpdate,
 }) => {
@@ -41,7 +40,7 @@ const MenuDialog = ({
         <ImportExportMenu
           title={title}
           handleClose={handleClose}
-          handleRecipes={handleRecipes}
+          handleUpdate={handleUpdate}
           recipes={recipes}
         />
       ) : contentType === 'clear' ? (

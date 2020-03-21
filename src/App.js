@@ -103,33 +103,6 @@ class App extends Component {
     this.setState({ graph });
   };
 
-  handleOverclock = (step) => {
-    let recipes = this.state.recipes;
-
-    recipes[step].overclock = !recipes[step].overclock;
-
-    this.setState({ recipes });
-  };
-
-  handleTier = (step, value) => {
-    let recipes = this.state.recipes;
-
-    recipes[step].tier = value;
-
-    this.setState({ recipes });
-  };
-
-  handleDelete = (step) => {
-    let recipes = this.state.recipes;
-    recipes = recipes.filter((r) => Number(r.step) !== Number(step));
-
-    for (let index in recipes) {
-      recipes[index].step = Number(index);
-    }
-
-    this.setState({ recipes });
-  };
-
   render() {
     let muiTheme = createMuiTheme(this.state.theme);
     return (
@@ -154,7 +127,6 @@ class App extends Component {
                   <NavContent
                     graph={this.state.graph}
                     handleTheme={this.toggleDarkTheme}
-                    handleRecipes={this.handleUpdate}
                     handleClear={this.handleClear}
                     recipes={this.state.recipes}
                     handleUpdate={this.handleUpdate}
