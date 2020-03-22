@@ -105,7 +105,7 @@ class App extends Component {
   };
 
   handleUpdate = (newRecipes) => {
-    let recipes = newRecipes;
+    let recipes = AddOverclock(newRecipes);
     let graph = GenerateGraph(recipes);
     this.setState({ recipes });
     this.setState({ graph });
