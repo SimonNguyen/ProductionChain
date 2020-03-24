@@ -15,30 +15,13 @@ import {
   SidebarTriggerIcon,
   headerStyles,
 } from '@mui-treasury/layout';
-import { DefaultTheme } from './data';
+import { DefaultTheme, Config } from './data';
 import { GenerateGraph } from './components/utils/graph';
 import DataTable from './components/DataTable';
 import NavContent from './components/NavContent';
 import HeaderContent from './components/HeaderContent';
 
 import { AddOverclock } from './components/utils/overclock';
-
-let config = {
-  sidebar: {
-    anchor: 'left',
-    width: 256,
-    variant: 'permanent',
-    collapsible: true,
-    collapsedWidth: 64,
-  },
-  content: { persistentBehavior: 'fit' },
-  header: {
-    position: 'fixed',
-    clipped: false,
-    persistentBehavior: 'fit',
-    offsetHeight: 64,
-  },
-};
 
 class App extends Component {
   constructor(props) {
@@ -119,7 +102,7 @@ class App extends Component {
         <CssBaseline />
         <Root
           theme={muiTheme}
-          config={config}
+          config={Config}
           initialCollapsed={this.state.collapsed}>
           {({ sidebarStyles, collapsed }) => (
             <>

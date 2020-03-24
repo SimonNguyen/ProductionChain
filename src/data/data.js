@@ -13,23 +13,6 @@ const TierNames = [
 
 const Voltages = [8, 32, 128, 512, 2048, 8192, 32768, 131072, 524288];
 
-const Colors = [
-  '#3B511A',
-  '#51301A',
-  '#253192',
-  '#7B2FBE',
-  '#287697',
-  '#434343',
-  '#D88198',
-  '#41CD34',
-  '#DECF2A',
-  '#6689D3',
-  '#C354CD',
-  '#EB8844',
-  '#1E1B1B',
-  '#B3312C',
-];
-
 const Recipes = [
   {
     step: 0,
@@ -419,4 +402,21 @@ const DefaultTheme = {
   },
 };
 
-export { TierNames, Voltages, Colors, Recipes, DefaultTheme };
+const Config = {
+  sidebar: {
+    anchor: 'left',
+    width: 256,
+    variant: 'permanent',
+    collapsible: true,
+    collapsedWidth: 64,
+  },
+  content: { persistentBehavior: 'fit' },
+  header: {
+    position: 'fixed',
+    clipped: false,
+    persistentBehavior: 'fit',
+    offsetHeight: 64,
+  },
+};
+
+export { TierNames, Voltages, Recipes, DefaultTheme, Config };

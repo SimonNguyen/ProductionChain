@@ -2,21 +2,10 @@ import React, { Component } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import MaterialTable from 'material-table';
+import isEqual from 'lodash/isEqual';
 import { TierNames } from '../../data';
 import MenuDialog from '../menus/MenuDialog';
-import isEqual from 'lodash/isEqual';
-
-function DataTableCell(props) {
-  return (
-    <React.Fragment>
-      {props.items.map((item) => (
-        <div key={'_' + props.type + item.name + props.step}>
-          {item.quantity + item.unit + ' ' + item.name}
-        </div>
-      ))}
-    </React.Fragment>
-  );
-}
+import { DataTableCell } from './DataTableCell';
 
 class DataTable extends Component {
   constructor(props) {

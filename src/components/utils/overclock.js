@@ -4,7 +4,6 @@ import { TierNames, Voltages } from '../../data';
  * https://github.com/GregTechCE/GregTech/blob/master/src/main/java/gregtech/api/capability/impl/AbstractRecipeLogic.java
  * Returns object containing { rft: number, time: number }
  *
- * @export
  * @param {Number} EUt - EU per tick
  * @param {Number} tierIndex - GregTech machine tier
  * @param {Number} duration - Recipe duration in ticks
@@ -50,6 +49,12 @@ function Overclock(EUt, tierIndex, duration) {
   };
 }
 
+/**
+ * Returns recipe list with overclocked values.
+ *
+ * @param {*} recipes - Array of recipe objects
+ * @returns
+ */
 function AddOverclock(recipes) {
   recipes.forEach((recipe) => {
     let oc = Overclock(recipe.rft / 4, recipe.machineTier, recipe.time);
