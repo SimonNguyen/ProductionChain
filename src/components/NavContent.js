@@ -11,6 +11,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import AddIcon from '@material-ui/icons/Add';
 import FunctionsIcon from '@material-ui/icons/Functions';
 import MenuDialog from './menus/MenuDialog';
+import GitHubIcon from '@material-ui/icons/GitHub';
 
 const NavContent = React.memo(function NavContent(props) {
   const [open, setOpen] = React.useState(false);
@@ -115,6 +116,22 @@ const NavContent = React.memo(function NavContent(props) {
           </ListItemIcon>
           <ListItemText
             primary={'Settings'}
+            primaryTypographyProps={{ noWrap: true }}
+          />
+        </ListItem>
+        <ListItem
+          button
+          onClick={() =>
+            window.open(
+              'https://github.com/SimonNguyen/ProductionChain/',
+              '_blank'
+            )
+          }>
+          <ListItemIcon>
+            <GitHubIcon />
+          </ListItemIcon>
+          <ListItemText
+            primary={'GitHub'}
             primaryTypographyProps={{ noWrap: true }}
           />
         </ListItem>
