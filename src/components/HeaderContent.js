@@ -1,5 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 
 const styles = () => ({
@@ -13,9 +14,13 @@ const styles = () => ({
   },
 });
 
+const url = window.location.href;
+
 const HeaderContent = ({ classes }) => (
   <Typography noWrap color={'textPrimary'} className={classes.header}>
-    Production Chain
+    <Link href={url.substring(0, url.indexOf('?'))} color="inherit">
+      Production Chain
+    </Link>
   </Typography>
 );
 

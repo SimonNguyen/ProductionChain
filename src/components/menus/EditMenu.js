@@ -92,6 +92,9 @@ const EditMenu = React.memo(function EditMenu(props) {
     props.rowData.outputs.slice(0, props.rowData.outputs.length)
   );
   const [valid, setValid] = React.useState(true);
+  const [validName, setValidName] = React.useState(false);
+  const [validInputs, setValidInputs] = React.useState(false);
+  const [validOutputs, setValidOutputs] = React.useState(false);
 
   const regAnyNumber = /^-?\d+\.?\d*$/;
   const regWholeNumber = /^\d+$/;
@@ -116,29 +119,32 @@ const EditMenu = React.memo(function EditMenu(props) {
   };
 
   const handleNumInputs = (value) => {
-    if (value >= 0 && value <= 100 && regWholeNumber.test(value)) {
+    if (value >= 0 && regWholeNumber.test(value)) {
       setNumInputs(value);
       setInputs((prevInputs) => pushDefault(prevInputs, value));
-      setValid(false);
+      setValidInputs(false);
     }
+
+    handleValidation('inputs', false);
   };
 
   const handleNumOutputs = (value) => {
-    if (value >= 0 && value <= 100 && regWholeNumber.test(value)) {
+    if (value >= 0 && regWholeNumber.test(value)) {
       setNumOutputs(value);
       setOutputs((prevOutputs) => pushDefault(prevOutputs, value));
-      setValid(false);
+      setValidOutputs(false);
     }
+
+    handleValidation('outputs', false);
   };
 
   const handleUpdateMachineName = (value) => {
     setMachineName(value);
 
-    if (value.length === 0) {
-      setValid(false);
-    } else {
-      setValid(true);
-    }
+    let validName = value.length !== 0;
+
+    setValidName(validName);
+    handleValidation('machineName', validName);
   };
 
   const handleUpdateInputs = (id, item) => {
@@ -146,14 +152,15 @@ const EditMenu = React.memo(function EditMenu(props) {
     newInputs[id] = item;
     setInputs(newInputs);
 
-    let valid = true;
+    let validInputs = true;
     newInputs.forEach((input) => {
       if (input.name.length === 0) {
-        valid = valid && false;
+        validInputs = validInputs && false;
       }
     });
 
-    setValid(valid);
+    setValidInputs(validInputs);
+    handleValidation('inputs', validInputs);
   };
 
   const handleUpdateOutputs = (id, item) => {
@@ -161,14 +168,27 @@ const EditMenu = React.memo(function EditMenu(props) {
     newOutputs[id] = item;
     setOutputs(newOutputs);
 
-    let valid = true;
-    newOutputs.forEach((output) => {
+    let validOutputs = true;
+    outputs.forEach((output) => {
       if (output.name.length === 0) {
-        valid = valid && false;
+        validOutputs = validOutputs && false;
       }
     });
 
-    setValid(valid);
+    setValidOutputs(validOutputs);
+    handleValidation('outputs', validOutputs);
+  };
+
+  const handleValidation = (type, value) => {
+    if (type === 'machineName') {
+      setValid(value && validInputs && validOutputs);
+    } else if (type === 'inputs') {
+      setValid(validName && value && validOutputs);
+    } else if (type === 'outputs') {
+      setValid(validName && validInputs && value);
+    } else {
+      setValid(validName && validInputs && validOutputs);
+    }
   };
 
   const handleUpdateRecipes = () => {

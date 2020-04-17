@@ -2,20 +2,10 @@ import React, { Component } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import MaterialTable from 'material-table';
+import isEqual from 'lodash/isEqual';
 import { TierNames } from '../../data';
 import MenuDialog from '../menus/MenuDialog';
-
-function DataTableCell(props) {
-  return (
-    <React.Fragment>
-      {props.items.map((item) => (
-        <div key={'_' + props.type + item.name + props.step}>
-          {item.quantity + item.unit + ' ' + item.name}
-        </div>
-      ))}
-    </React.Fragment>
-  );
-}
+import { DataTableCell } from './DataTableCell';
 
 class DataTable extends Component {
   constructor(props) {
@@ -140,6 +130,15 @@ class DataTable extends Component {
     this.setState({ dialog: false });
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (!isEqual(prevState.recipes, this.state.recipes)) {
+      this.setState({ recipes: Array.from(this.props.recipes) });
+    }
+    if (!isEqual(this.props.recipes, this.state.recipes)) {
+      this.setState({ recipes: Array.from(this.props.recipes) });
+    }
+  }
+
   render() {
     return (
       <Paper variant="outlined" my={2}>
@@ -199,18 +198,17 @@ class DataTable extends Component {
                 setTimeout(() => {
                   {
                     let recipes = [...this.state.recipes];
-                    let index = recipes.indexOf(oldData);
-                    recipes.splice(index, 1);
+                    recipes.splice(oldData.step, 1);
 
                     recipes.forEach((recipe, index) => {
-                      recipe.step = index + 1;
+                      recipe.step = index;
                     });
 
                     this.setState({ recipes }, () => resolve());
                     this.props.handleUpdate(recipes);
                   }
                   resolve();
-                }, 200);
+                }, 0);
               }),
           }}
           localization={{

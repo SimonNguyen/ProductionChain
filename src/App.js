@@ -15,7 +15,7 @@ import {
   SidebarTriggerIcon,
   headerStyles,
 } from '@mui-treasury/layout';
-import { DefaultTheme, Recipes } from './data';
+import { DefaultTheme, Config } from './data';
 import { GenerateGraph } from './components/utils/graph';
 import DataTable from './components/DataTable';
 import NavContent from './components/NavContent';
@@ -23,31 +23,13 @@ import HeaderContent from './components/HeaderContent';
 
 import { AddOverclock } from './components/utils/overclock';
 
-let config = {
-  sidebar: {
-    anchor: 'left',
-    width: 256,
-    variant: 'permanent',
-    collapsible: true,
-    collapsedWidth: 64,
-  },
-  content: { persistentBehavior: 'fit' },
-  header: {
-    position: 'fixed',
-    clipped: false,
-    persistentBehavior: 'fit',
-    offsetHeight: 64,
-  },
-};
-
 class App extends Component {
   constructor(props) {
     super(props);
 
     let themeType = window.localStorage.getItem('theme');
     let collapsed = window.localStorage.getItem('collapsed');
-    let recipes = AddOverclock(Recipes.slice(0, Recipes.length));
-    let graph = GenerateGraph(recipes);
+    let storedRecipes = JSON.parse(window.localStorage.getItem('recipes'));
 
     if (themeType === null) {
       window.localStorage.setItem('theme', 'dark');
@@ -60,6 +42,14 @@ class App extends Component {
     if (collapsed === null) {
       window.localStorage.setItem('collapsed', 'false');
     }
+
+    if (storedRecipes === null) {
+      window.localStorage.setItem('recipes', '[]');
+      storedRecipes = [];
+    }
+
+    let recipes = AddOverclock(storedRecipes.slice(0, storedRecipes.length));
+    let graph = GenerateGraph(recipes);
 
     this.state = {
       theme: DefaultTheme,
@@ -94,13 +84,15 @@ class App extends Component {
     recipes.length = 0;
 
     this.setState({ recipes });
+    window.localStorage.setItem('recipes', JSON.stringify(recipes));
   };
 
   handleUpdate = (newRecipes) => {
-    let recipes = newRecipes;
+    let recipes = AddOverclock(newRecipes);
     let graph = GenerateGraph(recipes);
     this.setState({ recipes });
     this.setState({ graph });
+    window.localStorage.setItem('recipes', JSON.stringify(recipes));
   };
 
   render() {
@@ -110,7 +102,7 @@ class App extends Component {
         <CssBaseline />
         <Root
           theme={muiTheme}
-          config={config}
+          config={Config}
           initialCollapsed={this.state.collapsed}>
           {({ sidebarStyles, collapsed }) => (
             <>

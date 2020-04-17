@@ -35,19 +35,22 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
   );
   const [targetMachines, setTargetMachines] = React.useState(1);
   const [targetItem, setTargetItem] = React.useState(
-    requirements.outputs.length !== 0 ? Object.keys(requirements.outputs)[0] : 0
+    Object.keys(requirements.outputs).length !== 0
+      ? Object.keys(requirements.outputs)[0]
+      : ''
   );
   const [targetQuantity, setTargetQuantity] = React.useState(
-    requirements.outputs.length !== 0
+    Object.keys(requirements.outputs).length !== 0
       ? requirements.outputs[targetItem].quantity
       : 0
   );
   const [targetRatio, setTargetRatio] = React.useState(
-    requirements.outputs.length !== 0
+    Object.keys(requirements.outputs).length !== 0
       ? targetQuantity / requirements.outputs[targetItem].time
       : 0
   );
   const [targetOps, setTargetOps] = React.useState(targetRatio);
+  const [targetStored, setTargetStored] = React.useState([]);
   const [targetLabelWidth, setTargetLabelWidth] = React.useState(0);
 
   const targetLabel = React.useRef(null);
@@ -72,6 +75,11 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
     setTargetItem(value);
     setTargetQuantity(quantity);
     setTargetRatio(quantity / requirements.outputs[value].time);
+
+    if (typeof targetStored[value] !== 'undefined') {
+      setTargetOps(targetStored[value].targetOps);
+      setTargetMachines(targetStored[value].targetMachines);
+    }
   };
 
   const handleTarget = () => {
@@ -80,6 +88,13 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
       'targetMachines',
       targetMachines
     );
+
+    let targets = targetStored;
+    targets[targetItem] = {
+      targetOps: targetOps,
+      targetMachines: targetMachines,
+    };
+    setTargetStored(targets);
   };
 
   const handleCalculate = () => {
@@ -91,7 +106,7 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
     setRequirements(MachineRequirements(props.recipes, calculatedGraph));
   };
 
-  const regAnyNumber = /^-?\d+\.?\d*$/;
+  const regAnyPositiveNumber = /^\d+\.?\d*$/;
 
   return (
     <>
@@ -109,7 +124,9 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
             <Grid container direction="row" alignItems="center">
               <FormControl className={classes.formControl}>
                 <TextField
-                  error={!regAnyNumber.test(targetOps)}
+                  error={
+                    !regAnyPositiveNumber.test(targetOps) || targetOps === 0
+                  }
                   label="Output per second"
                   placeholder="1"
                   required
@@ -121,7 +138,10 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
               </FormControl>
               <FormControl variant="outlined" className={classes.formControl}>
                 <TextField
-                  error={!regAnyNumber.test(targetMachines)}
+                  error={
+                    !regAnyPositiveNumber.test(targetMachines) ||
+                    targetMachines === 0
+                  }
                   label="Number of machines"
                   placeholder="1"
                   required
@@ -246,7 +266,9 @@ const CalculatorMenu = React.memo(function CalculatorMenu(props) {
             </Grid>
           </>
         ) : (
-          <DialogContentText>No recipe information.</DialogContentText>
+          <DialogContentText>
+            No recipe information to calculate.
+          </DialogContentText>
         )}
       </DialogContent>
       <DialogActions>

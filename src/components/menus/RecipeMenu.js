@@ -14,9 +14,11 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import Infinite from 'react-infinite';
 import RecipeRow from './RecipeRow';
 
 import { TierNames } from '../../data';
+import { pushDefault, newRecipe } from '../utils/helper';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -29,45 +31,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function pushDefault(array, n) {
-  let newArray = array;
-  if (array.length < n) {
-    for (let i = array.length; i < n; i++) {
-      newArray.push({ name: '', quantity: 1, unit: 'b' });
-    }
-  } else {
-    newArray = newArray.slice(0, n);
-  }
-
-  return newArray;
-}
-
-function newRecipe(
-  isEu,
-  step,
-  machineName,
-  machineTier,
-  overclock,
-  rft,
-  time,
-  inputs,
-  outputs
-) {
-  let recipe = {
-    step: step,
-    machineName: machineName,
-    machineTier: machineTier,
-    overclock: overclock,
-    rft: isEu ? rft * 4 : rft,
-    time: time,
-    inputs: inputs,
-    outputs: outputs,
-    targetMachines: 1,
-  };
-
-  return recipe;
-}
-
 const RecipeMenu = React.memo(function RecipeMenu(props) {
   const classes = useStyles();
   const [isEu, setIsEu] = React.useState(false);
@@ -79,6 +42,9 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
   const [numInputs, setNumInputs] = React.useState(1);
   const [numOutputs, setNumOutputs] = React.useState(1);
   const [valid, setValid] = React.useState(false);
+  const [validName, setValidName] = React.useState(false);
+  const [validInputs, setValidInputs] = React.useState(false);
+  const [validOutputs, setValidOutputs] = React.useState(false);
 
   const [inputs, setInputs] = React.useState([
     { name: '', quantity: 1, unit: 'b' },
@@ -113,14 +79,29 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
     if (value >= 0 && regWholeNumber.test(value)) {
       setNumInputs(value);
       setInputs((prevInputs) => pushDefault(prevInputs, value));
+      setValidInputs(false);
     }
+
+    handleValidation('inputs', false);
   };
 
   const handleNumOutputs = (value) => {
     if (value >= 0 && regWholeNumber.test(value)) {
       setNumOutputs(value);
       setOutputs((prevOutputs) => pushDefault(prevOutputs, value));
+      setValidOutputs(false);
     }
+
+    handleValidation('outputs', false);
+  };
+
+  const handleUpdateMachineName = (value) => {
+    setMachineName(value);
+
+    let validName = value.length !== 0;
+
+    setValidName(validName);
+    handleValidation('machineName', validName);
   };
 
   const handleUpdateInputs = (id, item) => {
@@ -128,34 +109,48 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
     newInputs[id] = item;
     setInputs(newInputs);
 
-    let valid = true;
+    let validInputs = true;
     newInputs.forEach((input) => {
       if (input.name.length === 0) {
-        valid = valid && false;
+        validInputs = validInputs && false;
       }
     });
 
-    setValid(valid);
+    setValidInputs(validInputs);
+    handleValidation('inputs', validInputs);
   };
 
   const handleUpdateOutputs = (id, item) => {
-    let newOutputs = inputs;
+    let newOutputs = outputs;
     newOutputs[id] = item;
     setOutputs(newOutputs);
 
-    let valid = true;
-    newOutputs.forEach((output) => {
+    let validOutputs = true;
+    outputs.forEach((output) => {
       if (output.name.length === 0) {
-        valid = valid && false;
+        validOutputs = validOutputs && false;
       }
     });
 
-    setValid(valid);
+    setValidOutputs(validOutputs);
+    handleValidation('outputs', validOutputs);
+  };
+
+  const handleValidation = (type, value) => {
+    if (type === 'machineName') {
+      setValid(value && validInputs && validOutputs);
+    } else if (type === 'inputs') {
+      setValid(validName && value && validOutputs);
+    } else if (type === 'outputs') {
+      setValid(validName && validInputs && value);
+    } else {
+      setValid(validName && validInputs && validOutputs);
+    }
   };
 
   const handleUpdateRecipes = () => {
     let recipes = props.recipes;
-    let index = Object.keys(recipes).length;
+    let index = recipes.length;
 
     recipes.push(
       newRecipe(
@@ -188,7 +183,7 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
             required
             value={machineName}
             variant="outlined"
-            onChange={(event) => setMachineName(event.target.value)}
+            onChange={(event) => handleUpdateMachineName(event.target.value)}
           />
         </FormControl>
         <FormControl variant="outlined" className={classes.formControl}>
@@ -302,24 +297,44 @@ const RecipeMenu = React.memo(function RecipeMenu(props) {
           justify="space-between"
           alignitems="center">
           <Grid item xs={6}>
-            {inputs.map((input, index) => (
-              <RecipeRow
-                key={'input' + index}
-                id={index}
-                item={input}
-                handleUpdateItems={handleUpdateInputs}
-              />
-            ))}
+            <Infinite
+              containerHeight={
+                inputs.length * 72 > (window.innerHeight * 3) / 5
+                  ? (window.innerHeight * 3) / 5
+                  : inputs.length === 0
+                  ? 72
+                  : inputs.length * 72
+              }
+              elementHeight={72}>
+              {inputs.map((input, index) => (
+                <RecipeRow
+                  key={'input' + index}
+                  id={index}
+                  item={input}
+                  handleUpdateItems={handleUpdateInputs}
+                />
+              ))}
+            </Infinite>
           </Grid>
           <Grid item xs={6}>
-            {outputs.map((output, index) => (
-              <RecipeRow
-                key={'output' + index}
-                id={index}
-                item={output}
-                handleUpdateItems={handleUpdateOutputs}
-              />
-            ))}
+            <Infinite
+              containerHeight={
+                outputs.length * 72 > (window.innerHeight * 3) / 5
+                  ? (window.innerHeight * 3) / 5
+                  : outputs.length === 0
+                  ? 72
+                  : outputs.length * 72
+              }
+              elementHeight={72}>
+              {outputs.map((output, index) => (
+                <RecipeRow
+                  key={'output' + index}
+                  id={index}
+                  item={output}
+                  handleUpdateItems={handleUpdateOutputs}
+                />
+              ))}
+            </Infinite>
           </Grid>
         </Grid>
       </DialogContent>

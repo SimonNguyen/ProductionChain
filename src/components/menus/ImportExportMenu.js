@@ -4,6 +4,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import { compress, decompress } from 'lzutf8';
 import { Recipes } from '../../data';
@@ -19,7 +20,7 @@ const ImportExportMenu = React.memo(function ImportExportMenu(props) {
     let array = data.split(',');
     let uint8array = Uint8Array.from(array);
     let recipes = JSON.parse(decompress(uint8array));
-    props.handleRecipes(recipes);
+    props.handleUpdate(recipes);
   };
 
   const handleExport = () => {
@@ -30,7 +31,7 @@ const ImportExportMenu = React.memo(function ImportExportMenu(props) {
 
   const handleDefaultImport = () => {
     let recipes = Recipes;
-    props.handleRecipes(recipes);
+    props.handleUpdate(recipes);
   };
 
   return (
@@ -49,8 +50,7 @@ const ImportExportMenu = React.memo(function ImportExportMenu(props) {
           variant="outlined">
           Numismatic Generators
         </Button>
-        <br />
-        <br />
+        <Divider style={{ margin: '12px 0' }} />
         <TextField
           multiline
           fullWidth

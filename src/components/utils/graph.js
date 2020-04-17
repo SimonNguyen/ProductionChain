@@ -5,10 +5,10 @@ import findCircuits from 'elementary-circuits-directed-graph';
 import { TierNames } from '../../data';
 
 /**
- *A directed graph for recipe calculations.
+ * Returns a directed multigraph for recipe calculations.
  *
  * @export
- * @param {*} recipes - Input object containing recipes
+ * @param {*} recipes - Array of recipe objects
  * @returns
  */
 function GenerateGraph(recipes) {
@@ -34,6 +34,12 @@ function GenerateGraph(recipes) {
   return acyclicGraph;
 }
 
+/**
+ * Generates edges based on recipe input and output objects via direct linking.
+ *
+ * @param {*} graph - A directed multigraph with no edges.
+ * @returns
+ */
 function GenerateEdges(graph) {
   let edgeGraph = graph;
 
@@ -60,6 +66,12 @@ function GenerateEdges(graph) {
   return edgeGraph;
 }
 
+/**
+ * Converts a directed multigraph into a directed acyclic multigraph.
+ *
+ * @param {*} graph
+ * @returns
+ */
 function RemoveCycles(graph) {
   let adjList = FindAdjList(graph);
   let cycles = findCircuits(adjList);
@@ -72,6 +84,12 @@ function RemoveCycles(graph) {
   }
 }
 
+/**
+ * Returns a list of adjacent edges.
+ *
+ * @param {*} graph
+ * @returns
+ */
 function FindAdjList(graph) {
   let edges = [];
 
@@ -89,6 +107,13 @@ function FindAdjList(graph) {
   return adjList;
 }
 
+/**
+ * Removes cyclic edges from a graph.
+ *
+ * @param {*} graph
+ * @param {*} cycles
+ * @returns
+ */
 function FixGraph(graph, cycles) {
   let tmpGraph = graph;
 
@@ -105,6 +130,13 @@ function FixGraph(graph, cycles) {
   return tmpGraph;
 }
 
+/**
+ * Returns an object containing totals for machines per step, machines in chain, rf/t, inputs and outputs.
+ *
+ * @param {*} recipes
+ * @param {*} graph
+ * @returns
+ */
 function MachineRequirements(recipes, graph) {
   let machineTotals = [];
   let machineSteps = [];
@@ -134,7 +166,13 @@ function MachineRequirements(recipes, graph) {
         machineTotals[machine] + Math.ceil(attributes.targetMachines);
     }
 
-    machineSteps[node] = machine + ' ' + Math.ceil(attributes.targetMachines);
+    machineSteps[node] =
+      machine +
+      ' ' +
+      attributes.targetMachines.toFixed(2) +
+      ' (' +
+      Math.ceil(attributes.targetMachines) +
+      ')';
 
     rft = rft + Math.ceil(attributes.targetMachines) * recipeRft;
   });
@@ -142,6 +180,12 @@ function MachineRequirements(recipes, graph) {
   return { machineTotals, machineSteps, rft, inputs, outputs };
 }
 
+/**
+ * Determines the initial input requirements for a provided graph.
+ *
+ * @param {*} graph
+ * @returns
+ */
 function FindInitialInputs(graph) {
   let inputs = [];
 
@@ -176,6 +220,12 @@ function FindInitialInputs(graph) {
   return inputs.sort();
 }
 
+/**
+ * Determines the final outputs for the provided graph.
+ *
+ * @param {*} graph
+ * @returns
+ */
 function FindFinalOutputs(graph) {
   let outputs = [];
 
@@ -210,6 +260,14 @@ function FindFinalOutputs(graph) {
   return outputs.sort();
 }
 
+/**
+ * Calculates the number of machines required to satisfy a node's recipe.
+ *
+ * @param {*} graph
+ * @param {*} sourceNode
+ * @param {*} calculatorTargetMachines
+ * @returns
+ */
 function CalculateTarget(graph, sourceNode, calculatorTargetMachines) {
   let sourceAttributes = graph.getNodeAttributes(sourceNode);
   if (typeof calculatorTargetMachines !== 'undefined') {
