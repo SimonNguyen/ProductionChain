@@ -87,9 +87,9 @@ const Recipes = [
     step: 3,
     machineName: 'Furnace',
     machineTier: 2,
-    overclock: false,
-    rft: 128,
-    time: 3.2,
+    overclock: true,
+    rft: 16,
+    time: 6.4,
     inputs: [
       {
         name: 'Sand',
